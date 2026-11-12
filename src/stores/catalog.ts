@@ -1,3 +1,4 @@
+import { isLocalProvider } from "../lib/model-source"
 import { create } from "zustand"
 import { useConnections } from "./connections"
 import type { Agent, Command } from "../lib/sdk"
@@ -16,6 +17,8 @@ export interface Provider {
   id: string
   name: string
   connected: boolean
+  /** Served from the user's own machine/network (llama.cpp, Ollama, ...), not a hosted API. */
+  local?: boolean
   models: ProviderModel[]
 }
 
@@ -81,6 +84,7 @@ export const useCatalog = create<CatalogState>((set, get) => ({
             id: p.id,
             name: p.name || p.id,
             connected: connected.has(p.id),
+            local: isLocalProvider(p.id, (p as { endpointUrls?: string[] }).endpointUrls),
             models: Object.values(p.models || {})
               .filter((m) => m.status !== "deprecated")
               .map((m) => ({

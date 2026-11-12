@@ -410,7 +410,13 @@
     },
     "modelPicker": {
       "title": "Select Model",
-      "searchPlaceholder": "Search models..."
+      "searchPlaceholder": "Search models...",
+      "source": {
+        "all": "All",
+        "local": "Local",
+        "cloud": "Cloud"
+      },
+      "localBadge": "on your computer"
     },
     "variantPicker": {
       "title": "Reasoning Effort",

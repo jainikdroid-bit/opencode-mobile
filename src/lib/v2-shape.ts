@@ -147,6 +147,7 @@ export interface V2ModelInfo {
   status?: "alpha" | "beta" | "deprecated" | "active"
   enabled?: boolean
   limit: { context: number; output: number }
+  api?: { url?: string }
 }
 
 export interface V2ProviderInfo {
@@ -466,11 +467,12 @@ export function toProviderCatalog(
   models: V2ModelInfo[],
   defaultModel: V2ModelInfo | null,
 ): {
-  all: Array<{ id: string; name: string; models: Record<string, any> }>
+  all: Array<{ id: string; name: string; models: Record<string, any>; endpointUrls?: string[] }>
   default: Record<string, string>
   connected: string[]
 } {
   const byProvider = new Map<string, { id: string; name: string; models: Record<string, any> }>()
+  const urls = new Map<string, string[]>()
   for (const p of providers || []) {
     byProvider.set(p.id, { id: p.id, name: p.name, models: {} })
   }
@@ -481,6 +483,7 @@ export function toProviderCatalog(
     }
     if (m.enabled === false) continue
     connected.add(m.providerID)
+    if (m.api?.url) urls.set(m.providerID, [...(urls.get(m.providerID) ?? []), m.api.url])
     const entry = byProvider.get(m.providerID)!
     const variants: Record<string, { reasoningEffort?: string }> = {}
     for (const v of m.variants || []) {
@@ -503,7 +506,9 @@ export function toProviderCatalog(
   const defaultByProvider: Record<string, string> = {}
   if (defaultModel) defaultByProvider[defaultModel.providerID] = defaultModel.id
   return {
-    all: Array.from(byProvider.values()).filter((p) => Object.keys(p.models).length > 0),
+    all: Array.from(byProvider.values())
+      .filter((p) => Object.keys(p.models).length > 0)
+      .map((p) => ({ ...p, endpointUrls: urls.get(p.id) })),
     default: defaultByProvider,
     connected: Array.from(connected),
   }

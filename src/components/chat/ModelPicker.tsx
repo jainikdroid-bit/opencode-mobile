@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import BottomSheet, { BottomSheetBackdrop, BottomSheetSectionList, BottomSheetTextInput } from "@gorhom/bottom-sheet"
 import { useTranslation } from "react-i18next"
+import { matchesSource, countBySource, type SourceFilter } from "../../lib/model-source"
 
 interface ModelItem {
   providerID: string
@@ -14,6 +15,7 @@ interface ModelItem {
 interface Provider {
   id: string
   name: string
+  local?: boolean
   models: Array<{ id: string; name: string }>
 }
 
@@ -28,11 +30,14 @@ interface Props {
 export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }: Props) {
   const { t } = useTranslation()
   const [search, setSearch] = useState("")
+  const [source, setSource] = useState<SourceFilter>("all")
+  const counts = useMemo(() => countBySource(Array.isArray(providers) ? providers : []), [providers])
 
   const sections = useMemo(() => {
     const list = Array.isArray(providers) ? providers : []
     const q = search.toLowerCase()
     const result = list
+      .filter((p) => matchesSource(p, source))
       .map((p) => {
         const models = (p.models || [])
           .filter(
@@ -56,7 +61,7 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
             return aActive === bActive ? 0 : aActive ? -1 : 1
           })
         }
-        return { title: p.name || p.id, data: models }
+        return { title: p.name || p.id, local: p.local === true, data: models }
       })
       .filter((s) => s.data.length > 0)
     // Sort the section containing the selected model to the top
@@ -68,7 +73,7 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
       })
     }
     return result
-  }, [providers, search, selected])
+  }, [providers, search, selected, source])
 
   const handleSelect = useCallback(
     (providerID: string, modelID: string) => {
@@ -102,6 +107,20 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
     >
       <View style={s.header}>
         <Text style={[s.title, isDark && s.textWhite]}>{t("chat.modelPicker.title")}</Text>
+        <View style={s.sourceRow} testID="model-source-filter">
+          {(["all", "local", "cloud"] as const).map((key) => (
+            <TouchableOpacity
+              key={key}
+              style={[s.sourceChip, isDark && s.sourceChipDark, source === key && s.sourceChipActive]}
+              onPress={() => setSource(key)}
+              testID={`model-source-${key}`}
+            >
+              <Text style={[s.sourceText, isDark && s.textWhite, source === key && s.sourceTextActive]}>
+                {t(`chat.modelPicker.source.${key}`)} · {counts[key]}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
         <BottomSheetTextInput
           style={[s.search, isDark && s.searchDark]}
           placeholder={t("chat.modelPicker.searchPlaceholder")}
@@ -115,9 +134,15 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
       <BottomSheetSectionList
         sections={sections}
         keyExtractor={(item: ModelItem) => `${item.providerID}/${item.modelID}`}
-        renderSectionHeader={({ section }: { section: { title: string } }) => (
+        renderSectionHeader={({ section }: { section: { title: string; local?: boolean } }) => (
           <View style={[s.sectionHeader, isDark && s.sectionHeaderDark]}>
             <Text style={[s.sectionTitle, isDark && s.metaDark]}>{section.title}</Text>
+            {section.local ? (
+              <View style={s.localBadge}>
+                <Ionicons name="hardware-chip-outline" size={12} color="#16a34a" />
+                <Text style={s.localBadgeText}>{t("chat.modelPicker.localBadge")}</Text>
+              </View>
+            ) : null}
           </View>
         )}
         renderItem={({ item }: { item: ModelItem }) => {
@@ -165,7 +190,24 @@ const s = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     paddingHorizontal: 16,
     paddingVertical: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
+  localBadge: { flexDirection: "row", alignItems: "center", gap: 3 },
+  localBadgeText: { fontSize: 11, fontWeight: "600", color: "#16a34a" },
+  sourceRow: { flexDirection: "row", gap: 8 },
+  sourceChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#d4d4d4",
+  },
+  sourceChipDark: { borderColor: "#404040" },
+  sourceChipActive: { backgroundColor: "#8b5cf6", borderColor: "#8b5cf6" },
+  sourceText: { fontSize: 13, color: "#525252" },
+  sourceTextActive: { color: "#ffffff", fontWeight: "600" },
   sectionHeaderDark: { backgroundColor: "#111111" },
   sectionTitle: {
     fontSize: 12,
