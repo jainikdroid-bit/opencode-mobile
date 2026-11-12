@@ -30,8 +30,10 @@ export const isTextFile = (f: SharedFile) => (f.mimeType || "").startsWith("text
 
 export function planShare(input: ShareInput): SharePlan {
   const plan: SharePlan = { text: "", images: [], textFiles: [], skipped: [] }
-  const parts = [input.text?.trim(), input.webUrl?.trim()].filter((p): p is string => !!p)
-  plan.text = [...new Set(parts)].join("\n")
+  const text = input.text?.trim() ?? ""
+  const link = input.webUrl?.trim() ?? ""
+  // Android hands over the link separately even when the text already contains it.
+  plan.text = [text, link && !text.includes(link) ? link : ""].filter(Boolean).join("\n")
   for (const f of input.files ?? []) {
     const filename = nameOf(f)
     const uri = f.path.startsWith("/") ? `file://${f.path}` : f.path

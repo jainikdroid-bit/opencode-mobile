@@ -64,7 +64,11 @@ export async function runPhoneTool(tool: PhoneToolName, args: Record<string, str
     case "phone_location": {
       const perm = await Location.requestForegroundPermissionsAsync()
       if (!perm.granted) throw new Error("location permission was not granted on the phone")
-      const p = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced })
+      // A fix can take a while indoors: wait up to 20 s, then fall back to the last known position.
+      const fresh = Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced })
+      const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), 20_000))
+      const p = (await Promise.race([fresh, timeout])) ?? (await Location.getLastKnownPositionAsync())
+      if (!p) throw new Error("could not get a location fix on the phone")
       return { latitude: p.coords.latitude, longitude: p.coords.longitude, accuracyMeters: p.coords.accuracy }
     }
     case "phone_photo":

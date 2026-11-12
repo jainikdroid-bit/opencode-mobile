@@ -5,6 +5,7 @@ import { planShare, fenceFile, hasShareContent, MAX_TEXT_FILE_BYTES } from "./sh
 test("text and link are merged without duplicates", () => {
   assert.equal(planShare({ text: " hi ", webUrl: "https://a.b" }).text, "hi\nhttps://a.b")
   assert.equal(planShare({ text: "https://a.b", webUrl: "https://a.b" }).text, "https://a.b")
+  assert.equal(planShare({ text: "Look at https://a.b please", webUrl: "https://a.b" }).text, "Look at https://a.b please")
 })
 test("files are sorted into images, text files and skipped", () => {
   const p = planShare({

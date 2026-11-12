@@ -1,0 +1,5 @@
+v0.10.1 — Fixes from device testing
+
+• Quick permissions now answer through the right folder, so Allow/Deny from the banner works for every project.
+• Long-press on a session: Delete is no longer hidden on Android.
+• Shared links are no longer duplicated; the location tool no longer waits forever without a GPS fix.

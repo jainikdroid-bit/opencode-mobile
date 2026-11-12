@@ -76,12 +76,17 @@ function SessionItem({
   }
 
   const onLongPress = () => {
-    Alert.alert(session.title || t("sessionsList.untitledSession"), undefined, [
-      { text: t("common.cancel"), style: "cancel" },
-      { text: t(pinned ? "sessionsList.actions.unpin" : "sessionsList.actions.pin"), onPress: onTogglePin },
-      { text: t("sessionsList.actions.rename"), onPress: onRename },
-      { text: t("common.delete"), style: "destructive", onPress: onDelete },
-    ])
+    // Android shows at most three buttons, so there is no explicit Cancel: tapping outside or Back dismisses it.
+    Alert.alert(
+      session.title || t("sessionsList.untitledSession"),
+      undefined,
+      [
+        { text: t(pinned ? "sessionsList.actions.unpin" : "sessionsList.actions.pin"), onPress: onTogglePin },
+        { text: t("sessionsList.actions.rename"), onPress: onRename },
+        { text: t("common.delete"), style: "destructive", onPress: onDelete },
+      ],
+      { cancelable: true },
+    )
   }
 
   // Extract short directory name from session
