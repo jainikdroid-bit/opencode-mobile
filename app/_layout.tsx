@@ -17,6 +17,8 @@ import { useSettings } from "../src/stores/settings"
 import { AuthGate } from "../src/components/AuthGate"
 import { ErrorBoundary } from "../src/components/ErrorBoundary"
 import * as notifications from "../src/lib/notifications"
+import { usePhoneBridge } from "../src/lib/usePhoneBridge"
+import { ShareIntentProvider, useShareIntentContext } from "expo-share-intent"
 
 // The app is dark-only: a minimal blue-black look with neon accents.
 Appearance.setColorScheme("dark")
@@ -117,6 +119,12 @@ function RootLayout() {
   }, [client])
 
   const isLoading = authLoading || connectionsLoading
+  usePhoneBridge()
+  const { hasShareIntent } = useShareIntentContext()
+  useEffect(() => {
+    // Another app shared something with us: let the user pick the conversation.
+    if (hasShareIntent && !isLoading) router.push("/share")
+  }, [hasShareIntent, isLoading])
 
   if (isLoading) {
     return (
@@ -164,6 +172,7 @@ function RootLayout() {
                   presentation: "modal",
                 }}
               />
+              <Stack.Screen name="share" options={{ title: t("share.title"), presentation: "modal" }} />
               <Stack.Screen name="guide" options={{ title: t("guide.title"), presentation: "modal" }} />
               <Stack.Screen name="scan" options={{ title: t("scan.title"), presentation: "modal" }} />
               <Stack.Screen name="files" options={{ title: t("files.title"), presentation: "card" }} />
@@ -193,4 +202,10 @@ function RootLayout() {
   )
 }
 
-export default RootLayout
+export default function RootLayoutWithShare() {
+  return (
+    <ShareIntentProvider>
+      <RootLayout />
+    </ShareIntentProvider>
+  )
+}

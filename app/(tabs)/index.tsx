@@ -32,6 +32,7 @@ import { nameOf } from "../../src/lib/path-utils"
 import { SETUP_GUIDE_URL } from "../../src/lib/links"
 import { Mascot } from "../../src/components/Mascot"
 import { RunnerGame } from "../../src/components/RunnerGame"
+import { filterSessions, splitPinned, togglePin, parsePinned, PINNED_KEY } from "../../src/lib/session-filter"
 import { StartServerBar } from "../../src/components/StartServerBar"
 import { canStartFromPhone } from "../../src/lib/launcher"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -55,8 +56,12 @@ function SessionItem({
   isDark,
   onRename,
   onDelete,
+  pinned,
+  onTogglePin,
 }: {
   session: Session
+  pinned: boolean
+  onTogglePin: () => void
   isDark: boolean
   onRename: () => void
   onDelete: () => void
@@ -73,6 +78,7 @@ function SessionItem({
   const onLongPress = () => {
     Alert.alert(session.title || t("sessionsList.untitledSession"), undefined, [
       { text: t("common.cancel"), style: "cancel" },
+      { text: t(pinned ? "sessionsList.actions.unpin" : "sessionsList.actions.pin"), onPress: onTogglePin },
       { text: t("sessionsList.actions.rename"), onPress: onRename },
       { text: t("common.delete"), style: "destructive", onPress: onDelete },
     ])
@@ -90,6 +96,7 @@ function SessionItem({
     >
       <View style={styles.sessionContent}>
         <View style={styles.sessionHeader}>
+          {pinned ? <Ionicons name="pin" size={13} color="#22d3ee" style={{ marginRight: 6 }} /> : null}
           <Text style={[styles.sessionTitle, isDark && styles.textDark]} numberOfLines={1}>
             {session.title || t("sessionsList.untitledSession")}
           </Text>
@@ -122,6 +129,7 @@ function SessionItem({
 type ListRow =
   | { type: "header"; directory: string; shortName: string; count: number; collapsed: boolean }
   | { type: "session"; session: Session }
+  | { type: "pinned-header"; count: number }
 
 function GroupHeader({
   row,
@@ -215,6 +223,21 @@ export default function SessionsScreen() {
   // all groups start expanded (#67).
   const [collapsedDirs, setCollapsedDirs] = useState<Set<string>>(new Set())
 
+  const [query, setQuery] = useState("")
+  const [pinnedIds, setPinnedIds] = useState<string[]>([])
+  useEffect(() => {
+    AsyncStorage.getItem(PINNED_KEY)
+      .then((raw) => setPinnedIds(parsePinned(raw)))
+      .catch(() => {})
+  }, [])
+  const onTogglePin = useCallback((id: string) => {
+    setPinnedIds((prev) => {
+      const next = togglePin(prev, id)
+      AsyncStorage.setItem(PINNED_KEY, JSON.stringify(next)).catch(() => {})
+      return next
+    })
+  }, [])
+
   const toggleGroup = useCallback((directory: string) => {
     setCollapsedDirs((prev) => {
       const next = new Set(prev)
@@ -227,11 +250,18 @@ export default function SessionsScreen() {
   // Flatten sessions into header+item rows. Skip headers entirely when
   // everything lives in one directory — a lone header adds noise, not clarity.
   const rows = useMemo<ListRow[]>(() => {
-    const groups = groupByDirectory(sessions)
-    if (groups.length <= 1) {
-      return sessions.map((session) => ({ type: "session", session }))
-    }
+    const matching = filterSessions(sessions, query)
+    const { pinned, rest } = splitPinned(matching, pinnedIds)
     const out: ListRow[] = []
+    if (pinned.length > 0) {
+      out.push({ type: "pinned-header", count: pinned.length })
+      for (const session of pinned) out.push({ type: "session", session })
+    }
+    const groups = groupByDirectory(rest)
+    if (groups.length <= 1) {
+      for (const session of rest) out.push({ type: "session", session })
+      return out
+    }
     for (const group of groups) {
       const collapsed = collapsedDirs.has(group.directory)
       out.push({
@@ -246,7 +276,7 @@ export default function SessionsScreen() {
       }
     }
     return out
-  }, [sessions, collapsedDirs])
+  }, [sessions, collapsedDirs, query, pinnedIds])
 
   // Fetch server-known projects when the new session modal opens
   useEffect(() => {
@@ -603,14 +633,46 @@ export default function SessionsScreen() {
 
       <FlatList
         data={rows}
-        keyExtractor={(row) => (row.type === "header" ? `dir:${row.directory}` : row.session.id)}
+        keyExtractor={(row) => (row.type === "header" ? `dir:${row.directory}` : row.type === "pinned-header" ? "pinned" : row.session.id)}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          sessions.length > 4 || query ? (
+            <View style={[styles.searchBox, isDark && styles.searchBoxDark]}>
+              <Ionicons name="search" size={16} color="#8a93a8" />
+              <TextInput
+                style={[styles.searchInput, isDark && styles.textDark]}
+                value={query}
+                onChangeText={setQuery}
+                placeholder={t("sessionsList.search")}
+                placeholderTextColor="#8a93a8"
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="search"
+                testID="session-search"
+              />
+              {query ? (
+                <TouchableOpacity onPress={() => setQuery("")} hitSlop={10}>
+                  <Ionicons name="close-circle" size={16} color="#8a93a8" />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          ) : null
+        }
         renderItem={({ item: row }) =>
-          row.type === "header" ? (
+          row.type === "pinned-header" ? (
+            <View style={styles.pinnedHeader}>
+              <Ionicons name="pin" size={14} color="#22d3ee" />
+              <Text style={[styles.groupHeaderText, isDark && styles.textDark]}>{t("sessionsList.pinned")}</Text>
+              <Text style={[styles.groupHeaderCount, isDark && styles.metaDark]}>{row.count}</Text>
+            </View>
+          ) : row.type === "header" ? (
             <GroupHeader row={row} isDark={isDark} onToggle={() => toggleGroup(row.directory)} />
           ) : (
             <SessionItem
               session={row.session}
               isDark={isDark}
+              pinned={pinnedIds.includes(row.session.id)}
+              onTogglePin={() => onTogglePin(row.session.id)}
               onRename={() => handleRename(row.session)}
               onDelete={() => handleDelete(row.session)}
             />
@@ -626,7 +688,7 @@ export default function SessionsScreen() {
             </View>
           ) : (
             <View style={styles.emptyList}>
-              <Text style={[styles.emptyListText, isDark && styles.metaDark]}>{t("sessionsList.empty.noSessions")}</Text>
+              <Text style={[styles.emptyListText, isDark && styles.metaDark]}>{t(query ? "sessionsList.noMatches" : "sessionsList.empty.noSessions")}</Text>
             </View>
           )
         }
@@ -984,6 +1046,22 @@ const styles = StyleSheet.create({
     color: "#dc2626",
     fontSize: 14,
   },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginHorizontal: 12,
+    marginTop: 8,
+    marginBottom: 4,
+    paddingHorizontal: 12,
+    height: 40,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  searchBoxDark: { borderColor: "#1d2433", backgroundColor: "#0d1017" },
+  searchInput: { flex: 1, fontSize: 14, color: "#07080c", paddingVertical: 0 },
+  pinnedHeader: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 16, paddingVertical: 10 },
   groupHeader: {
     flexDirection: "row",
     alignItems: "center",

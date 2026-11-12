@@ -282,7 +282,9 @@
     },
     "filesCount": "{{count}} files",
     "actions": {
-      "rename": "Rename"
+      "rename": "Rename",
+      "pin": "Pin",
+      "unpin": "Unpin"
     },
     "alerts": {
       "renameFailedTitle": "Rename failed",
@@ -318,7 +320,10 @@
     },
     "renameModal": {
       "title": "Rename Session"
-    }
+    },
+    "search": "Search sessions",
+    "pinned": "Pinned",
+    "noMatches": "No sessions match your search."
   },
   "notifications": {
     "categories": {
@@ -561,6 +566,49 @@
       "timeout": "The server did not come up. Check the computer.",
       "no-server": "Nothing is set up on the computer yet. Run the installer there.",
       "error": "Could not start the server."
+    }
+  },
+  "share": {
+    "title": "Share to OpenCode",
+    "newSession": "New session with this",
+    "orPick": "Or add to an existing session",
+    "nothing": "Nothing usable was shared.",
+    "images": "{{count}} image(s)",
+    "files": "{{count}} file(s)",
+    "skippedTitle": "Some items were skipped",
+    "failedTitle": "Could not share",
+    "failedMessage": "Could not prepare the shared content. Try again."
+  },
+  "phone": {
+    "section": "Phone tools for the AI agent",
+    "master": "Let the agent use my phone",
+    "masterHint": "Works while this app is open. Everything below starts off.",
+    "noBridge": "Pair with a computer set up using --phone-tools first.",
+    "asksEachTime": "Asks you every time",
+    "recent": "Recent requests",
+    "confirmTitle": "The agent wants to use your phone",
+    "allow": "Allow",
+    "decline": "Decline",
+    "tools": {
+      "phone_info": "Phone info (model, battery)",
+      "phone_notify": "Show notifications",
+      "phone_speak": "Speak aloud",
+      "phone_clipboard_write": "Write to clipboard",
+      "phone_clipboard_read": "Read clipboard",
+      "phone_location": "Location",
+      "phone_photo": "Take a photo"
+    },
+    "confirm": {
+      "phone_clipboard_write": "Put text on your clipboard?",
+      "phone_clipboard_read": "Let it read what is on your clipboard?",
+      "phone_location": "Share your current location with it?",
+      "phone_photo": "Open the camera and send it the photo you take?"
+    },
+    "outcome": {
+      "done": "done",
+      "declined": "declined",
+      "off": "blocked",
+      "error": "failed"
     }
   }
 }

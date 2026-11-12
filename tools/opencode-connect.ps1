@@ -53,7 +53,7 @@ New-Item -ItemType Directory -Force -Path $Dir | Out-Null
 $core = if ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot 'connect.js'))) { $PSScriptRoot } else { Join-Path $Dir 'core' }
 if ($core -ne $PSScriptRoot) {
     New-Item -ItemType Directory -Force -Path $core | Out-Null
-    foreach ($f in 'connect.js', 'launcher.js', 'autostart.js') {
+    foreach ($f in 'connect.js', 'launcher.js', 'autostart.js', 'phone-bridge.js', 'phone-mcp.js') {
         try { Invoke-WebRequest -UseBasicParsing -Uri "$BaseUrl/$f" -OutFile (Join-Path $core $f) } catch { Say "Could not download $f"; exit 1 }
     }
 }

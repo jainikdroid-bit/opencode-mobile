@@ -21,7 +21,7 @@ const BASE_URL = 'https://raw.githubusercontent.com/jainikdroid-bit/opencode-mob
 const APP_URL = 'https://github.com/jainikdroid-bit/opencode-mobile/releases/latest'
 const WIN = process.platform === 'win32'
 const VALUE_FLAGS = new Set(['mode', 'port', 'name', 'hostname'])
-const BOOL_FLAGS = new Set(['noinstall', 'json', 'noguide', 'noopen', 'noqr', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
+const BOOL_FLAGS = new Set(['phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
 
 /** Accepts `-Json`, `--json`, `--no-guide`, `-NoGuide`, `-Mode lan`, `--mode=lan`; case and dashes ignored. */
 function parseArgs(argv) {
@@ -132,9 +132,11 @@ function run(opts, io) {
 
     // ----- uninstall -----
     if (opts.uninstall) {
+      const bridgeP = Number(state.bridgePort) || port - 2
       for (const p of [port, launcherPortOf()]) launcherLib.stopPort(p)
       note('server and launcher', 'did', 'stopped')
-      if (ts && mode === 'tailscale') { for (const p of [port, launcherPortOf()]) sh(ts, ['serve', `--tcp=${p}`, 'off']); note('tailscale forwards', 'did', 'removed') }
+      if (ts && mode === 'tailscale') { for (const p of [port, launcherPortOf(), bridgeP]) sh(ts, ['serve', `--tcp=${p}`, 'off']); note('tailscale forwards', 'did', 'removed') }
+      if (unregisterOpencodeMcp()) note('phone tools', 'did', 'removed the MCP entry from the opencode config')
       const gone = autostart.remove()
       if (gone.length) note('autostart', 'did', 'removed')
       result.ok = true; result.stage = 'uninstalled'
@@ -272,14 +274,23 @@ function run(opts, io) {
       note('server', 'did', `started on ${bindHost}:${port}`)
     }
     const launcherPort = port - 1
+    const bridgePort = port - 2
+    const phoneToolsWasOn = !!state.phoneTools
+    const phoneTools = !!(opts.phonetools || state.phoneTools)
     const autostartOn = !opts.noautostart && mode !== 'local'
-    state = { port, mode, name, launcherPort, launcherHost: bindHost, autostart: autostartOn }
+    state = { port, mode, name, launcherPort, launcherHost: bindHost, autostart: autostartOn, phoneTools, ...(phoneTools ? { bridgePort } : {}) }
     fs.writeFileSync(stateFile, JSON.stringify(state, null, 2))
 
     // ----- 4b. launcher: lets the phone start the server later -----
     const launcherJs = path.join(dir, 'launcher.js')
     const bundled = path.join(__dirname, 'launcher.js')
     if (path.resolve(bundled) !== path.resolve(launcherJs) && fs.existsSync(bundled)) fs.copyFileSync(bundled, launcherJs)
+    for (const extra of phoneTools ? ['phone-bridge.js', 'phone-mcp.js'] : []) {
+      const src = path.join(__dirname, extra)
+      const dest = path.join(dir, extra)
+      if (path.resolve(src) !== path.resolve(dest) && fs.existsSync(src)) fs.copyFileSync(src, dest)
+    }
+    if (phoneTools && !phoneToolsWasOn) launcherLib.stopPort(launcherPort) // restart so the launcher starts the bridge
     if (!fs.existsSync(launcherJs)) { try { fs.writeFileSync(launcherJs, await download(`${BASE_URL}/launcher.js`)) } catch { /* reported below */ } }
     if (!fs.existsSync(launcherJs)) note('launcher', 'skip', 'could not fetch launcher.js (starting the server from the phone will not work)')
     else {
@@ -290,6 +301,11 @@ function run(opts, io) {
       if (listening(launcherPort)) {
         note('launcher', 'ok', `phone can start the server (port ${launcherPort})`)
         if (mode === 'tailscale') sh(tsExe, ['serve', '--bg', '--tcp', String(launcherPort), `tcp://127.0.0.1:${launcherPort}`])
+        if (phoneTools) {
+          for (let i = 0; i < 20 && !listening(bridgePort); i++) await sleep(250)
+          if (mode === 'tailscale') sh(tsExe, ['serve', '--bg', '--tcp', String(bridgePort), `tcp://127.0.0.1:${bridgePort}`])
+          note('phone tools', listening(bridgePort) ? 'ok' : 'skip', listening(bridgePort) ? registerOpencodeMcp(path.join(dir, 'phone-mcp.js')) : 'bridge did not start')
+        }
       } else note('launcher', 'skip', 'did not start')
       if (autostartOn) {
         try { note('autostart', 'did', `launcher starts when you sign in (${autostart.install({ nodePath: process.execPath, launcherPath: launcherJs, dir })}; opt out: --no-autostart)`) } catch (e) { note('autostart', 'skip', String(e.message || e)) }
@@ -315,6 +331,36 @@ function run(opts, io) {
     if (!opts.json) io.out(`\nPairing link (also works with "Paste pairing link" in the app):\n${link}\n\nStop later:  --stop     Check:  --doctor     Remove:  --uninstall`)
     return finish(0)
   })()
+}
+
+/** Adds the phone MCP server to the user's opencode config (merging, never overwriting other entries). */
+const opencodeConfigFile = () => path.join(process.env.XDG_CONFIG_HOME || path.join(os.homedir(), '.config'), 'opencode', 'opencode.json')
+
+function registerOpencodeMcp(mcpPath) {
+  const file = opencodeConfigFile()
+  const entry = { type: 'local', command: ['node', mcpPath], enabled: true }
+  let config = {}
+  try {
+    if (fs.existsSync(file)) config = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''))
+  } catch {
+    return `add this to ${file} yourself ("mcp": { "phone": ${JSON.stringify(entry)} }): the file could not be parsed`
+  }
+  const next = { ...config, mcp: { ...(config.mcp || {}), phone: entry } }
+  fs.mkdirSync(path.dirname(file), { recursive: true })
+  fs.writeFileSync(file, JSON.stringify(next, null, 2))
+  return `agent can use the phone (MCP "phone" added to ${file}); the phone app decides what is allowed`
+}
+
+/** Removes only the "phone" entry we added. Returns true if something was removed. */
+function unregisterOpencodeMcp() {
+  const file = opencodeConfigFile()
+  try {
+    const config = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''))
+    if (!config.mcp || !config.mcp.phone) return false
+    const { phone, ...rest } = config.mcp
+    fs.writeFileSync(file, JSON.stringify({ ...config, mcp: rest }, null, 2))
+    return true
+  } catch { return false }
 }
 
 function installTailscale(say) {
@@ -373,7 +419,7 @@ async function showQr({ dir, link, opts, io, say }) {
   spawn(process.execPath, ['-e', `setTimeout(()=>{try{require('fs').rmSync(${JSON.stringify(page)},{force:true})}catch(e){}},300000)`], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
 }
 
-module.exports = { parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
+module.exports = { registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
 
 if (require.main === module) {
   const io = { out: (t) => process.stdout.write(t + '\n'), err: (t) => process.stderr.write(t + '\n') }

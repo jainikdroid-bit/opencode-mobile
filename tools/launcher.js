@@ -198,6 +198,8 @@ function main() {
     console.log(`opencode launcher on ${host}:${port}`)
     // At sign-in: bring the server up too, unless the user turned that off.
     if (state.autostart !== false && deps.readPassword()) launcher.start().catch(() => {})
+    // Optional: let an AI agent use a few phone functions, gated by the phone (see phone-bridge.js).
+    if (state.phoneTools) require('./phone-bridge.js').listen({ port: Number(state.bridgePort) || (Number(state.port) || 4096) - 2, host, readPassword: deps.readPassword })
   })
 }
 

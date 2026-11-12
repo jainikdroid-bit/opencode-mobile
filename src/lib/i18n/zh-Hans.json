@@ -282,7 +282,9 @@
     },
     "filesCount": "{{count}} 个文件",
     "actions": {
-      "rename": "重命名"
+      "rename": "重命名",
+      "pin": "置顶",
+      "unpin": "取消置顶"
     },
     "alerts": {
       "renameFailedTitle": "重命名失败",
@@ -318,7 +320,10 @@
     },
     "renameModal": {
       "title": "重命名会话"
-    }
+    },
+    "search": "搜索会话",
+    "pinned": "已置顶",
+    "noMatches": "没有匹配的会话。"
   },
   "notifications": {
     "categories": {
@@ -561,6 +566,49 @@
       "timeout": "服务器未能启动。请检查电脑。",
       "no-server": "电脑上尚未设置。请在电脑上运行安装程序。",
       "error": "无法启动服务器。"
+    }
+  },
+  "share": {
+    "title": "分享到 OpenCode",
+    "newSession": "用此内容新建会话",
+    "orPick": "或添加到现有会话",
+    "nothing": "没有可用的内容。",
+    "images": "{{count}} 张图片",
+    "files": "{{count}} 个文件",
+    "skippedTitle": "部分内容已跳过",
+    "failedTitle": "无法分享",
+    "failedMessage": "无法准备分享的内容，请重试。"
+  },
+  "phone": {
+    "section": "AI 代理的手机功能",
+    "master": "允许代理使用我的手机",
+    "masterHint": "仅在应用打开时有效。下列功能默认全部关闭。",
+    "noBridge": "请先连接已使用 --phone-tools 设置的电脑。",
+    "asksEachTime": "每次都会询问",
+    "recent": "最近请求",
+    "confirmTitle": "代理想使用你的手机",
+    "allow": "允许",
+    "decline": "拒绝",
+    "tools": {
+      "phone_info": "手机信息（型号、电量）",
+      "phone_notify": "显示通知",
+      "phone_speak": "朗读",
+      "phone_clipboard_write": "写入剪贴板",
+      "phone_clipboard_read": "读取剪贴板",
+      "phone_location": "位置",
+      "phone_photo": "拍照"
+    },
+    "confirm": {
+      "phone_clipboard_write": "把文字放到剪贴板？",
+      "phone_clipboard_read": "允许读取剪贴板？",
+      "phone_location": "分享你当前的位置？",
+      "phone_photo": "打开相机并把拍的照片发给它？"
+    },
+    "outcome": {
+      "done": "完成",
+      "declined": "已拒绝",
+      "off": "已拦截",
+      "error": "失败"
     }
   }
 }

@@ -95,6 +95,10 @@ model configured, the model picker will be empty: run `opencode auth login` (or 
 | Phone camera does nothing on the QR | Normal for some camera apps; use the app's own **Scan QR to pair**. |
 | Needs to work without Tailscale at home | `-Mode lan` (ask the person first; binds the Wi-Fi address only, password protected). |
 
+## Optional: phone tools for the agent
+
+`-PhoneTools` / `--phone-tools` starts a mailbox (`tools/phone-bridge.js`, port = server port - 2, tailnet only, same password) and adds an MCP server named `phone` to `~/.config/opencode/opencode.json` (merged, other entries untouched; `-Uninstall` removes only that entry). Ask the person first: it changes their opencode config and lets the agent request phone functions. The phone app still decides: every tool is off until the person switches it on in *Settings*, location/photo/clipboard ask every time, and nothing works while the app is closed. Do not try to bypass those switches.
+
 ## Undo
 
 `-Stop` stops the server and removes the Tailscale forward. To remove everything: also delete `%LOCALAPPDATA%\opencode-connect`

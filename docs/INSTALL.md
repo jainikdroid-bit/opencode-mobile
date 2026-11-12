@@ -48,6 +48,12 @@ The first time you open the app it also shows a short setup guide. Tap **Skip gu
   if the server is ever off, the app shows a **Start it** button. The computer must be on and online (it cannot be woken).
   Opt out of the helper with `-NoAutostart`; remove everything with `-Uninstall`.
 
+### Handy features
+
+- **Share to OpenCode:** in any app (browser, gallery, files) tap Share, pick OpenCode, choose a session; text, links, images and small text files land in the message box.
+- **Search and pin sessions:** search box on the Sessions screen; long-press a session to pin it to the top.
+- **Phone tools for the agent (optional):** run the installer with `-PhoneTools` (`--phone-tools` on macOS/Linux), then switch on *Settings, Phone tools for the AI agent* in the app. The agent can then show notifications, speak, read or write the clipboard, get your location or ask you to take a photo. Everything is off by default, sensitive actions ask you every time, and it works only while the app is open.
+
 | | Computer | Phone |
 |---|---|---|
 | Windows 10/11 | tested | - |

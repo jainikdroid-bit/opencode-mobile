@@ -40,7 +40,7 @@ if [ -n "$here" ] && [ -f "$here/connect.js" ]; then
 else
   core="$DIR/core"
   mkdir -p "$core"
-  for f in connect.js launcher.js autostart.js; do
+  for f in connect.js launcher.js autostart.js phone-bridge.js phone-mcp.js; do
     curl -fsSL "$BASE_URL/$f" -o "$core/$f" || { say "Could not download $f"; exit 1; }
   done
 fi

@@ -1,0 +1,5 @@
+v0.9.0 — Share, search, phone tools
+
+• Share to OpenCode: send text, links, images and small text files from any app into a new or existing session.
+• Search sessions by title or folder; long-press to pin a session to the top.
+• Phone tools for the AI agent (optional, off by default): notifications, speech, clipboard, location, photo. The phone asks before anything sensitive and works only while the app is open.

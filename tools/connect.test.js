@@ -57,3 +57,33 @@ test('autostart files per platform', () => {
   assert.match(autostart.targets('darwin', '/Users/a', {}).file.replace(/\\/g, '/'), /Library\/LaunchAgents\/com\.opencode\.connect\.plist$/)
   assert.match(autostart.targets('linux', '/home/a', {}).unit.replace(/\\/g, '/'), /\.config\/systemd\/user\/opencode-connect\.service$/)
 })
+
+test('phone MCP entry is merged into the opencode config and removed again without touching other entries', () => {
+  const fs = require('node:fs')
+  const os = require('node:os')
+  const path = require('node:path')
+  const { registerOpencodeMcp, unregisterOpencodeMcp } = require('./connect.js')
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oc-cfg-'))
+  const previous = process.env.XDG_CONFIG_HOME
+  process.env.XDG_CONFIG_HOME = dir
+  try {
+    const file = path.join(dir, 'opencode', 'opencode.json')
+    fs.mkdirSync(path.dirname(file), { recursive: true })
+    fs.writeFileSync(file, JSON.stringify({ model: 'x', mcp: { other: { type: 'remote', url: 'http://a' } } }))
+    registerOpencodeMcp('/tmp/phone-mcp.js')
+    let cfg = JSON.parse(fs.readFileSync(file, 'utf8'))
+    assert.equal(cfg.model, 'x')
+    assert.ok(cfg.mcp.other && cfg.mcp.phone)
+    assert.deepEqual(cfg.mcp.phone.command, ['node', '/tmp/phone-mcp.js'])
+    assert.equal(unregisterOpencodeMcp(), true)
+    cfg = JSON.parse(fs.readFileSync(file, 'utf8'))
+    assert.ok(cfg.mcp.other && !cfg.mcp.phone)
+    assert.equal(unregisterOpencodeMcp(), false)
+    fs.writeFileSync(file, '{ broken')
+    assert.match(registerOpencodeMcp('/tmp/p.js'), /could not be parsed/)
+    assert.equal(fs.readFileSync(file, 'utf8'), '{ broken')
+  } finally {
+    if (previous === undefined) delete process.env.XDG_CONFIG_HOME; else process.env.XDG_CONFIG_HOME = previous
+    fs.rmSync(dir, { recursive: true, force: true })
+  }
+})

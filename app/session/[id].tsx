@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTranslation } from "react-i18next"
 import * as ImagePicker from "expo-image-picker"
+import { useShare } from "../../src/stores/share"
 import * as ImageManipulator from "expo-image-manipulator"
 import * as Clipboard from "expo-clipboard"
 import type BottomSheet from "@gorhom/bottom-sheet"
@@ -87,6 +88,13 @@ export default function SessionScreen() {
   const variantSheetRef = useRef<BottomSheet>(null)
   const [input, setInput] = useState("")
   const [attachments, setAttachments] = useState<Attachment[]>([])
+  // Content shared from another app ("Share to OpenCode") is dropped into the composer, not sent automatically.
+  useEffect(() => {
+    const shared = useShare.getState().take()
+    if (!shared) return
+    if (shared.text) setInput((prev) => (prev ? `${prev}\n${shared.text}` : shared.text))
+    if (shared.attachments.length) setAttachments((prev) => [...prev, ...shared.attachments])
+  }, [])
   const [showInfo, setShowInfo] = useState(false)
   // Raw text of the message opened in the full-screen selection sheet
   const [textSheet, setTextSheet] = useState<string | null>(null)

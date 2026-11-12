@@ -25,6 +25,7 @@ import { PRIVACY_POLICY_URL } from "../../src/lib/links"
 import { CURRENT_VERSION, checkForUpdate, type AvailableUpdate } from "../../src/lib/update-check"
 import type { LocalePreference } from "../../src/lib/i18n/locale-resolve"
 import { McpConnectors } from "../../src/components/McpConnectors"
+import { PhoneTools } from "../../src/components/PhoneTools"
 
 function SettingRow({
   icon,
@@ -141,6 +142,11 @@ export default function SettingsScreen() {
       <SettingSection title={t("settings.sections.mcp")} isDark={isDark}>
         <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
           <McpConnectors isDark={isDark} />
+        </View>
+      </SettingSection>
+      <SettingSection title={t("phone.section")} isDark={isDark}>
+        <View style={{ paddingHorizontal: 16, paddingVertical: 8 }}>
+          <PhoneTools />
         </View>
       </SettingSection>
       <SettingSection title={t("settings.sections.security")} isDark={isDark}>
