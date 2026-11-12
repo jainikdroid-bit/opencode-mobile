@@ -225,3 +225,11 @@ Pair the phone with your computer in one scan, with no hosted relay and nothing 
 3. Stop with `pwsh -File tools/opencode-connect.ps1 -Stop`.
 
 The phone and the computer must be on the same Tailscale account. The pairing link contains the password, so treat it like one.
+
+## Giving the agent a phone (optional, desktop side)
+
+- **Screen control:** `@mobilenext/mobile-mcp` drives the phone through adb (screenshots, taps, typing, app launch). Enable wireless debugging on the phone, then add it to `opencode.json` as a local MCP.
+- **Phone functions:** `tools/termux-mcp/phone_mcp.py` runs in Termux (needs the Termux:API app and `pkg install termux-api python`) and exposes battery, location, notifications, camera, SMS, clipboard, TTS and more. Register it over SSH so nothing listens on the network: `"command": ["ssh", "-T", "phone", "python", "mcp/phone_mcp.py"]`.
+- **Keep it safe:** put these tools behind a dedicated agent and approval, e.g. `"permission": { "phone_*": "ask", "mobile_*": "ask" }` and `"tools": { "phone_*": false, "mobile_*": false }` with `agent.phone.tools` turning them back on.
+- **Notifications when the agent is done or waiting:** an OpenCode plugin can call `termux-notification` over SSH on `session.idle` / `permission.updated` (no cloud service involved).
+- **Connectors in the app:** Settings → Connectors (MCP) lists the server's MCP servers with on/off switches.
