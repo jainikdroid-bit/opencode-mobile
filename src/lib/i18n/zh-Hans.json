@@ -497,5 +497,18 @@
     "reconnectTitle": "启动新的 Shell？",
     "reconnectMessage": "将在电脑上打开新的 Shell，旧的会被关闭。",
     "placeholder": "输入命令"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "点击开始，点击跳跃。",
+    "over": "连接丢失。又来了。",
+    "retry": "点击重试",
+    "best": "最高",
+    "play": "没网？玩 RIG RUN",
+    "hide": "返回 RIG",
+    "quip1": "你试过关了再开吗？",
+    "quip2": "在我机器上是好的。",
+    "quip3": "错误 404：技能未找到。",
+    "quip4": "都怪 DNS。"
   }
 }

@@ -2,6 +2,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, useColorScheme, Ale
 import { router } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
+import { Mascot } from "../../src/components/Mascot"
 import { useConnections } from "../../src/stores/connections"
 import { useSettings } from "../../src/stores/settings"
 import type { ServerConnection } from "../../src/lib/types"
@@ -127,7 +128,7 @@ export default function ConnectionsScreen() {
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="server-outline" size={64} color={isDark ? "#444444" : "#cccccc"} />
+            <Mascot state="offline" size={110} />
             <Text style={[styles.emptyTitle, isDark && styles.textDark]}>{t("connectionsList.empty.title")}</Text>
             <Text style={[styles.emptySubtitle, isDark && styles.metaDark]}>
               {t("connectionsList.empty.subtitle")}

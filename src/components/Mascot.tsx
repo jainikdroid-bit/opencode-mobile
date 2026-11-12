@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react"
+import { memo, useEffect, useRef } from "react"
 import { Animated, Easing, View } from "react-native"
-import Svg, { Circle, G, Line, Path, Rect } from "react-native-svg"
+import Svg, { Circle, G, Line, Path, Rect, Text as SvgText } from "react-native-svg"
 import { cyber } from "../theme/cyber"
 
 // RIG, the cyberpunk worker. One drawing, several moods:
@@ -11,7 +11,8 @@ import { cyber } from "../theme/cyber"
 //   loading   eye scans, ring spins around the head
 //   success   green smile in the visor
 //   error     red cross in the visor, antenna goes red
-export type MascotState = "idle" | "thinking" | "working" | "writing" | "loading" | "success" | "error"
+//   offline   flat-line visor, a "?" over the hat and a dangling, sparking plug
+export type MascotState = "idle" | "thinking" | "working" | "writing" | "loading" | "success" | "error" | "offline"
 
 const AnimatedRect = Animated.createAnimatedComponent(Rect)
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
@@ -38,7 +39,7 @@ function useLoop(duration: number, pingPong: boolean, enabled = true) {
   return value
 }
 
-export function Mascot({ state = "idle", size = 96 }: Props) {
+function MascotImpl({ state = "idle", size = 96 }: Props) {
   const scan = useLoop(state === "thinking" ? 520 : 700, true, state === "thinking" || state === "loading")
   const pulse = useLoop(900, true, state === "idle" || state === "working" || state === "writing")
   const blink = useLoop(700, true)
@@ -46,7 +47,7 @@ export function Mascot({ state = "idle", size = 96 }: Props) {
   const rise = useLoop(1200, false, state === "thinking")
   const type = useLoop(480, true, state === "writing")
 
-  const accent = state === "error" ? cyber.red : state === "success" ? cyber.green : cyber.cyan
+  const accent = state === "error" ? cyber.red : state === "success" ? cyber.green : state === "offline" ? cyber.amber : cyber.cyan
   const eyeX = scan.interpolate({ inputRange: [0, 1], outputRange: [41, 59] })
   const idleEye = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.55, 1] })
   const antenna = blink.interpolate({ inputRange: [0, 1], outputRange: [0.35, 1] })
@@ -84,6 +85,8 @@ export function Mascot({ state = "idle", size = 96 }: Props) {
           </G>
         ) : state === "success" ? (
           <Path d="M44 68 Q60 78 76 68" stroke={accent} strokeWidth={3} fill="none" strokeLinecap="round" />
+        ) : state === "offline" ? (
+          <Line x1={44} y1={69} x2={76} y2={69} stroke={accent} strokeWidth={3} strokeDasharray="6 4" strokeLinecap="round" />
         ) : state === "error" ? (
           <G stroke={accent} strokeWidth={3} strokeLinecap="round">
             <Line x1={52} y1={63} x2={68} y2={75} />
@@ -114,6 +117,20 @@ export function Mascot({ state = "idle", size = 96 }: Props) {
           </G>
         ) : null}
 
+        {/* offline: question mark and the unplugged cable */}
+        {state === "offline" ? (
+          <G>
+            <AnimatedG opacity={antenna}>
+              <SvgText x={101} y={16} fill={cyber.amber} fontSize={16} fontWeight="bold">
+                ?
+              </SvgText>
+            </AnimatedG>
+            <Path d="M90 100 Q114 96 108 114" stroke={cyber.magenta} strokeWidth={3} fill="none" strokeLinecap="round" />
+            <Rect x={103} y={113} width={10} height={6} rx={1.5} fill={cyber.muted} />
+            <AnimatedCircle cx={108} cy={122} r={2.4} fill={cyber.amber} opacity={antenna} />
+          </G>
+        ) : null}
+
         {/* gear for work / ring for loading */}
         {state === "working" ? (
           <G>
@@ -134,3 +151,6 @@ export function Mascot({ state = "idle", size = 96 }: Props) {
     </View>
   )
 }
+
+/** Memoised so a parent that re-renders every frame (the runner game) does not re-render RIG. */
+export const Mascot = memo(MascotImpl)

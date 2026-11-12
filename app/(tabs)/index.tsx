@@ -30,6 +30,8 @@ import { groupByDirectory } from "../../src/lib/session-grouping"
 import { UpdateBanner } from "../../src/components/UpdateBanner"
 import { nameOf } from "../../src/lib/path-utils"
 import { SETUP_GUIDE_URL } from "../../src/lib/links"
+import { Mascot } from "../../src/components/Mascot"
+import { RunnerGame } from "../../src/components/RunnerGame"
 
 function formatTime(timestamp: number, t: (key: string, opts?: Record<string, unknown>) => string): string {
   const date = new Date(timestamp)
@@ -162,6 +164,8 @@ export default function SessionsScreen() {
   const isDark = colorScheme === "dark"
   const { t } = useTranslation()
   const [showNewSession, setShowNewSession] = useState(false)
+  // "No connection" mini game (RIG RUN): shown in place of the unplugged mascot.
+  const [playOffline, setPlayOffline] = useState(false)
   const [customDir, setCustomDir] = useState("")
   const [isCreating, setIsCreating] = useState(false)
   const [renaming, setRenaming] = useState<Session | null>(null)
@@ -438,7 +442,15 @@ export default function SessionsScreen() {
   if (!activeConnection) {
     return (
       <View style={[styles.emptyContainer, isDark && styles.containerDark]}>
-        <Ionicons name="server-outline" size={64} color={isDark ? "#444444" : "#cccccc"} />
+        {playOffline ? (
+          <View style={{ width: "100%", paddingHorizontal: 16 }}>
+            <RunnerGame />
+          </View>
+        ) : (
+          <TouchableOpacity onPress={() => setPlayOffline(true)} activeOpacity={0.8} testID="offline-mascot">
+            <Mascot state="offline" size={120} />
+          </TouchableOpacity>
+        )}
         <Text style={[styles.emptyTitle, isDark && styles.textDark]}>{t("sessionsList.empty.noConnectionTitle")}</Text>
         <Text style={[styles.emptySubtitle, isDark && styles.metaDark]}>
           {t("sessionsList.empty.noConnectionSubtitle")}
@@ -451,6 +463,9 @@ export default function SessionsScreen() {
           <Text style={[styles.addButtonText, isDark && styles.addButtonTextDark]}>
             {t("sessionsList.empty.addConnectionButton")}
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setPlayOffline((v) => !v)} style={styles.setupGuideLink} testID="play-offline-game">
+          <Text style={styles.setupGuideLinkText}>{playOffline ? t("game.hide") : t("game.play")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.setupGuideLink}

@@ -70,6 +70,9 @@ cyberpunk site technician: hard hat, glowing visor, antenna. It acts out what th
 | writing | the visor shows typing bars |
 | loading | eye scans inside a spinning ring |
 | success / error | green smile / red cross |
+| offline | flat-line visor, a "?" and a sparking unplugged cable |
+
+No connection? Tap the unplugged RIG to play **RIG RUN**, an endless runner: jump over server racks and live cables; your best score is kept on the phone.
 
 Tokens live in [`src/theme/cyber.ts`](src/theme/cyber.ts); the logo is [`docs/brand/rig.svg`](docs/brand/rig.svg).
 

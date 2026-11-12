@@ -1,0 +1,4 @@
+v0.6.1 — RIG RUN
+
+• No connection? Tap the unplugged RIG and play RIG RUN: jump over server racks and live cables, best score is saved.
+• Funny offline RIG: flat-line visor, a question mark and a sparking plug.

@@ -497,5 +497,18 @@
     "reconnectTitle": "Start a new shell?",
     "reconnectMessage": "This opens a fresh shell on the computer; the old one is closed.",
     "placeholder": "Type a command"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "Tap to start. Tap to jump.",
+    "over": "CONNECTION LOST. AGAIN.",
+    "retry": "Tap to retry",
+    "best": "BEST",
+    "play": "Offline? Play RIG RUN",
+    "hide": "Back to RIG",
+    "quip1": "Have you tried turning it off and on again?",
+    "quip2": "It works on my machine.",
+    "quip3": "Error 404: skill not found.",
+    "quip4": "Blame the DNS."
   }
 }
