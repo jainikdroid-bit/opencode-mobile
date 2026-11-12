@@ -9,6 +9,8 @@ import {
   useColorScheme,
   Linking,
   Alert,
+  Modal,
+  Pressable,
 } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
@@ -23,7 +25,7 @@ import {
 import type { Category } from "../../src/lib/notifications"
 import { PRIVACY_POLICY_URL } from "../../src/lib/links"
 import { CURRENT_VERSION, checkForUpdate, type AvailableUpdate } from "../../src/lib/update-check"
-import type { LocalePreference } from "../../src/lib/i18n/locale-resolve"
+import { LOCALE_NAMES, SUPPORTED_LOCALES, type LocalePreference } from "../../src/lib/i18n/locale-resolve"
 import { McpConnectors } from "../../src/components/McpConnectors"
 import { PhoneTools } from "../../src/components/PhoneTools"
 
@@ -120,22 +122,17 @@ export default function SettingsScreen() {
       .catch(() => setOsGranted(false))
   }
 
-  const localeLabels: Record<LocalePreference, string> = {
-    system: t("settings.language.system"),
-    en: t("settings.language.en"),
-    "zh-Hans": t("settings.language.zhHans"),
-    ru: t("settings.language.ru"),
-  }
-
-  const handleLanguagePress = useCallback(() => {
-    Alert.alert(t("settings.language.title"), undefined, [
-      { text: localeLabels.system, onPress: () => setLocale("system") },
-      { text: localeLabels.en, onPress: () => setLocale("en") },
-      { text: localeLabels["zh-Hans"], onPress: () => setLocale("zh-Hans") },
-      { text: localeLabels.ru, onPress: () => setLocale("ru") },
-      { text: t("common.cancel"), style: "cancel" },
-    ])
-  }, [t, setLocale, localeLabels])
+  // Each language is shown in its own name, so it can be found even when the current UI language is unreadable.
+  const localeLabels: Record<LocalePreference, string> = { system: t("settings.language.system"), ...LOCALE_NAMES }
+  const [showLanguages, setShowLanguages] = useState(false)
+  const handleLanguagePress = useCallback(() => setShowLanguages(true), [])
+  const chooseLanguage = useCallback(
+    (preference: LocalePreference) => {
+      setShowLanguages(false)
+      void setLocale(preference)
+    },
+    [setLocale],
+  )
 
   return (
     <ScrollView style={[styles.container, isDark && styles.containerDark]} contentContainerStyle={styles.content}>
@@ -284,6 +281,21 @@ export default function SettingsScreen() {
         <Text style={[styles.footerText, isDark && styles.metaDark]}>{t("settings.footer.appName")}</Text>
         <Text style={[styles.footerText, isDark && styles.metaDark]}>{t("settings.footer.tagline")}</Text>
       </View>
+      <Modal visible={showLanguages} transparent animationType="fade" onRequestClose={() => setShowLanguages(false)}>
+        <Pressable style={styles.langBackdrop} onPress={() => setShowLanguages(false)}>
+          <View style={[styles.langSheet, isDark && styles.langSheetDark]}>
+            <Text style={[styles.langTitle, isDark && styles.sectionTitleDark]}>{t("settings.language.title")}</Text>
+            <ScrollView>
+              {(["system", ...SUPPORTED_LOCALES] as LocalePreference[]).map((preference) => (
+                <TouchableOpacity key={preference} style={styles.langRow} onPress={() => chooseLanguage(preference)} testID={`language-${preference}`}>
+                  <Text style={[styles.langLabel, isDark && { color: "#e8ecf4" }]}>{localeLabels[preference]}</Text>
+                  {locale === preference ? <Ionicons name="checkmark" size={20} color="#22d3ee" /> : null}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </Pressable>
+      </Modal>
     </ScrollView>
   )
 }
@@ -299,6 +311,12 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 32,
   },
+  langBackdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.6)", justifyContent: "center", padding: 24 },
+  langSheet: { maxHeight: "80%", borderRadius: 12, backgroundColor: "#ffffff", paddingVertical: 8 },
+  langSheetDark: { backgroundColor: "#0d1018", borderWidth: 1, borderColor: "#1d2433" },
+  langTitle: { fontSize: 16, fontWeight: "700", paddingHorizontal: 20, paddingVertical: 12, color: "#07080c" },
+  langRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 20, paddingVertical: 14 },
+  langLabel: { fontSize: 16, color: "#07080c" },
   section: {
     marginTop: 24,
   },

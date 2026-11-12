@@ -144,7 +144,7 @@ function realDeps(dir) {
     },
     startServer(port, password, host) {
       const args = ['serve', '--hostname', host || bindHostOf(this.readState()), '--port', String(port)]
-      const options = { env: { ...process.env, OPENCODE_SERVER_PASSWORD: password }, cwd: os.homedir(), detached: true, stdio: 'ignore', windowsHide: true }
+      const options = { env: { ...process.env, OPENCODE_SERVER_PASSWORD: password }, cwd: os.homedir(), detached: process.platform !== 'win32', stdio: 'ignore', windowsHide: true } // on Windows a detached cmd has no console, so opencode.exe would open its own visible window
       const child = process.platform === 'win32' ? spawn('cmd.exe', ['/c', 'opencode', ...args], options) : spawn('opencode', args, options)
       child.on('error', () => {})
       child.unref()

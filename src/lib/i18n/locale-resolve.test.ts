@@ -17,9 +17,9 @@ test("matchSupportedLocale maps en variants to en", () => {
 })
 
 test("matchSupportedLocale returns null for unsupported languages", () => {
-  assert.equal(matchSupportedLocale("fr-FR"), null)
-  assert.equal(matchSupportedLocale("ja"), null)
-  assert.equal(matchSupportedLocale("es-ES"), null)
+  assert.equal(matchSupportedLocale("it-IT"), null)
+  assert.equal(matchSupportedLocale("ar"), null)
+  assert.equal(matchSupportedLocale("hi-IN"), null)
 })
 
 test("resolveLocale: explicit preference always wins over device tags", () => {
@@ -28,11 +28,20 @@ test("resolveLocale: explicit preference always wins over device tags", () => {
 })
 
 test("resolveLocale: system preference picks first supported device tag", () => {
-  assert.equal(resolveLocale("system", ["fr-FR", "zh-Hans-CN", "en-US"]), "zh-Hans")
+  assert.equal(resolveLocale("system", ["it-IT", "zh-Hans-CN", "en-US"]), "zh-Hans")
   assert.equal(resolveLocale("system", ["en-US", "zh-Hans-CN"]), "en")
 })
 
 test("resolveLocale: system preference falls back when nothing matches", () => {
-  assert.equal(resolveLocale("system", ["fr-FR", "ja-JP"]), FALLBACK_LOCALE)
+  assert.equal(resolveLocale("system", ["it-IT", "ar-SA"]), FALLBACK_LOCALE)
   assert.equal(resolveLocale("system", []), FALLBACK_LOCALE)
+})
+
+test("the new languages resolve from device tags", () => {
+  assert.equal(matchSupportedLocale("fr-FR"), "fr")
+  assert.equal(matchSupportedLocale("pt-BR"), "pt")
+  assert.equal(matchSupportedLocale("pt_PT"), "pt")
+  assert.equal(matchSupportedLocale("ja-JP"), "ja")
+  assert.equal(matchSupportedLocale("uk-UA"), "uk")
+  assert.equal(resolveLocale("system", ["tr-TR", "en-US"]), "tr")
 })

@@ -11,6 +11,14 @@ const EXPLICIT: Record<Exclude<LocalePreference, "system">, string> = {
   en: "en-US",
   ru: "ru-RU",
   "zh-Hans": "zh-CN",
+  es: "es-ES",
+  de: "de-DE",
+  fr: "fr-FR",
+  pt: "pt-BR",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  uk: "uk-UA",
+  tr: "tr-TR",
 }
 
 /**

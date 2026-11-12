@@ -2,8 +2,23 @@
 // so it's unit-testable with plain `node --test` (same split as
 // settings-merge.ts / store-review-policy.ts).
 
-export const SUPPORTED_LOCALES = ["en", "zh-Hans", "ru"] as const
+export const SUPPORTED_LOCALES = ["en", "ru", "zh-Hans", "es", "de", "fr", "pt", "ja", "ko", "uk", "tr"] as const
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number]
+
+/** Each language in its own name: the picker must be readable by someone who cannot read the current UI language. */
+export const LOCALE_NAMES: Record<SupportedLocale, string> = {
+  en: "English",
+  ru: "Русский",
+  "zh-Hans": "简体中文",
+  es: "Español",
+  de: "Deutsch",
+  fr: "Français",
+  pt: "Português",
+  ja: "日本語",
+  ko: "한국어",
+  uk: "Українська",
+  tr: "Türkçe",
+}
 
 export const FALLBACK_LOCALE: SupportedLocale = "en"
 
@@ -18,9 +33,8 @@ export type LocalePreference = "system" | SupportedLocale
 export function matchSupportedLocale(tag: string): SupportedLocale | null {
   const lower = tag.toLowerCase()
   if (lower.startsWith("zh")) return "zh-Hans"
-  if (lower.startsWith("en")) return "en"
-  if (lower.startsWith("ru")) return "ru"
-  return null
+  const language = lower.split(/[-_]/)[0]
+  return (SUPPORTED_LOCALES as readonly string[]).includes(language) ? (language as SupportedLocale) : null
 }
 
 /**

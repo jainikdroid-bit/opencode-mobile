@@ -1,0 +1,623 @@
+{
+  "common": {
+    "cancel": "İptal",
+    "ok": "Tamam",
+    "error": "Hata",
+    "delete": "Sil",
+    "retry": "Yeniden Dene",
+    "save": "Kaydet",
+    "close": "Kapat",
+    "shareReport": "Raporu paylaş"
+  },
+  "settings": {
+    "sections": {
+      "security": "Güvenlik",
+      "notifications": "Bildirimler",
+      "privacy": "Gizlilik",
+      "about": "Hakkında",
+      "mcp": "Bağlantı Noktaları (MCP)"
+    },
+    "security": {
+      "biometricOpen": {
+        "label": "Uygulamayı Açmak için Biyometrik Gerekli",
+        "descriptionEnabled": "Uygulamayı kilidini açmak için Yüz Kimliği veya Touch ID kullan",
+        "descriptionUnavailable": "Biyometrik kimlik doğrulama mevcut değil"
+      },
+      "biometricSend": {
+        "label": "Mesaj Göndermek için Biyometrik Gerekli",
+        "description": "Mesaj göndermeden önce kimlik doğrula"
+      },
+      "lockNow": {
+        "label": "Uygulamayı Şimdi Kilitle",
+        "description": "Yeniden açmak için kimlik doğrulama gerektir"
+      }
+    },
+    "notifications": {
+      "disabledNotice": "Bildirimler sistem düzeyinde devre dışı. Uyarıları almak için Ayarlar'da etkinleştirin."
+    },
+    "privacy": {
+      "privacyPolicy": {
+        "label": "Gizlilik Politikası",
+        "description": "Hangi verileri topladığımız ve nasıl"
+      }
+    },
+    "about": {
+      "version": "Sürüm",
+      "github": {
+        "label": "GitHub",
+        "description": "Kaynak kodunu görüntüle"
+      },
+      "docs": {
+        "label": "Belgeler",
+        "description": "OpenCode kullanımını öğrenin"
+      }
+    },
+    "language": {
+      "label": "Dil",
+      "title": "Dil Seçin",
+      "system": "Sistem Varsayılanı",
+      "en": "İngilizce",
+      "zhHans": "Basitleştirilmiş Çince",
+      "ru": "Rusça"
+    },
+    "footer": {
+      "appName": "OpenCode Mobile",
+      "tagline": "AI kodlama asistanınıza her yerden bağlanın"
+    },
+    "alerts": {
+      "notificationsDisabledTitle": "Bildirimler Devre Dışı",
+      "notificationsDisabledMessage": "Uyarı almak için cihaz ayarlarınızda OpenCode için bildirimleri etkinleştirin."
+    },
+    "mcp": {
+      "description": "Aracınızın bilgisayarda kullanabileceği araçlar: e-posta, tarayıcı, telefon ve daha fazlası. Bunları buradan açıp kapatabilirsiniz.",
+      "empty": "Bu sunucu hiçbir bağlantı noktası bildirmiyor.",
+      "refresh": "Yenile",
+      "state": {
+        "connected": "Bağlı",
+        "disabled": "Kapalı",
+        "failed": "Başarısız",
+        "needs_auth": "Bilgisayarda giriş yapılması gerekiyor",
+        "other": "Bilinmiyor"
+      }
+    }
+  },
+  "session": {
+    "titleFallback": "Oturum",
+    "toolbar": {
+      "auto": "Otomatik"
+    },
+    "banners": {
+      "reconnecting": "Yeniden bağlanıyor… (deneme {{attempt}})",
+      "connected": "Bağlandı ✓",
+      "reverted": "Mesaj geri alındı — onay için yeniden gönderin",
+      "undo": "Geri Al",
+      "dismiss": "Yoksay"
+    },
+    "sheet": {
+      "thinking": "Düşünüyor",
+      "tool": "Araç",
+      "input": "Girdi",
+      "result": "Sonuç",
+      "error": "Hata",
+      "file": "Dosya"
+    },
+    "empty": {
+      "title": "Bir konuşma başlatın",
+      "hint": "Komutlar için / yazın",
+      "suggestions": {
+        "explain": "Bu projeyi açıkla",
+        "bugs": "Hataları bul ve düzelt",
+        "tests": "Test yaz",
+        "changes": "Son değişiklikleri özetle"
+      }
+    },
+    "loadingOlder": "Eski mesajlar yükleniyor...",
+    "input": {
+      "placeholderListening": "Dinliyor...",
+      "placeholderFollowUp": "Bir devam mesajı gönder...",
+      "placeholderDefault": "Bir mesaj yazın..."
+    },
+    "actions": {
+      "editMessage": "Mesajı düzenle",
+      "replace": "Değiştir",
+      "selectText": "Metni seç",
+      "copyAll": "Tümünü kopyala",
+      "copied": "Kopyalandı"
+    },
+    "alerts": {
+      "messageActionsTitle": "Mesaj işlemleri",
+      "notSupportedTitle": "Desteklenmiyor",
+      "notSupportedMessage": "Gönderilen mesajları düzenlemek daha yeni bir opencode sunucusu gerektirir. Lütfen sunucuyu güncelleyip yeniden deneyin.",
+      "revertAuthFailedTitle": "Kimlik doğrulama başarısız",
+      "revertAuthFailedMessage": "Sunucu kimlik bilgileriniz reddedildi. Bağlantınızı kontrol edip yeniden deneyin.",
+      "editFailedTitle": "Düzenleme başarısız",
+      "editFailedMessage": "Bu mesaja geri dönülemiyor. Lütfen yeniden deneyin.",
+      "replaceDraftTitle": "Taslak değiştirilsin mi?",
+      "replaceDraftMessage": "Gönderilmemiş bir mesajınız var. Bu mesajı düzenlemek onu değiştirecek.",
+      "cameraPermissionTitle": "İzin gerekli",
+      "cameraPermissionMessage": "Fotoğraf çekmek için kamera erişimi gerekiyor.",
+      "emptyClipboardTitle": "Pano boş",
+      "emptyClipboardMessage": "Pano metin veya görsel içermiyor.",
+      "authRequiredTitle": "Kimlik doğrulama gerekli",
+      "authRequiredMessage": "Göndermek için biyometrik kimlik doğrulama gerekli. Lütfen yeniden deneyin.",
+      "sendFailedTitle": "Mesaj gönderilmedi",
+      "sendFailedMessage": "Mesajınız gönderilemedi. Bağlantınızı kontrol edip yeniden deneyin.",
+      "replyFailedTitle": "Yanıt başarısız",
+      "replyFailedMessage": "Yanıtınız gönderilemedi. Lütfen yeniden deneyin.",
+      "rejectFailedTitle": "Reddetme başarısız",
+      "rejectFailedMessage": "Yanıtınız gönderilemedi. Lütfen yeniden deneyin.",
+      "imageFailedTitle": "Görsel eklenmedi",
+      "imageFailedMessage": "Bir veya daha fazla görsel işlenemedi. Lütfen farklı bir fotoğraf deneyin.",
+      "speechErrorTitle": "Sesli girdi başarısız",
+      "speechErrorMessage": "Sesli girdi kullanılamadı. Mikrofon izninizi kontrol edip yeniden deneyin."
+    }
+  },
+  "connection": {
+    "shared": {
+      "connectionType": "Bağlantı Türü",
+      "types": {
+        "local": "Yerel",
+        "tunnel": "Tünel",
+        "cloud": "Bulut"
+      },
+      "name": "Ad",
+      "namePlaceholder": "Sunucum",
+      "serverUrl": "Sunucu URL'si",
+      "directoryOptional": "Proje Dizini (İsteğe Bağlı)",
+      "authentication": "Kimlik Doğrulama",
+      "username": "Kullanıcı Adı",
+      "password": "Şifre",
+      "alerts": {
+        "enterName": "Lütfen bir bağlantı adı girin",
+        "enterUrl": "Lütfen bir sunucu URL'si girin",
+        "invalidUrlTitle": "Geçersiz URL",
+        "invalidUrlMessage": "http:// veya https:// içeren tam bir URL girin, örn. http://192.168.1.100:4096",
+        "connectionFailedTitle": "Bağlantı Başarısız",
+        "unknownError": "Bilinmeyen hata",
+        "saveFailedTitle": "Bağlantı Kaydedilemedi",
+        "saveFailedMessage": "Bağlantı testi başarılı oldu ancak kaydetme başarısız oldu. Lütfen yeniden deneyin."
+      }
+    },
+    "add": {
+      "quick": {
+        "title": "OpenCode'a Bağlan",
+        "subtitle": "Bağlanmak için bilgisayarınızın IP adresini girin",
+        "ipAddressLabel": "IP Adresi",
+        "nameOptionalLabel": "Ad (isteğe bağlı)",
+        "namePlaceholder": "Mac'im",
+        "passwordIfSetLabel": "Şifre (sunucuda ayarlandıysa)",
+        "passwordPlaceholder": "Yoksa boş bırakın",
+        "usernameHintPrefix": "Kullanıcı adı varsayılan olarak ",
+        "usernameHintMiddle": ". Özel kullanıcı adı kullanın: ",
+        "usernameHintSuffix": ".",
+        "advancedOptionsLink": "Gelişmiş seçenekler",
+        "connectButton": "Bağlan",
+        "helpTitle": "IP adresinizi nasıl bulursunuz:",
+        "helpMacPrefix": "Mac'inizde şunu çalıştırın:",
+        "helpTailscalePrefix": "Tailscale örnekleri:",
+        "helpProtocolPrefix": "Yerel ve Tailscale adresleri için ",
+        "helpProtocolMiddle": " kullanın, TLS yapılandırıldıysa ",
+        "helpProtocolSuffix": " kullanın.",
+        "helpRunningPrefix": "OpenCode'un çalıştığından emin olun:",
+        "connectCardTitle": "OpenCode Connect",
+        "connectCardBadge": "Kendi barındırma",
+        "connectCardDesc": "Telefonunuzu bilgisayarınızla bir dokunuşla eşleştirin: orada tools/opencode-connect.ps1 çalıştırın, kameranızla QR kodunu tarayın, tamam. Sadece özel ağ — internete hiçbir şey açılmaz.",
+        "advancedLink": "Gelişmiş seçenekler (tüneller, bulut, kimlik doğrulama)"
+      },
+      "advanced": {
+        "backToQuick": "Basit mod",
+        "urlHintPrefix": "Yerel/Tailscale örnekleri: ",
+        "urlHintOr": " veya ",
+        "urlHintUse": ". ",
+        "urlHintSuffix": " yalnızca TLS yapılandırıldığında kullanın.",
+        "directoryHint": "Sunucunun mevcut dizinini kullanmak için boş bırakın veya farklı bir klasörde çalışmak için bir yol belirtin.",
+        "saveButton": "Bağlantıyı Kaydet"
+      },
+      "alerts": {
+        "enterIp": "Lütfen bilgisayarınızın IP adresini girin",
+        "connectionFailedMessage": "{{summary}}\n\nHedef: {{target}}\nHata: {{error}}"
+      }
+    },
+    "edit": {
+      "notFound": "Bağlantı bulunamadı",
+      "directoryHint": "Sunucunun mevcut dizinini kullanmak için boş bırakın. Oturumlar bu klasörde oluşturulacak.",
+      "passwordLabel": "Şifre (mevcudu korumak için boş bırakın)",
+      "testButton": "Bağlantıyı Test Et",
+      "saveButton": "Değişiklikleri Kaydet",
+      "deleteButton": "Bağlantıyı Sil",
+      "alerts": {
+        "successTitle": "Başarılı",
+        "successMessage": "Bağlantı başarılı!",
+        "connectionFailedMessage": "{{summary}}\n\n({{detail}})",
+        "noDetail": "detay yok",
+        "deleteTitle": "Bağlantıyı Sil",
+        "deleteMessage": "\"{{name}}\" bağlantısını silmek istediğinizden emin misiniz?"
+      }
+    },
+    "pair": {
+      "pasteButton": "Eşleştirme bağlantısını yapıştır",
+      "clipboardEmpty": "Pano boş veya OpenCode eşleştirme bağlantısı içermiyor. Önce opencode-connect tarafından gösterilen bağlantıyı kopyalayın veya kameranızla QR kodunu tarayın.",
+      "invalidTitle": "Geçersiz eşleştirme bağlantısı",
+      "invalidMessage": "Bu bağlantı geçerli bir OpenCode eşleştirme bağlantısı değil.",
+      "screenTitle": "Bilgisayarla eşleştir",
+      "confirmText": "Bu sunucuyu uygulamaya eklensin mi?",
+      "confirmWarning": "Yalnızca bu bağlantıyı kendi bilgisayarınızda siz oluşturduysanız devam edin.",
+      "connect": "Bağlan",
+      "connecting": "Bağlanıyor…",
+      "failedTitle": "Bağlanılamadı"
+    }
+  },
+  "nav": {
+    "sessionsTab": "Oturumlar",
+    "connectionsTab": "Bağlantılar",
+    "settingsTab": "Ayarlar",
+    "addConnectionTitle": "Bağlantı Ekle",
+    "editConnectionTitle": "Bağlantıyı Düzenle"
+  },
+  "connectionsList": {
+    "activeBadge": "Aktif",
+    "lastConnected": "Son bağlanma: {{date}}",
+    "actionsAlert": {
+      "message": "Ne yapmak istersiniz?",
+      "edit": "Düzenle"
+    },
+    "empty": {
+      "title": "Bağlantı Yok",
+      "subtitle": "OpenCode sunucunuza bir bağlantı ekleyin"
+    },
+    "header": "Geçiş için dokunun, seçenekler için uzun dokunun",
+    "preferences": {
+      "title": "Tercihler",
+      "pageSizeLabel": "Sayfa başına mesaj",
+      "pageSizeHint": "Bir oturum açarken kaç mesaj yükleneceği. Daha düşük = daha hızlı."
+    }
+  },
+  "sessionsList": {
+    "untitledSession": "Adsız Oturum",
+    "time": {
+      "justNow": "Az önce",
+      "minutesAgo": "{{count}} dk önce",
+      "hoursAgo": "{{count}} saat önce",
+      "daysAgo": "{{count}} gün önce"
+    },
+    "filesCount": "{{count}} dosya",
+    "actions": {
+      "rename": "Yeniden Adlandır",
+      "pin": "Sabitle",
+      "unpin": "Sabitlemeyi Kaldır"
+    },
+    "alerts": {
+      "renameFailedTitle": "Yeniden adlandırma başarısız",
+      "renameFailedMessage": "Oturum yeniden adlandırılamadı. Lütfen yeniden deneyin.",
+      "deleteTitle": "Oturumu Sil",
+      "deleteMessage": "\"{{title}}\" silinsin mi?",
+      "deleteFailedTitle": "Silme başarısız",
+      "deleteFailedMessage": "Oturum silinemedi. Lütfen yeniden deneyin.",
+      "createFailedMessage": "Oturum oluşturulamadı. Bağlantınızı kontrol edip yeniden deneyin."
+    },
+    "empty": {
+      "noConnectionTitle": "Bağlantı Yok",
+      "noConnectionSubtitle": "Başlamak için ağınızda veya Tailscale üzerinden opencode serve çalıştıran bir bilgisayara bağlanın.",
+      "setupGuideLink": "Sunucu kurulum kılavuzu",
+      "addConnectionButton": "Bağlantı Ekle",
+      "tryDemoButton": "Demo dene (sunucu gerekmez)",
+      "authFailedTitle": "Kimlik Doğrulama Başarısız",
+      "authFailedSubtitle": "{{name}} kimlik bilgilerinizi reddetti. Yeniden bağlanmak için kullanıcı adını ve şifreyi kontrol edin.",
+      "checkCredentialsButton": "Kimlik Bilgilerini Kontrol Et",
+      "noSessions": "Henüz oturum yok"
+    },
+    "newSessionModal": {
+      "title": "Yeni Oturum",
+      "currentProjectLabel": "Mevcut Proje",
+      "serverDefault": "Sunucu varsayılanı",
+      "recentProjectsLabel": "Son Projeler",
+      "serverProjectsLabel": "Sunucu Projeleri",
+      "browseFoldersLabel": "Klasörlere Göz At…",
+      "browseFoldersHint": "Sunucunun dosya sistemini keşfedin",
+      "enterPathLabel": "Yolu Manuel Girin",
+      "createInButton": "{{dir}} içinde oluştur",
+      "createSessionButton": "Oturum Oluştur"
+    },
+    "renameModal": {
+      "title": "Oturumu Yeniden Adlandır"
+    },
+    "search": "Oturumları ara",
+    "pinned": "Sabitlenmiş",
+    "noMatches": "Aramanızla eşleşen oturum yok."
+  },
+  "notifications": {
+    "categories": {
+      "permissions": {
+        "label": "İzin İstekleri",
+        "description": "Bir araca devam etmek için onay gerektiğinde"
+      },
+      "questions": {
+        "label": "Sorular",
+        "description": "Asistan girdinizi gerektiğinde"
+      },
+      "completed": {
+        "label": "Görev Tamamlandı",
+        "description": "Bir oturum işleme bittiğinde"
+      },
+      "errors": {
+        "label": "Hatalar",
+        "description": "Bir oturum sorunla karşılaştığında"
+      },
+      "connection": {
+        "label": "Bağlantı",
+        "description": "Uygulama uzun süre bağlantı kaybettiğinde"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Bir şeyler yanlış gitti",
+    "subtitle": "Uygulama beklenmeyen bir hatayla karşılaşt. Otomatik olarak bildirildi. Daha hızlı düzeltmemize yardımcı olmak için ayrıntılı bir rapor paylaşabilirsiniz.",
+    "errorLabel": "Hata",
+    "unknownError": "Bilinmeyen hata",
+    "stackLabel": "Yığın",
+    "componentLabel": "Bileşen",
+    "shareButton": "Raporu Paylaş",
+    "tryAgainButton": "Yeniden Dene"
+  },
+  "authGate": {
+    "title": "OpenCode Kilitli",
+    "subtitle": "Oturumlarınıza erişmek için kimlik doğrulayın",
+    "unlockButton": "Kilidi Aç"
+  },
+  "chat": {
+    "permissionPrompt": {
+      "title": "İzin Gerekli",
+      "deny": "Reddet",
+      "always": "Her Zaman",
+      "allow": "İzin Ver"
+    },
+    "questionPrompt": {
+      "headerFallback": "Soru",
+      "answerPlaceholder": "Cevabınızı yazın...",
+      "customAnswerLabel": "Kendi cevabınızı yazın",
+      "dismiss": "Yoksay",
+      "next": "Sonraki",
+      "submit": "Gönder"
+    },
+    "statusIndicator": {
+      "retrying": "Yeniden deneniyor (deneme {{attempt}})...",
+      "working": "Çalışıyor...",
+      "thinking": "Ajan düşünüyor",
+      "tool": "{{tool}} kullanılıyor",
+      "writing": "Cevap yazılıyor"
+    },
+    "slashPopover": {
+      "customBadge": "cmd"
+    },
+    "modelPicker": {
+      "title": "Model Seç",
+      "searchPlaceholder": "Modellerde ara...",
+      "source": {
+        "all": "Tümü",
+        "local": "Yerel",
+        "cloud": "Bulut"
+      },
+      "localBadge": "bilgisayarınızda"
+    },
+    "variantPicker": {
+      "title": "Çözümleme Çabası",
+      "autoLabel": "Otomatik",
+      "autoDescription": "Model varsayılan çözümlemeyi kullan",
+      "effort": {
+        "low": "Daha hızlı, daha az kapsamlı çözümleme",
+        "medium": "Dengeli çözümleme ve hız",
+        "high": "Derin, kapsamlı çözümleme"
+      }
+    },
+    "directorySwitcher": {
+      "title": "Projeyi Değiştir",
+      "serverDefaultLabel": "Sunucu Varsayılanı",
+      "browseLabel": "Göz At…",
+      "recentProjectsLabel": "Son Projeler",
+      "usesServerDir": "Sunucunun çalışma dizinini kullanıyor"
+    },
+    "directoryBrowserSheet": {
+      "noActiveConnection": "Aktif bağlantı yok",
+      "listFailed": "Dizin listelenemedi",
+      "title": "Klasörlere Göz At",
+      "jumpPlaceholder": "Yola atla...",
+      "noSubfolders": "Burada alt klasör yok",
+      "enterPathHint": "Göz atmaya başlamak için yukarıya bir yol girin",
+      "useFolderButton": "{{folder}} kullan",
+      "thisFolderFallback": "bu klasör"
+    },
+    "reasoningBlock": {
+      "label": "Düşünme",
+      "live": "Ajan düşünüyor…",
+      "done": "{{time}} düşündü"
+    },
+    "toolCallCard": {
+      "fallbackTitle": "Araç",
+      "patternOnly": "Desen: {{pattern}}",
+      "patternWithPath": "Desen: {{pattern}} — {{path}}"
+    },
+    "sessionInfo": {
+      "noUsageData": "Henüz kullanım verisi yok",
+      "loading": "Yükleniyor...",
+      "loadAllMessages": "Tüm mesajları yükle",
+      "jumpToBeginning": "Başlangıca atla",
+      "pills": {
+        "in": "Girdi",
+        "out": "Çıktı",
+        "think": "Düşün",
+        "cacheRead": "Önbellek O",
+        "cacheWrite": "Önbellek Y"
+      },
+      "meta": {
+        "created": "Oluşturuldu",
+        "updated": "Güncellendi",
+        "messages": "Mesajlar",
+        "changes": "Değişiklikler",
+        "shared": "Paylaşılan",
+        "yes": "Evet"
+      },
+      "time": {
+        "justNow": "az önce",
+        "minutesAgo": "{{count}} dk önce",
+        "hoursAgo": "{{count}} saat önce",
+        "daysAgo": "{{count}} gün önce"
+      }
+    }
+  },
+  "demo": {
+    "title": "Demo",
+    "banner": "Demo — örnek konuşma, sunucu bağlı değil",
+    "ctaTitle": "Beğendiniz mi?",
+    "ctaSubtitle": "Bu betiklenmiş bir demoydu. Bunu gerçek yapmak için kendi opencode sunucunuzu bağlayın.",
+    "connectButton": "Kendi sunucunuzu bağlayın",
+    "setupGuideLink": "Sunucu kurulum kılavuzu"
+  },
+  "update": {
+    "available": "Güncelleme mevcut",
+    "body": "{{version}} sürümü çıktı. Siz {{current}} kullanıyorsunuz.",
+    "action": "Al",
+    "dismiss": "Şimdi değil",
+    "upToDate": "Güncel"
+  },
+  "files": {
+    "title": "Dosyalar",
+    "filter": "Bu klasörü filtrele",
+    "up": "Bir seviye yukarı",
+    "empty": "Bu klasör boş.",
+    "binary": "İkili dosya: gösterilmiyor.",
+    "clipped": "Uzun bir dosyanın ilk kısmı gösteriliyor.",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı"
+  },
+  "terminal": {
+    "title": "Terminal",
+    "status": {
+      "connecting": "Bağlanıyor…",
+      "connected": "Bağlı",
+      "closed": "Bağlantı kesildi",
+      "error": "Bağlantı hatası"
+    },
+    "connectionFailed": "Terminal bağlantısı açılamadı",
+    "reconnect": "Yeniden Bağlan",
+    "reconnectTitle": "Yeni bir kabuk başlatılsın mı?",
+    "reconnectMessage": "Bu bilgisayarda yeni bir kabuk açar; eski kapanır.",
+    "placeholder": "Bir komut yazın"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "Başlatmak için dokunun. Zıplamak için dokunun.",
+    "over": "BAĞLANTI KOPDU. TEKRAR.",
+    "retry": "Yeniden denemek için dokunun",
+    "best": "EN İYİ",
+    "play": "Çevrimdışı? RIG RUN oyna",
+    "hide": "RIG'e dön",
+    "quip1": "Kapatıp tekrar açmayı denedin mi?",
+    "quip2": "Makinemde çalışıyor.",
+    "quip3": "Hata 404: beceri bulunamadı.",
+    "quip4": "DNS'yi suçla."
+  },
+  "scan": {
+    "title": "QR Tara",
+    "button": "Eşleşmek için QR tara",
+    "hint": "BİLGİSAYARINIZDAKİ QR'YA İŞARET EDİN",
+    "sub": "Otomatik eşleşir.",
+    "invalid": "Bu bir OpenCode eşleştirme kodu değil.",
+    "permissionTitle": "Tarama için kamera",
+    "permissionBody": "Kamera yalnızca eşleştirme QR kodunu okumak için kullanılır. Hiçbir şey kaydedilmez veya gönderilmez.",
+    "allow": "Kameraya izin ver"
+  },
+  "guide": {
+    "title": "Kurulum kılavuzu",
+    "skip": "Kılavuzu atla",
+    "next": "Sonraki",
+    "back": "Geri",
+    "scanNow": "Tarayıcıyı aç",
+    "copy": "Komutu kopyala",
+    "copied": "Kopyalandı",
+    "fullGuide": "GitHub'da tam kılavuz",
+    "os": {
+      "windows": "Windows",
+      "unix": "macOS / Linux"
+    },
+    "computer": {
+      "title": "Bilgisayarınızda bir komut çalıştırın",
+      "body": "PowerShell (Windows) veya Terminal (macOS / Linux) açın, komutu yapıştırın, Enter'a basın. Eksik olanları kurar, sunucuyu başlatır ve bir QR kodu gösterir.",
+      "tip": "İpucu: bu sayfayı bilgisayarınıza gönderin veya tam kılavuzdaki adresi oraya yazın."
+    },
+    "tailscale": {
+      "title": "Bu telefonda Tailscale",
+      "body": "Tailscale'i yükleyin ve bilgisayarınızda kullandığınız hesapla oturum açın. İki cihaz arasında özel bir bağlantı kurar. Aynı Wi-Fi'dasınız ve LAN modu seçtiniz mi? Bu adımı atlayın.",
+      "open": "Google Play'i Aç"
+    },
+    "scan": {
+      "title": "QR kodunu tarayın",
+      "body": "Bilgisayarınızda iki QR kodlu bir sayfa açıldı. Aşağıdaki düğmeye dokunun ve kamerayı ikinci koda doğrultun. Sonra Bağlan'a dokunun."
+    }
+  },
+  "launcher": {
+    "offlineTitle": "Bilgisayarınızdaki sunucu kapalı",
+    "hint": "Buradan başlatın (bilgisayar açık ve çevrimiçi olmalı).",
+    "start": "Başlat",
+    "retry": "Yeniden dene",
+    "starting": "Sunucu başlatılıyor… en fazla 30 sn",
+    "failed": {
+      "unreachable": "Bilgisayara ulaşılamıyor. Uyku modunda, çevrimdışı olabilir veya başlatıcısı çalışmıyordur.",
+      "unauthorized": "Başlatıcı şifreyi reddetti. Bilgisayarla tekrar eşleşin.",
+      "timeout": "Sunucu başlamadı. Bilgisayarı kontrol edin.",
+      "no-server": "Bilgisayarında henüz hiçbir şey kurulu değil. Orada yükleyiciyi çalıştırın.",
+      "error": "Sunucu başlatılamadı."
+    }
+  },
+  "share": {
+    "title": "OpenCode'a Paylaş",
+    "newSession": "Bununla yeni oturum",
+    "orPick": "Veya mevcut bir oturuma ekle",
+    "nothing": "Kullanılabilir hiçbir şey paylaşılmadı.",
+    "images": "{{count}} görsel(ler)",
+    "files": "{{count}} dosya(lar)",
+    "skippedTitle": "Bazı öğeler atlandı",
+    "failedTitle": "Paylaşılamadı",
+    "failedMessage": "Paylaşılan içerik hazırlanamadı. Yeniden deneyin."
+  },
+  "phone": {
+    "section": "AI ajanı için telefon araçları",
+    "master": "Ajanın telefonumu kullanmasına izin ver",
+    "masterHint": "Bu uygulama açıkken çalışır. Aşağıdakilerin tümü kapalı başlar.",
+    "noBridge": "Önce --phone-tools ile kurulmuş bir bilgisayarla eşleşin.",
+    "asksEachTime": "Her seferinde sorar",
+    "recent": "Son istekler",
+    "confirmTitle": "Ajan telefonunuzu kullanmak istiyor",
+    "allow": "İzin Ver",
+    "decline": "Reddet",
+    "tools": {
+      "phone_info": "Telefon bilgisi (model, pil)",
+      "phone_notify": "Bildirimleri göster",
+      "phone_speak": "Sesli oku",
+      "phone_clipboard_write": "Panoya yaz",
+      "phone_clipboard_read": "Panodan oku",
+      "phone_location": "Konum",
+      "phone_photo": "Fotoğraf çek"
+    },
+    "confirm": {
+      "phone_clipboard_write": "Metni panoya yerleştirsin mi?",
+      "phone_clipboard_read": "Panodakini okumasına izin verilsin mi?",
+      "phone_location": "Mevcut konumunuzu onunla paylaşsın mı?",
+      "phone_photo": "Kamerayı açıp çektiğiniz fotoğrafı göndermesin mi?"
+    },
+    "outcome": {
+      "done": "yapıldı",
+      "declined": "reddedildi",
+      "off": "engellendi",
+      "error": "başarısız"
+    }
+  },
+  "permissionBanner": {
+    "more": "+{{count}} daha"
+  },
+  "voice": {
+    "listening": "Dinliyor… şimdi konuşun",
+    "thinking": "Düşünüyor…",
+    "speaking": "Konuşuyor…",
+    "stop": "Bitir"
+  }
+}

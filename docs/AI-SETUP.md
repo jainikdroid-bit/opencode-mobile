@@ -95,6 +95,10 @@ model configured, the model picker will be empty: run `opencode auth login` (or 
 | Phone camera does nothing on the QR | Normal for some camera apps; use the app's own **Scan QR to pair**. |
 | Needs to work without Tailscale at home | `-Mode lan` (ask the person first; binds the Wi-Fi address only, password protected). |
 
+## Optional: a free cloud model
+
+`-FreeModel` / `--free-model` merges a keyless Pollinations provider (`pollinations/openai-fast`) into `~/.config/opencode/opencode.json` and sets it as the default model only when none is set. It changes the person's opencode config and sends prompts to a free third-party service: ask first and say so. `-Uninstall` removes only that provider.
+
 ## Optional: tunnel mode (no VPN)
 
 `-Mode tunnel` publishes the server through a free Cloudflare quick tunnel (outbound only; `cloudflared` is downloaded into the state directory, no admin rights). This puts the server on the public internet behind the password: ask the person first, prefer `-Mode tailscale`, and never show or log the pairing link (it contains the password and the private ntfy topic). `-Uninstall` stops the tunnel; delete the state directory to remove `cloudflared` and the topic.

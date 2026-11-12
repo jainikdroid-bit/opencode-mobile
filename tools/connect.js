@@ -21,7 +21,7 @@ const BASE_URL = 'https://raw.githubusercontent.com/jainikdroid-bit/opencode-mob
 const APP_URL = 'https://github.com/jainikdroid-bit/opencode-mobile/releases/latest'
 const WIN = process.platform === 'win32'
 const VALUE_FLAGS = new Set(['mode', 'port', 'name', 'hostname'])
-const BOOL_FLAGS = new Set(['phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
+const BOOL_FLAGS = new Set(['freemodel', 'phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
 
 /** Accepts `-Json`, `--json`, `--no-guide`, `-NoGuide`, `-Mode lan`, `--mode=lan`; case and dashes ignored. */
 function parseArgs(argv) {
@@ -137,6 +137,7 @@ function run(opts, io) {
       note('server and launcher', 'did', 'stopped')
       if (ts && mode === 'tailscale') { for (const p of [port, launcherPortOf(), bridgeP]) sh(ts, ['serve', `--tcp=${p}`, 'off']); note('tailscale forwards', 'did', 'removed') }
       if (unregisterOpencodeMcp()) note('phone tools', 'did', 'removed the MCP entry from the opencode config')
+      if (unregisterFreeModel()) note('free model', 'did', 'removed the free model from the opencode config')
       const gone = autostart.remove()
       if (gone.length) note('autostart', 'did', 'removed')
       result.ok = true; result.stage = 'uninstalled'
@@ -252,6 +253,7 @@ function run(opts, io) {
     if (opts.dryrun) {
       say(`\nWould start: opencode serve --hostname ${bindHost} --port ${port}`)
       if (mode === 'tailscale') say(`Would run: tailscale serve --bg --tcp ${port} tcp://127.0.0.1:${port}`)
+      if (opts.freemodel) say('Would add the free Pollinations cloud model to the opencode config.')
       if (mode === 'tunnel') say('Would start a free Cloudflare quick tunnel (outbound only) to a local gateway; the address is sent to the phone through a private ntfy.sh topic.')
       say(`Phone would connect to: http://${linkHost}:${port}`)
       result.ok = true; result.stage = 'dry-run'
@@ -295,6 +297,8 @@ function run(opts, io) {
       ...(tunnelOn ? { gatewayPort: port - 3, bridgePort, tunnelTopic, cloudflared, ...(launcherAlive && state.tunnelUrl ? { tunnelUrl: state.tunnelUrl } : {}) } : {}),
     }
     fs.writeFileSync(stateFile, JSON.stringify(state, null, 2))
+
+    if (opts.freemodel) note('free model', 'did', registerFreeModel())
 
     // ----- 4b. launcher: lets the phone start the server later -----
     const launcherJs = path.join(dir, 'launcher.js')
@@ -411,6 +415,45 @@ function currentTunnelUrl(stateFile) {
   try { return JSON.parse(fs.readFileSync(stateFile, 'utf8').replace(/^\uFEFF/, '')).tunnelUrl || '' } catch { return '' }
 }
 
+/** A free cloud model that needs no account or key, so a fresh install can be tried at once (Pollinations, GPT-OSS 20B). */
+const FREE_PROVIDER = {
+  npm: '@ai-sdk/openai-compatible',
+  name: 'Pollinations (free, no key)',
+  options: { baseURL: 'https://text.pollinations.ai/openai', apiKey: 'none' },
+  models: { 'openai-fast': { name: 'GPT-OSS 20B (free cloud)', tool_call: true, reasoning: true, limit: { context: 128000, output: 8192 } } },
+}
+
+/** Adds the free model provider to the opencode config (merged; sets the default model only when none is set). */
+function registerFreeModel() {
+  const file = opencodeConfigFile()
+  let config = {}
+  try {
+    if (fs.existsSync(file)) config = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''))
+  } catch {
+    return `add the "pollinations" provider to ${file} yourself: the file could not be parsed`
+  }
+  const next = { ...config, provider: { ...(config.provider || {}), pollinations: FREE_PROVIDER } }
+  const setDefault = !config.model
+  if (setDefault) next.model = 'pollinations/openai-fast'
+  fs.mkdirSync(path.dirname(file), { recursive: true })
+  fs.writeFileSync(file, JSON.stringify(next, null, 2))
+  return `free cloud model added (pollinations/openai-fast${setDefault ? ', set as default' : ', your default model is unchanged'}). Prompts go to the free Pollinations service: do not use it for private code`
+}
+
+/** Removes only what registerFreeModel() added. */
+function unregisterFreeModel() {
+  const file = opencodeConfigFile()
+  try {
+    const config = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''))
+    if (!config.provider || !config.provider.pollinations) return false
+    const { pollinations, ...rest } = config.provider
+    const next = { ...config, provider: rest }
+    if (next.model === 'pollinations/openai-fast') delete next.model
+    fs.writeFileSync(file, JSON.stringify(next, null, 2))
+    return true
+  } catch { return false }
+}
+
 function installTailscale(say) {
   say('Installing Tailscale (your system may ask for permission)...')
   if (WIN) {
@@ -468,7 +511,7 @@ async function showQr({ dir, link, opts, io, say }) {
   spawn(process.execPath, ['-e', `setTimeout(()=>{try{require('fs').rmSync(${JSON.stringify(page)},{force:true})}catch(e){}},300000)`], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
 }
 
-module.exports = { currentTunnelUrl, registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
+module.exports = { registerFreeModel, unregisterFreeModel, currentTunnelUrl, registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
 
 if (require.main === module) {
   const io = { out: (t) => process.stdout.write(t + '\n'), err: (t) => process.stderr.write(t + '\n') }

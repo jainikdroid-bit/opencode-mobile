@@ -1,0 +1,6 @@
+v0.11.0 — 11 languages and a free test model
+
+• The app now speaks English, Russian, Chinese, Spanish, German, French, Portuguese, Japanese, Korean, Ukrainian and Turkish. Pick the language in Settings.
+• README and the install guide are available in all 11 languages.
+• Installer flag -FreeModel adds a free cloud model that needs no account (for trying the app).
+• Windows: the server started by the launcher no longer opens a visible console window.

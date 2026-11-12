@@ -1,0 +1,623 @@
+{
+  "common": {
+    "cancel": "Abbrechen",
+    "ok": "OK",
+    "error": "Fehler",
+    "delete": "Löschen",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "close": "Schließen",
+    "shareReport": "Bericht teilen"
+  },
+  "settings": {
+    "sections": {
+      "security": "Sicherheit",
+      "notifications": "Benachrichtigungen",
+      "privacy": "Datenschutz",
+      "about": "Über",
+      "mcp": "Connectors (MCP)"
+    },
+    "security": {
+      "biometricOpen": {
+        "label": "Biometrie zum Öffnen erforderlich",
+        "descriptionEnabled": "Face ID oder Touch ID zum Entsperren der App verwenden",
+        "descriptionUnavailable": "Biometrische Authentifizierung nicht verfügbar"
+      },
+      "biometricSend": {
+        "label": "Biometrie zum Senden erforderlich",
+        "description": "Vor dem Senden von Nachrichten authentifizieren"
+      },
+      "lockNow": {
+        "label": "App jetzt sperren",
+        "description": "Authentifizierung zum erneuten Öffnen erforderlich"
+      }
+    },
+    "notifications": {
+      "disabledNotice": "Benachrichtigungen sind auf Systemebene deaktiviert. Aktivieren Sie sie in den Einstellungen, um Benachrichtigungen zu erhalten."
+    },
+    "privacy": {
+      "privacyPolicy": {
+        "label": "Datenschutzerklärung",
+        "description": "Welche Daten wir sammeln und wie"
+      }
+    },
+    "about": {
+      "version": "Version",
+      "github": {
+        "label": "GitHub",
+        "description": "Quellcode anzeigen"
+      },
+      "docs": {
+        "label": "Dokumentation",
+        "description": "Erfahren Sie, wie Sie OpenCode verwenden"
+      }
+    },
+    "language": {
+      "label": "Sprache",
+      "title": "Sprache auswählen",
+      "system": "Systemstandard",
+      "en": "Englisch",
+      "zhHans": "Vereinfachtes Chinesisch",
+      "ru": "Russisch"
+    },
+    "footer": {
+      "appName": "OpenCode Mobile",
+      "tagline": "Verbinden Sie sich von überall mit Ihrem KI-Coding-Assistenten"
+    },
+    "alerts": {
+      "notificationsDisabledTitle": "Benachrichtigungen deaktiviert",
+      "notificationsDisabledMessage": "Aktivieren Sie Benachrichtigungen für OpenCode in Ihren Geräteeinstellungen, um Benachrichtigungen zu erhalten."
+    },
+    "mcp": {
+      "description": "Tools, die Ihr Agent auf dem Computer verwenden kann: E-Mail, Browser, Telefon und mehr. Schalten Sie sie hier ein oder aus.",
+      "empty": "Dieser Server meldet keine Connectors.",
+      "refresh": "Aktualisieren",
+      "state": {
+        "connected": "Verbunden",
+        "disabled": "Aus",
+        "failed": "Fehlgeschlagen",
+        "needs_auth": "Anmeldung auf dem Computer erforderlich",
+        "other": "Unbekannt"
+      }
+    }
+  },
+  "session": {
+    "titleFallback": "Sitzung",
+    "toolbar": {
+      "auto": "Auto"
+    },
+    "banners": {
+      "reconnecting": "Erneut verbinden… (Versuch {{attempt}})",
+      "connected": "Verbunden ✓",
+      "reverted": "Nachricht rückgängig gemacht — erneut senden zur Bestätigung",
+      "undo": "Rückgängig",
+      "dismiss": "Schließen"
+    },
+    "sheet": {
+      "thinking": "Denken",
+      "tool": "Tool",
+      "input": "Eingabe",
+      "result": "Ergebnis",
+      "error": "Fehler",
+      "file": "Datei"
+    },
+    "empty": {
+      "title": "Unterhaltung starten",
+      "hint": "/ für Befehle tippen",
+      "suggestions": {
+        "explain": "Dieses Projekt erklären",
+        "bugs": "Fehler finden und beheben",
+        "tests": "Tests schreiben",
+        "changes": "Letzte Änderungen zusammenfassen"
+      }
+    },
+    "loadingOlder": "Ältere Nachrichten werden geladen…",
+    "input": {
+      "placeholderListening": "Hören…",
+      "placeholderFollowUp": "Folgefrage senden…",
+      "placeholderDefault": "Nachricht tippen…"
+    },
+    "actions": {
+      "editMessage": "Nachricht bearbeiten",
+      "replace": "Ersetzen",
+      "selectText": "Text auswählen",
+      "copyAll": "Alles kopieren",
+      "copied": "Kopiert"
+    },
+    "alerts": {
+      "messageActionsTitle": "Nachrichtenaktionen",
+      "notSupportedTitle": "Nicht unterstützt",
+      "notSupportedMessage": "Das Bearbeiten gesendeter Nachrichten erfordert eine neuere opencode-Server-Version. Bitte aktualisieren Sie den Server und versuchen Sie es erneut.",
+      "revertAuthFailedTitle": "Authentifizierung fehlgeschlagen",
+      "revertAuthFailedMessage": "Ihre Server-Anmeldedaten wurden abgelehnt. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+      "editFailedTitle": "Bearbeiten fehlgeschlagen",
+      "editFailedMessage": "Konnte nicht zu dieser Nachricht zurückkehren. Bitte versuchen Sie es erneut.",
+      "replaceDraftTitle": "Entwurf ersetzen?",
+      "replaceDraftMessage": "Sie haben eine ungesendete Nachricht im Editor. Das Bearbeiten dieser Nachricht ersetzt sie.",
+      "cameraPermissionTitle": "Berechtigung erforderlich",
+      "cameraPermissionMessage": "Kamerazugriff ist zum Aufnehmen von Fotos erforderlich.",
+      "emptyClipboardTitle": "Zwischenablage leer",
+      "emptyClipboardMessage": "Die Zwischenablage enthält keinen Text oder kein Bild.",
+      "authRequiredTitle": "Authentifizierung erforderlich",
+      "authRequiredMessage": "Biometrische Authentifizierung ist zum Senden erforderlich. Bitte versuchen Sie es erneut.",
+      "sendFailedTitle": "Nachricht nicht gesendet",
+      "sendFailedMessage": "Nachricht konnte nicht gesendet werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+      "replyFailedTitle": "Antwort fehlgeschlagen",
+      "replyFailedMessage": "Antwort konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+      "rejectFailedTitle": "Ablehnung fehlgeschlagen",
+      "rejectFailedMessage": "Antwort konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+      "imageFailedTitle": "Bild nicht angehängt",
+      "imageFailedMessage": "Ein oder mehrere Bilder konnten nicht verarbeitet werden. Bitte versuchen Sie ein anderes Foto.",
+      "speechErrorTitle": "Spracheingabe fehlgeschlagen",
+      "speechErrorMessage": "Spracheingabe konnte nicht verwendet werden. Überprüfen Sie Ihre Mikrofonberechtigung und versuchen Sie es erneut."
+    }
+  },
+  "connection": {
+    "shared": {
+      "connectionType": "Verbindungstyp",
+      "types": {
+        "local": "Lokal",
+        "tunnel": "Tunnel",
+        "cloud": "Cloud"
+      },
+      "name": "Name",
+      "namePlaceholder": "Mein Server",
+      "serverUrl": "Server-URL",
+      "directoryOptional": "Projektverzeichnis (optional)",
+      "authentication": "Authentifizierung",
+      "username": "Benutzername",
+      "password": "Passwort",
+      "alerts": {
+        "enterName": "Bitte geben Sie einen Verbindungsnamen ein",
+        "enterUrl": "Bitte geben Sie eine Server-URL ein",
+        "invalidUrlTitle": "Ungültige URL",
+        "invalidUrlMessage": "Geben Sie eine vollständige URL mit http:// oder https:// ein, z.B. http://192.168.1.100:4096",
+        "connectionFailedTitle": "Verbindung fehlgeschlagen",
+        "unknownError": "Unbekannter Fehler",
+        "saveFailedTitle": "Verbindung konnte nicht gespeichert werden",
+        "saveFailedMessage": "Der Verbindungstest war erfolgreich, aber das Speichern ist fehlgeschlagen. Bitte versuchen Sie es erneut."
+      }
+    },
+    "add": {
+      "quick": {
+        "title": "Mit OpenCode verbinden",
+        "subtitle": "Geben Sie die IP-Adresse Ihres Computers ein",
+        "ipAddressLabel": "IP-Adresse",
+        "nameOptionalLabel": "Name (optional)",
+        "namePlaceholder": "Mein Mac",
+        "passwordIfSetLabel": "Passwort (falls auf Server gesetzt)",
+        "passwordPlaceholder": "Leer lassen, wenn keins",
+        "usernameHintPrefix": "Benutzername ist standardmäßig ",
+        "usernameHintMiddle": ". Benutzerdefinierter Benutzername? Verwenden Sie ",
+        "usernameHintSuffix": ".",
+        "advancedOptionsLink": "Erweiterte Optionen",
+        "connectButton": "Verbinden",
+        "helpTitle": "So finden Sie Ihre IP:",
+        "helpMacPrefix": "Auf Ihrem Mac ausführen:",
+        "helpTailscalePrefix": "Tailscale-Beispiele:",
+        "helpProtocolPrefix": "Verwenden Sie ",
+        "helpProtocolMiddle": " für lokale und Tailscale-Adressen, es sei denn, TLS ist konfiguriert, dann verwenden Sie ",
+        "helpProtocolSuffix": ".",
+        "helpRunningPrefix": "Stellen Sie sicher, dass OpenCode läuft:",
+        "connectCardTitle": "OpenCode Connect",
+        "connectCardBadge": "Selbst gehostet",
+        "connectCardDesc": "Koppeln Sie Ihr Telefon mit Ihrem Computer in einem Tap: Führen Sie dort tools/opencode-connect.ps1 aus, scannen Sie den QR-Code mit Ihrer Kamera, fertig. Nur privates Netzwerk — nichts wird ins Internet freigegeben.",
+        "advancedLink": "Erweiterte Optionen (Tunnel, Cloud, Authentifizierung)"
+      },
+      "advanced": {
+        "backToQuick": "Einfacher Modus",
+        "urlHintPrefix": "Lokale/Tailscale-Beispiele: ",
+        "urlHintOr": " oder ",
+        "urlHintUse": ". Verwenden Sie ",
+        "urlHintSuffix": " nur wenn TLS konfiguriert ist.",
+        "directoryHint": "Leer lassen, um das aktuelle Verzeichnis des Servers zu verwenden, oder einen Pfad angeben, um in einem anderen Ordner zu arbeiten.",
+        "saveButton": "Verbindung speichern"
+      },
+      "alerts": {
+        "enterIp": "Bitte geben Sie die IP-Adresse Ihres Computers ein",
+        "connectionFailedMessage": "{{summary}}\n\nZiel: {{target}}\nFehler: {{error}}"
+      }
+    },
+    "edit": {
+      "notFound": "Verbindung nicht gefunden",
+      "directoryHint": "Leer lassen, um das aktuelle Verzeichnis des Servers zu verwenden. Sitzungen werden in diesem Ordner erstellt.",
+      "passwordLabel": "Passwort (leer lassen, um bestehendes zu behalten)",
+      "testButton": "Verbindung testen",
+      "saveButton": "Änderungen speichern",
+      "deleteButton": "Verbindung löschen",
+      "alerts": {
+        "successTitle": "Erfolg",
+        "successMessage": "Verbindung erfolgreich!",
+        "connectionFailedMessage": "{{summary}}\n\n({{detail}})",
+        "noDetail": "kein Detail",
+        "deleteTitle": "Verbindung löschen",
+        "deleteMessage": "Sind Sie sicher, dass Sie „{{name}}“ löschen möchten?"
+      }
+    },
+    "pair": {
+      "pasteButton": "Pairing-Link einfügen",
+      "clipboardEmpty": "Die Zwischenablage enthält keinen OpenCode-Pairing-Link. Kopieren Sie zuerst den von opencode-connect angezeigten Link oder scannen Sie dessen QR-Code mit Ihrer Kamera.",
+      "invalidTitle": "Ungültiger Pairing-Link",
+      "invalidMessage": "Dieser Link ist kein gültiger OpenCode-Pairing-Link.",
+      "screenTitle": "Mit Computer koppeln",
+      "confirmText": "Diesen Server zur App hinzufügen?",
+      "confirmWarning": "Setzen Sie nur fort, wenn Sie diesen Link selbst auf Ihrem eigenen Computer erstellt haben.",
+      "connect": "Verbinden",
+      "connecting": "Verbinde…",
+      "failedTitle": "Verbindung nicht möglich"
+    }
+  },
+  "nav": {
+    "sessionsTab": "Sitzungen",
+    "connectionsTab": "Verbindungen",
+    "settingsTab": "Einstellungen",
+    "addConnectionTitle": "Verbindung hinzufügen",
+    "editConnectionTitle": "Verbindung bearbeiten"
+  },
+  "connectionsList": {
+    "activeBadge": "Aktiv",
+    "lastConnected": "Zuletzt verbunden: {{date}}",
+    "actionsAlert": {
+      "message": "Was möchten Sie tun?",
+      "edit": "Bearbeiten"
+    },
+    "empty": {
+      "title": "Keine Verbindungen",
+      "subtitle": "Fügen Sie eine Verbindung zu Ihrem OpenCode-Server hinzu"
+    },
+    "header": "Tippen zum Wechseln, langes Drücken für Optionen",
+    "preferences": {
+      "title": "Einstellungen",
+      "pageSizeLabel": "Nachrichten pro Seite",
+      "pageSizeHint": "Wie viele Nachrichten beim Öffnen einer Sitzung geladen werden. Niedriger = schneller."
+    }
+  },
+  "sessionsList": {
+    "untitledSession": "Sitzung ohne Titel",
+    "time": {
+      "justNow": "Soeben",
+      "minutesAgo": "vor {{count}} Min.",
+      "hoursAgo": "vor {{count}} Std.",
+      "daysAgo": "vor {{count}} Tagen"
+    },
+    "filesCount": "{{count}} Dateien",
+    "actions": {
+      "rename": "Umbenennen",
+      "pin": "Anheften",
+      "unpin": "Loslösen"
+    },
+    "alerts": {
+      "renameFailedTitle": "Umbenennen fehlgeschlagen",
+      "renameFailedMessage": "Sitzung konnte nicht umbenannt werden. Bitte versuchen Sie es erneut.",
+      "deleteTitle": "Sitzung löschen",
+      "deleteMessage": "„{{title}}“ löschen?",
+      "deleteFailedTitle": "Löschen fehlgeschlagen",
+      "deleteFailedMessage": "Sitzung konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+      "createFailedMessage": "Sitzung konnte nicht erstellt werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+    },
+    "empty": {
+      "noConnectionTitle": "Keine Verbindung",
+      "noConnectionSubtitle": "Verbinden Sie sich mit einem Computer, der opencode serve auf Ihrem Netzwerk oder über Tailscale ausführt, um zu beginnen.",
+      "setupGuideLink": "So richten Sie einen Server ein",
+      "addConnectionButton": "Verbindung hinzufügen",
+      "tryDemoButton": "Demo ausprobieren (kein Server erforderlich)",
+      "authFailedTitle": "Authentifizierung fehlgeschlagen",
+      "authFailedSubtitle": "{{name}} hat Ihre Anmeldedaten abgelehnt. Überprüfen Sie Benutzername und Passwort zur erneuten Verbindung.",
+      "checkCredentialsButton": "Anmeldedaten überprüfen",
+      "noSessions": "Noch keine Sitzungen"
+    },
+    "newSessionModal": {
+      "title": "Neue Sitzung",
+      "currentProjectLabel": "Aktuelles Projekt",
+      "serverDefault": "Serverstandard",
+      "recentProjectsLabel": "Letzte Projekte",
+      "serverProjectsLabel": "Server-Projekte",
+      "browseFoldersLabel": "Ordner durchsuchen…",
+      "browseFoldersHint": "Dateisystem des Servers erkunden",
+      "enterPathLabel": "Pfad manuell eingeben",
+      "createInButton": "Erstellen in {{dir}}",
+      "createSessionButton": "Sitzung erstellen"
+    },
+    "renameModal": {
+      "title": "Sitzung umbenennen"
+    },
+    "search": "Sitzungen durchsuchen",
+    "pinned": "Angeheftet",
+    "noMatches": "Keine Sitzungen entsprechen Ihrer Suche."
+  },
+  "notifications": {
+    "categories": {
+      "permissions": {
+        "label": "Berechtigungsanfragen",
+        "description": "Wenn ein Tool eine Genehmigung benötigt"
+      },
+      "questions": {
+        "label": "Fragen",
+        "description": "Wenn der Assistent Ihre Eingabe benötigt"
+      },
+      "completed": {
+        "label": "Aufgabe abgeschlossen",
+        "description": "Wenn eine Sitzung die Verarbeitung beendet"
+      },
+      "errors": {
+        "label": "Fehler",
+        "description": "Wenn eine Sitzung auf ein Problem stößt"
+      },
+      "connection": {
+        "label": "Verbindung",
+        "description": "Wenn die App über längere Zeit die Verbindung verliert"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Etwas ist schiefgelaufen",
+    "subtitle": "Die App hat einen unerwarteten Fehler erhalten. Er wurde automatisch gemeldet. Sie können einen detaillierten Bericht teilen, um uns bei der schnelleren Behebung zu helfen.",
+    "errorLabel": "Fehler",
+    "unknownError": "Unbekannter Fehler",
+    "stackLabel": "Stack",
+    "componentLabel": "Komponente",
+    "shareButton": "Bericht teilen",
+    "tryAgainButton": "Erneut versuchen"
+  },
+  "authGate": {
+    "title": "OpenCode gesperrt",
+    "subtitle": "Authentifizieren Sie sich, um auf Ihre Sitzungen zuzugreifen",
+    "unlockButton": "Entsperren"
+  },
+  "chat": {
+    "permissionPrompt": {
+      "title": "Berechtigung erforderlich",
+      "deny": "Verweigern",
+      "always": "Immer",
+      "allow": "Erlauben"
+    },
+    "questionPrompt": {
+      "headerFallback": "Frage",
+      "answerPlaceholder": "Antwort tippen…",
+      "customAnswerLabel": "Eigene Antwort tippen",
+      "dismiss": "Schließen",
+      "next": "Weiter",
+      "submit": "Absenden"
+    },
+    "statusIndicator": {
+      "retrying": "Erneut versuchen (Versuch {{attempt}})…",
+      "working": "In Arbeit…",
+      "thinking": "Agent denkt nach",
+      "tool": "Verwende {{tool}}",
+      "writing": "Antwort wird geschrieben"
+    },
+    "slashPopover": {
+      "customBadge": "cmd"
+    },
+    "modelPicker": {
+      "title": "Modell auswählen",
+      "searchPlaceholder": "Modelle durchsuchen…",
+      "source": {
+        "all": "Alle",
+        "local": "Lokal",
+        "cloud": "Cloud"
+      },
+      "localBadge": "auf Ihrem Computer"
+    },
+    "variantPicker": {
+      "title": "Denkanstrengung",
+      "autoLabel": "Auto",
+      "autoDescription": "Standard-Denken des Modells verwenden",
+      "effort": {
+        "low": "Schneller, weniger gründliches Denken",
+        "medium": "Ausgewogenes Denken und Geschwindigkeit",
+        "high": "Tiefes, gründliches Denken"
+      }
+    },
+    "directorySwitcher": {
+      "title": "Projekt wechseln",
+      "serverDefaultLabel": "Serverstandard",
+      "browseLabel": "Durchsuchen…",
+      "recentProjectsLabel": "Letzte Projekte",
+      "usesServerDir": "Verwendet Arbeitsverzeichnis des Servers"
+    },
+    "directoryBrowserSheet": {
+      "noActiveConnection": "Keine aktive Verbindung",
+      "listFailed": "Verzeichnisauflistung fehlgeschlagen",
+      "title": "Ordner durchsuchen",
+      "jumpPlaceholder": "Zum Pfad springen…",
+      "noSubfolders": "Keine Unterordner hier",
+      "enterPathHint": "Geben Sie oben einen Pfad ein, um zu beginnen",
+      "useFolderButton": "{{folder}} verwenden",
+      "thisFolderFallback": "dieser Ordner"
+    },
+    "reasoningBlock": {
+      "label": "Denken",
+      "live": "Agent denkt nach…",
+      "done": "Dachte {{time}} nach"
+    },
+    "toolCallCard": {
+      "fallbackTitle": "Tool",
+      "patternOnly": "Muster: {{pattern}}",
+      "patternWithPath": "Muster: {{pattern}} in {{path}}"
+    },
+    "sessionInfo": {
+      "noUsageData": "Noch keine Nutzungsdaten",
+      "loading": "Wird geladen…",
+      "loadAllMessages": "Alle Nachrichten laden",
+      "jumpToBeginning": "Zum Anfang springen",
+      "pills": {
+        "in": "Ein",
+        "out": "Aus",
+        "think": "Denken",
+        "cacheRead": "Cache L",
+        "cacheWrite": "Cache S"
+      },
+      "meta": {
+        "created": "Erstellt",
+        "updated": "Aktualisiert",
+        "messages": "Nachrichten",
+        "changes": "Änderungen",
+        "shared": "Geteilt",
+        "yes": "Ja"
+      },
+      "time": {
+        "justNow": "soeben",
+        "minutesAgo": "vor {{count}} Min.",
+        "hoursAgo": "vor {{count}} Std.",
+        "daysAgo": "vor {{count}} Tagen"
+      }
+    }
+  },
+  "demo": {
+    "title": "Demo",
+    "banner": "Demo — Beispielkonversation, kein Server verbunden",
+    "ctaTitle": "Gefällt Ihnen, was Sie sehen?",
+    "ctaSubtitle": "Dies war eine skriptbasierte Demo. Verbinden Sie Ihren eigenen opencode-Server, um dies echt zu tun.",
+    "connectButton": "Eigenen Server verbinden",
+    "setupGuideLink": "So richten Sie einen Server ein"
+  },
+  "update": {
+    "available": "Update verfügbar",
+    "body": "Version {{version}} ist verfügbar. Sie haben {{current}}.",
+    "action": "Holen",
+    "dismiss": "Nicht jetzt",
+    "upToDate": "Aktuell"
+  },
+  "files": {
+    "title": "Dateien",
+    "filter": "Diesen Ordner filtern",
+    "up": "Eine Ebene höher",
+    "empty": "Dieser Ordner ist leer.",
+    "binary": "Binärdatei: nicht angezeigt.",
+    "clipped": "Erster Teil einer langen Datei wird angezeigt.",
+    "copy": "Kopieren",
+    "copied": "Kopiert"
+  },
+  "terminal": {
+    "title": "Terminal",
+    "status": {
+      "connecting": "Verbinde…",
+      "connected": "Verbunden",
+      "closed": "Getrennt",
+      "error": "Verbindungsfehler"
+    },
+    "connectionFailed": "Terminalverbindung konnte nicht geöffnet werden",
+    "reconnect": "Erneut verbinden",
+    "reconnectTitle": "Neue Shell starten?",
+    "reconnectMessage": "Dies öffnet eine neue Shell auf dem Computer; die alte wird geschlossen.",
+    "placeholder": "Befehl eingeben"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "Tippen zum Starten. Tippen zum Springen.",
+    "over": "VERBINDUNG UNTERBROCHEN. IMMER WIEDER.",
+    "retry": "Tippen zum Erneutversuchen",
+    "best": "BESTE",
+    "play": "Offline? RIG RUN spielen",
+    "hide": "Zurück zu RIG",
+    "quip1": "Haben Sie versucht, es auszuschalten und wieder einzuschalten?",
+    "quip2": "Bei mir funktioniert es.",
+    "quip3": "Fehler 404: Fähigkeit nicht gefunden.",
+    "quip4": "Schiebt die DNS."
+  },
+  "scan": {
+    "title": "QR scannen",
+    "button": "QR scannen zum Koppeln",
+    "hint": "AUF DEN QR AUF IHREM COMPUTER ZEIGEN",
+    "sub": "Koppelt automatisch.",
+    "invalid": "Dies ist kein OpenCode-Pairing-Code.",
+    "permissionTitle": "Kamera zum Scannen",
+    "permissionBody": "Die Kamera wird nur zum Lesen des Pairing-QR-Codes verwendet. Nichts wird aufgezeichnet oder gesendet.",
+    "allow": "Kamera erlauben"
+  },
+  "guide": {
+    "title": "Einrichtungsanleitung",
+    "skip": "Anleitung überspringen",
+    "next": "Weiter",
+    "back": "Zurück",
+    "scanNow": "Scanner öffnen",
+    "copy": "Befehl kopieren",
+    "copied": "Kopiert",
+    "fullGuide": "Vollständige Anleitung auf GitHub",
+    "os": {
+      "windows": "Windows",
+      "unix": "macOS / Linux"
+    },
+    "computer": {
+      "title": "Führen Sie einen Befehl auf Ihrem Computer aus",
+      "body": "Öffnen Sie PowerShell (Windows) oder Terminal (macOS / Linux), fügen Sie den Befehl ein, drücken Sie Eingabe. Es installiert fehlende Komponenten, startet den Server und zeigt einen QR-Code.",
+      "tip": "Tipp: Senden Sie diese Seite an Ihren Computer oder geben Sie die Adresse aus der vollständigen Anleitung dort ein."
+    },
+    "tailscale": {
+      "title": "Tailscale auf diesem Telefon",
+      "body": "Installieren Sie Tailscale und melden Sie sich mit demselben Konto an wie auf dem Computer. Es erstellt eine private Verbindung zwischen beiden. Gleiches Wi-Fi und LAN-Modus gewählt? Dies Schritt überspringen.",
+      "open": "Google Play öffnen"
+    },
+    "scan": {
+      "title": "QR-Code scannen",
+      "body": "Eine Seite mit zwei QR-Codes wurde auf Ihrem Computer geöffnet. Tippen Sie auf die Schaltfläche unten und zeigen Sie die Kamera auf den zweiten. Dann tippen Sie auf Verbinden."
+    }
+  },
+  "launcher": {
+    "offlineTitle": "Der Server auf Ihrem Computer ist aus",
+    "hint": "Starten Sie ihn hier (der Computer muss an und online sein).",
+    "start": "Starten",
+    "retry": "Erneut versuchen",
+    "starting": "Server wird gestartet… bis zu 30 s",
+    "failed": {
+      "unreachable": "Computer ist nicht erreichbar. Er könnte im Ruhezustand sein, offline oder sein Launcher läuft nicht.",
+      "unauthorized": "Launcher hat das Passwort abgelehnt. Koppeln Sie erneut mit dem Computer.",
+      "timeout": "Server ist nicht hochgekommen. Überprüfen Sie den Computer.",
+      "no-server": "Auf dem Computer ist noch nichts eingerichtet. Führen Sie dort den Installer aus.",
+      "error": "Server konnte nicht gestartet werden."
+    }
+  },
+  "share": {
+    "title": "Teilen mit OpenCode",
+    "newSession": "Neue Sitzung damit",
+    "orPick": "Oder zu einer bestehenden Sitzung hinzufügen",
+    "nothing": "Nichts Verwendbares wurde geteilt.",
+    "images": "{{count}} Bild(er)",
+    "files": "{{count}} Datei(en)",
+    "skippedTitle": "Einige Elemente wurden übersprungen",
+    "failedTitle": "Teilen fehlgeschlagen",
+    "failedMessage": "Geteilter Inhalt konnte nicht vorbereitet werden. Erneut versuchen."
+  },
+  "phone": {
+    "section": "Phone-Tools für den KI-Agenten",
+    "master": "Agent darf mein Telefon verwenden",
+    "masterHint": "Funktioniert, während diese App geöffnet ist. Alles unten ist ausgeschaltet.",
+    "noBridge": "Koppeln Sie zuerst mit einem Computer, der mit --phone-tools eingerichtet wurde.",
+    "asksEachTime": "Jedes Mal fragen",
+    "recent": "Letzte Anfragen",
+    "confirmTitle": "Der Agent möchte Ihr Telefon verwenden",
+    "allow": "Erlauben",
+    "decline": "Ablehnen",
+    "tools": {
+      "phone_info": "Telefoninfo (Modell, Akku)",
+      "phone_notify": "Benachrichtigungen anzeigen",
+      "phone_speak": "Laut vorlesen",
+      "phone_clipboard_write": "In Zwischenablage schreiben",
+      "phone_clipboard_read": "Zwischenablage lesen",
+      "phone_location": "Standort",
+      "phone_photo": "Foto aufnehmen"
+    },
+    "confirm": {
+      "phone_clipboard_write": "Text in die Zwischenablage legen?",
+      "phone_clipboard_read": "Lesen lassen, was in der Zwischenablage ist?",
+      "phone_location": "Ihren aktuellen Standort damit teilen?",
+      "phone_photo": "Kamera öffnen und das Foto damit senden?"
+    },
+    "outcome": {
+      "done": "erledigt",
+      "declined": "abgelehnt",
+      "off": "blockiert",
+      "error": "fehlgeschlagen"
+    }
+  },
+  "permissionBanner": {
+    "more": "+{{count}} mehr"
+  },
+  "voice": {
+    "listening": "Hören… jetzt sprechen",
+    "thinking": "Denken…",
+    "speaking": "Sprechen…",
+    "stop": "Beenden"
+  }
+}

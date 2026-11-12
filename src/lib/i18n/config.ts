@@ -8,12 +8,28 @@ import * as Localization from "expo-localization"
 import en from "./en.json"
 import zhHans from "./zh-Hans.json"
 import ru from "./ru.json"
+import es from "./es.json"
+import de from "./de.json"
+import fr from "./fr.json"
+import pt from "./pt.json"
+import ja from "./ja.json"
+import ko from "./ko.json"
+import uk from "./uk.json"
+import tr from "./tr.json"
 import { resolveLocale, FALLBACK_LOCALE, type LocalePreference } from "./locale-resolve"
 
 const resources = {
   en: { translation: en },
   "zh-Hans": { translation: zhHans },
   ru: { translation: ru },
+  es: { translation: es },
+  de: { translation: de },
+  fr: { translation: fr },
+  pt: { translation: pt },
+  ja: { translation: ja },
+  ko: { translation: ko },
+  uk: { translation: uk },
+  tr: { translation: tr },
 }
 
 /** Device locale tags in priority order, e.g. ["zh-Hans-CN", "en-US"]. */

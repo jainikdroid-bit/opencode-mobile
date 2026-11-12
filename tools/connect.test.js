@@ -87,3 +87,35 @@ test('phone MCP entry is merged into the opencode config and removed again witho
     fs.rmSync(dir, { recursive: true, force: true })
   }
 })
+
+test('the free cloud model is merged in, keeps the user default, and is removed again', () => {
+  const fs = require('node:fs')
+  const os = require('node:os')
+  const path = require('node:path')
+  const { registerFreeModel, unregisterFreeModel } = require('./connect.js')
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oc-free-'))
+  const previous = process.env.XDG_CONFIG_HOME
+  process.env.XDG_CONFIG_HOME = dir
+  const file = path.join(dir, 'opencode', 'opencode.json')
+  const read = () => JSON.parse(fs.readFileSync(file, 'utf8'))
+  try {
+    // empty config: provider added and becomes the default model
+    registerFreeModel()
+    assert.equal(read().model, 'pollinations/openai-fast')
+    assert.equal(read().provider.pollinations.options.baseURL, 'https://text.pollinations.ai/openai')
+    assert.equal(unregisterFreeModel(), true)
+    assert.equal(read().model, undefined)
+    // an existing default and other providers are left alone
+    fs.writeFileSync(file, JSON.stringify({ model: 'mine/x', provider: { mine: { name: 'm' } } }))
+    registerFreeModel()
+    assert.equal(read().model, 'mine/x')
+    assert.ok(read().provider.mine && read().provider.pollinations)
+    assert.equal(unregisterFreeModel(), true)
+    assert.equal(read().model, 'mine/x')
+    assert.ok(read().provider.mine && !read().provider.pollinations)
+    assert.equal(unregisterFreeModel(), false)
+  } finally {
+    if (previous === undefined) delete process.env.XDG_CONFIG_HOME; else process.env.XDG_CONFIG_HOME = previous
+    fs.rmSync(dir, { recursive: true, force: true })
+  }
+})

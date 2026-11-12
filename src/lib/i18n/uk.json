@@ -1,0 +1,623 @@
+{
+  "common": {
+    "cancel": "Скасувати",
+    "ok": "OK",
+    "error": "Помилка",
+    "delete": "Видалити",
+    "retry": "Повторити",
+    "save": "Зберегти",
+    "close": "Закрити",
+    "shareReport": "Поділитися звітом"
+  },
+  "settings": {
+    "sections": {
+      "security": "Безпека",
+      "notifications": "Сповіщення",
+      "privacy": "Приватність",
+      "about": "Про додаток",
+      "mcp": "Конектори (MCP)"
+    },
+    "security": {
+      "biometricOpen": {
+        "label": "Біометрія для входу",
+        "descriptionEnabled": "Розблоковуйте додаток через Face ID або Touch ID",
+        "descriptionUnavailable": "Біометрія недоступна"
+      },
+      "biometricSend": {
+        "label": "Біометрія для надсилання",
+        "description": "Підтверджуйте особу перед надсиланням повідомлень"
+      },
+      "lockNow": {
+        "label": "Заблокувати зараз",
+        "description": "Потрібна перевірка для повторного відкриття"
+      }
+    },
+    "notifications": {
+      "disabledNotice": "Сповіщення вимкнено на системному рівні. Увімкніть їх у Налаштуваннях, щоб отримувати сповіщення."
+    },
+    "privacy": {
+      "privacyPolicy": {
+        "label": "Політика конфіденційності",
+        "description": "Які дані ми збираємо і як"
+      }
+    },
+    "about": {
+      "version": "Версія",
+      "github": {
+        "label": "GitHub",
+        "description": "Переглянути вихідний код"
+      },
+      "docs": {
+        "label": "Документація",
+        "description": "Дізнайтеся, як користуватися OpenCode"
+      }
+    },
+    "language": {
+      "label": "Мова",
+      "title": "Оберіть мову",
+      "system": "Системна",
+      "en": "English",
+      "zhHans": "Спрощена китайська",
+      "ru": "Русский"
+    },
+    "footer": {
+      "appName": "OpenCode Mobile",
+      "tagline": "Підключайтеся до свого AI-помічника для кодування звідусіль"
+    },
+    "alerts": {
+      "notificationsDisabledTitle": "Сповіщення вимкнено",
+      "notificationsDisabledMessage": "Увімкніть сповіщення для OpenCode в налаштуваннях пристрою, щоб отримувати повідомлення."
+    },
+    "mcp": {
+      "description": "Інструменти, які ваш агент може використовувати на комп'ютері: пошта, браузер, телефон тощо. Увімкняйте або вимикайте їх тут.",
+      "empty": "Цей сервер не повідомляє про жодних конекторів.",
+      "refresh": "Оновити",
+      "state": {
+        "connected": "Підключено",
+        "disabled": "Вимкнено",
+        "failed": "Не вдалося",
+        "needs_auth": "Потрібен вхід на комп'ютері",
+        "other": "Невідомо"
+      }
+    }
+  },
+  "session": {
+    "titleFallback": "Сесія",
+    "toolbar": {
+      "auto": "Авто"
+    },
+    "banners": {
+      "reconnecting": "Підключення… (спроба {{attempt}})",
+      "connected": "Підключено ✓",
+      "reverted": "Повідомлення відмінено — надішліть ще раз для підтвердження",
+      "undo": "Скасувати",
+      "dismiss": "Закрити"
+    },
+    "sheet": {
+      "thinking": "Думаю",
+      "tool": "Інструмент",
+      "input": "Ввід",
+      "result": "Результат",
+      "error": "Помилка",
+      "file": "Файл"
+    },
+    "empty": {
+      "title": "Розпочніть розмову",
+      "hint": "Введіть / для команд",
+      "suggestions": {
+        "explain": "Поясніть цей проєкт",
+        "bugs": "Знайдіть та виправте баги",
+        "tests": "Напишіть тести",
+        "changes": "Підсумуйте останні зміни"
+      }
+    },
+    "loadingOlder": "Завантаження старіших повідомлень...",
+    "input": {
+      "placeholderListening": "Слухаю...",
+      "placeholderFollowUp": "Надішліть уточнення...",
+      "placeholderDefault": "Введіть повідомлення..."
+    },
+    "actions": {
+      "editMessage": "Редагувати повідомлення",
+      "replace": "Замінити",
+      "selectText": "Виділити текст",
+      "copyAll": "Копіювати все",
+      "copied": "Скопійовано"
+    },
+    "alerts": {
+      "messageActionsTitle": "Дії з повідомленням",
+      "notSupportedTitle": "Не підтримується",
+      "notSupportedMessage": "Редагування надісланих повідомлень вимагає новішої версії opencode server. Оновіть сервер і спробуйте знову.",
+      "revertAuthFailedTitle": "Помилка автентифікації",
+      "revertAuthFailedMessage": "Ваші облікові дані сервера відхилено. Перевірте з'єднання і спробуйте знову.",
+      "editFailedTitle": "Не вдалося відредагувати",
+      "editFailedMessage": "Не вдалося повернутися до цього повідомлення. Спробуйте знову.",
+      "replaceDraftTitle": "Замінити чернетку?",
+      "replaceDraftMessage": "У вас є невідправлене повідомлення в редакторі. Редагування цього повідомлення замінить його.",
+      "cameraPermissionTitle": "Потрібен дозвіл",
+      "cameraPermissionMessage": "Для зйомки фото потрібен доступ до камери.",
+      "emptyClipboardTitle": "Буфер порожній",
+      "emptyClipboardMessage": "Буфер обміну не містить тексту чи зображення.",
+      "authRequiredTitle": "Потрібна автентифікація",
+      "authRequiredMessage": "Для надсилання потрібна біометрична перевірка. Спробуйте знову.",
+      "sendFailedTitle": "Повідомлення не надіслано",
+      "sendFailedMessage": "Не вдалося надіслати повідомлення. Перевірте з'єднання і спробуйте знову.",
+      "replyFailedTitle": "Не вдалося відповісти",
+      "replyFailedMessage": "Не вдалося надіслати відповідь. Спробуйте знову.",
+      "rejectFailedTitle": "Не вдалося відхилити",
+      "rejectFailedMessage": "Не вдалося надіслати відповідь. Спробуйте знову.",
+      "imageFailedTitle": "Зображення не додано",
+      "imageFailedMessage": "Одне або кілька зображень не вдалося обробити. Спробуйте інше фото.",
+      "speechErrorTitle": "Голосовий ввід не вдався",
+      "speechErrorMessage": "Не вдалося використати голосовий ввід. Перевірте дозвіл на мікрофон і спробуйте знову."
+    }
+  },
+  "connection": {
+    "shared": {
+      "connectionType": "Тип підключення",
+      "types": {
+        "local": "Локальне",
+        "tunnel": "Тунель",
+        "cloud": "Хмара"
+      },
+      "name": "Назва",
+      "namePlaceholder": "Мій сервер",
+      "serverUrl": "URL сервера",
+      "directoryOptional": "Тека проєкту (необов'язково)",
+      "authentication": "Автентифікація",
+      "username": "Ім'я користувача",
+      "password": "Пароль",
+      "alerts": {
+        "enterName": "Введіть назву підключення",
+        "enterUrl": "Введіть URL сервера",
+        "invalidUrlTitle": "Невірний URL",
+        "invalidUrlMessage": "Введіть повний URL з http:// або https://, наприклад http://192.168.1.100:4096",
+        "connectionFailedTitle": "Не вдалося підключитися",
+        "unknownError": "Невідома помилка",
+        "saveFailedTitle": "Не вдалося зберегти підключення",
+        "saveFailedMessage": "Тест підключення пройшов успішно, але збереження не вдалося. Спробуйте знову."
+      }
+    },
+    "add": {
+      "quick": {
+        "title": "Підключитися до OpenCode",
+        "subtitle": "Введіть IP-адресу вашого комп'ютера",
+        "ipAddressLabel": "IP-адреса",
+        "nameOptionalLabel": "Назва (необов'язково)",
+        "namePlaceholder": "Мій Mac",
+        "passwordIfSetLabel": "Пароль (якщо встановлено на сервері)",
+        "passwordPlaceholder": "Залиште порожнім, якщо немає",
+        "usernameHintPrefix": "Ім'я користувача за замовчуванням — ",
+        "usernameHintMiddle": ". Потрібно інше? Використайте ",
+        "usernameHintSuffix": ".",
+        "advancedOptionsLink": "Розширені опції",
+        "connectButton": "Підключитися",
+        "helpTitle": "Як дізнатися IP:",
+        "helpMacPrefix": "На вашому Mac виконайте:",
+        "helpTailscalePrefix": "Приклади Tailscale:",
+        "helpProtocolPrefix": "Використовуйте ",
+        "helpProtocolMiddle": " для локальних та Tailscale-адрес, якщо TLS не налаштовано, тоді використовуйте ",
+        "helpProtocolSuffix": ".",
+        "helpRunningPrefix": "Переконайтеся, що OpenCode запущено:",
+        "connectCardTitle": "OpenCode Connect",
+        "connectCardBadge": "Власний сервер",
+        "connectCardDesc": "Зв'яжіть телефон з комп'ютером в один дотик: запустіть tools/opencode-connect.ps1 там, відскануйте QR-код камерою — готово. Тільки приватна мережа — нічого не відкрито в інтернет.",
+        "advancedLink": "Розширені опції (тунелі, хмара, автентифікація)"
+      },
+      "advanced": {
+        "backToQuick": "Простий режим",
+        "urlHintPrefix": "Локальні/Tailscale приклади: ",
+        "urlHintOr": " або ",
+        "urlHintUse": ". Використовуйте ",
+        "urlHintSuffix": " лише якщо налаштовано TLS.",
+        "directoryHint": "Залиште порожнім, щоб використовувати поточну теку сервера, або вкажіть шлях для роботи в іншій теці.",
+        "saveButton": "Зберегти підключення"
+      },
+      "alerts": {
+        "enterIp": "Введіть IP-адресу вашого комп'ютера",
+        "connectionFailedMessage": "{{summary}}\n\nЦіль: {{target}}\nПомилка: {{error}}"
+      }
+    },
+    "edit": {
+      "notFound": "Підключення не знайдено",
+      "directoryHint": "Залиште порожнім, щоб використовувати поточну теку сервера. Сесії створюватимуться в цій теці.",
+      "passwordLabel": "Пароль (залиште порожнім, щоб зберегти наявний)",
+      "testButton": "Перевірити підключення",
+      "saveButton": "Зберегти зміни",
+      "deleteButton": "Видалити підключення",
+      "alerts": {
+        "successTitle": "Успіх",
+        "successMessage": "Підключення успішне!",
+        "connectionFailedMessage": "{{summary}}\n\n({{detail}})",
+        "noDetail": "немає деталей",
+        "deleteTitle": "Видалити підключення",
+        "deleteMessage": "Ви впевнені, що хочете видалити \"{{name}}\"?"
+      }
+    },
+    "pair": {
+      "pasteButton": "Вставити посилання для сполучення",
+      "clipboardEmpty": "В буфері немає посилання OpenCode для сполучення. Спочатку скопіюйте посилання від opencode-connect або відскануйте його QR-код камерою.",
+      "invalidTitle": "Невірне посилання",
+      "invalidMessage": "Це не дійсне посилання OpenCode для сполучення.",
+      "screenTitle": "Сполучення з комп'ютером",
+      "confirmText": "Додати цей сервер до додатка?",
+      "confirmWarning": "Продовжуйте, тільки якщо створили це посилання самі на своєму комп'ютері.",
+      "connect": "Підключитися",
+      "connecting": "Підключення…",
+      "failedTitle": "Не вдалося підключитися"
+    }
+  },
+  "nav": {
+    "sessionsTab": "Сесії",
+    "connectionsTab": "Підключення",
+    "settingsTab": "Налаштування",
+    "addConnectionTitle": "Додати підключення",
+    "editConnectionTitle": "Редагувати підключення"
+  },
+  "connectionsList": {
+    "activeBadge": "Активне",
+    "lastConnected": "Останнє підключення: {{date}}",
+    "actionsAlert": {
+      "message": "Що ви хочете зробити?",
+      "edit": "Редагувати"
+    },
+    "empty": {
+      "title": "Немає підключень",
+      "subtitle": "Додайте підключення до вашого OpenCode сервера"
+    },
+    "header": "Натисніть для перемикання, довге натискання для опцій",
+    "preferences": {
+      "title": "Налаштування",
+      "pageSizeLabel": "Повідомлень на сторінку",
+      "pageSizeHint": "Скільки повідомлень завантажувати при відкритті сесії. Менше = швидше."
+    }
+  },
+  "sessionsList": {
+    "untitledSession": "Сесія без назви",
+    "time": {
+      "justNow": "Щойно",
+      "minutesAgo": "{{count}}хв тому",
+      "hoursAgo": "{{count}}год тому",
+      "daysAgo": "{{count}}д тому"
+    },
+    "filesCount": "{{count}} файлів",
+    "actions": {
+      "rename": "Перейменувати",
+      "pin": "Закріпити",
+      "unpin": "Відкріпити"
+    },
+    "alerts": {
+      "renameFailedTitle": "Не вдалося перейменувати",
+      "renameFailedMessage": "Не вдалося перейменувати сесію. Спробуйте знову.",
+      "deleteTitle": "Видалити сесію",
+      "deleteMessage": "Видалити \"{{title}}\"?",
+      "deleteFailedTitle": "Не вдалося видалити",
+      "deleteFailedMessage": "Не вдалося видалити сесію. Спробуйте знову.",
+      "createFailedMessage": "Не вдалося створити сесію. Перевірте з'єднання і спробуйте знову."
+    },
+    "empty": {
+      "noConnectionTitle": "Немає підключення",
+      "noConnectionSubtitle": "Підключіться до комп'ютера з запущеним opencode serve в мережі або через Tailscale, щоб розпочати.",
+      "setupGuideLink": "Як налаштувати сервер",
+      "addConnectionButton": "Додати підключення",
+      "tryDemoButton": "Спробувати демо (без сервера)",
+      "authFailedTitle": "Помилка автентифікації",
+      "authFailedSubtitle": "{{name}} відхилив ваші облікові дані. Перевірте ім'я та пароль для повторного підключення.",
+      "checkCredentialsButton": "Перевірити дані",
+      "noSessions": "Сесій ще немає"
+    },
+    "newSessionModal": {
+      "title": "Нова сесія",
+      "currentProjectLabel": "Поточний проєкт",
+      "serverDefault": "За замовчуванням сервера",
+      "recentProjectsLabel": "Останні проєкти",
+      "serverProjectsLabel": "Проєкти сервера",
+      "browseFoldersLabel": "Огляд тек…",
+      "browseFoldersHint": "Переглядайте файлову систему сервера",
+      "enterPathLabel": "Ввести шлях вручну",
+      "createInButton": "Створити в {{dir}}",
+      "createSessionButton": "Створити сесію"
+    },
+    "renameModal": {
+      "title": "Перейменувати сесію"
+    },
+    "search": "Пошук сесій",
+    "pinned": "Закріплені",
+    "noMatches": "Немає сесій за вашим пошуком."
+  },
+  "notifications": {
+    "categories": {
+      "permissions": {
+        "label": "Запити дозволів",
+        "description": "Коли інструменту потрібне затвердження"
+      },
+      "questions": {
+        "label": "Питання",
+        "description": "Коли помічнику потрібна ваша відповідь"
+      },
+      "completed": {
+        "label": "Завдання завершено",
+        "description": "Коли сесія закінчила обробку"
+      },
+      "errors": {
+        "label": "Помилки",
+        "description": "Коли в сесії виникла проблема"
+      },
+      "connection": {
+        "label": "З'єднання",
+        "description": "Коли додаток втратив з'єднання надовго"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Щось пішло не так",
+    "subtitle": "Додаток зіткнувся з несподіваною помилкою. Про це повідомлено автоматично. Ви можете надіслати детальний звіт, щоб допомогти нам виправити швидше.",
+    "errorLabel": "Помилка",
+    "unknownError": "Невідома помилка",
+    "stackLabel": "Стек",
+    "componentLabel": "Компонент",
+    "shareButton": "Поділитися звітом",
+    "tryAgainButton": "Спробувати знову"
+  },
+  "authGate": {
+    "title": "OpenCode заблоковано",
+    "subtitle": "Пройдіть автентифікацію для доступу до сесій",
+    "unlockButton": "Розблокувати"
+  },
+  "chat": {
+    "permissionPrompt": {
+      "title": "Потрібен дозвіл",
+      "deny": "Відхилити",
+      "always": "Завжди",
+      "allow": "Дозволити"
+    },
+    "questionPrompt": {
+      "headerFallback": "Питання",
+      "answerPlaceholder": "Введіть відповідь...",
+      "customAnswerLabel": "Введіть власну відповідь",
+      "dismiss": "Закрити",
+      "next": "Далі",
+      "submit": "Надіслати"
+    },
+    "statusIndicator": {
+      "retrying": "Повторна спроба (спроба {{attempt}})...",
+      "working": "Працюю...",
+      "thinking": "Агент думає",
+      "tool": "Використовує {{tool}}",
+      "writing": "Пише відповідь"
+    },
+    "slashPopover": {
+      "customBadge": "cmd"
+    },
+    "modelPicker": {
+      "title": "Обрати модель",
+      "searchPlaceholder": "Пошук моделей...",
+      "source": {
+        "all": "Усі",
+        "local": "Локальна",
+        "cloud": "Хмарна"
+      },
+      "localBadge": "на вашому комп'ютері"
+    },
+    "variantPicker": {
+      "title": "Рівень міркувань",
+      "autoLabel": "Авто",
+      "autoDescription": "Використовувати типові міркування моделі",
+      "effort": {
+        "low": "Швидше, менш глибокі міркування",
+        "medium": "Збалансовані міркування і швидкість",
+        "high": "Глибокі, ретельні міркування"
+      }
+    },
+    "directorySwitcher": {
+      "title": "Змінити проєкт",
+      "serverDefaultLabel": "За замовчуванням сервера",
+      "browseLabel": "Огляд…",
+      "recentProjectsLabel": "Останні проєкти",
+      "usesServerDir": "Використовує робочу теку сервера"
+    },
+    "directoryBrowserSheet": {
+      "noActiveConnection": "Немає активного підключення",
+      "listFailed": "Не вдалося перелічити теку",
+      "title": "Огляд тек",
+      "jumpPlaceholder": "Перейти до шляху...",
+      "noSubfolders": "Тут немає підтек",
+      "enterPathHint": "Введіть шлях вище, щоб почати огляд",
+      "useFolderButton": "Використати {{folder}}",
+      "thisFolderFallback": "ця тека"
+    },
+    "reasoningBlock": {
+      "label": "Міркування",
+      "live": "Агент думає…",
+      "done": "Думав {{time}}"
+    },
+    "toolCallCard": {
+      "fallbackTitle": "Інструмент",
+      "patternOnly": "Шаблон: {{pattern}}",
+      "patternWithPath": "Шаблон: {{pattern}} у {{path}}"
+    },
+    "sessionInfo": {
+      "noUsageData": "Даних використання ще немає",
+      "loading": "Завантаження...",
+      "loadAllMessages": "Завантажити всі повідомлення",
+      "jumpToBeginning": "Перейти на початок",
+      "pills": {
+        "in": "Вхід",
+        "out": "Вихід",
+        "think": "Міркування",
+        "cacheRead": "Кеш Ч",
+        "cacheWrite": "Кеш З"
+      },
+      "meta": {
+        "created": "Створено",
+        "updated": "Оновлено",
+        "messages": "Повідомлення",
+        "changes": "Зміни",
+        "shared": "Поділено",
+        "yes": "Так"
+      },
+      "time": {
+        "justNow": "щойно",
+        "minutesAgo": "{{count}}хв тому",
+        "hoursAgo": "{{count}}год тому",
+        "daysAgo": "{{count}}д тому"
+      }
+    }
+  },
+  "demo": {
+    "title": "Демо",
+    "banner": "Демо — зразкова розмова, сервер не підключено",
+    "ctaTitle": "Сподобалося?",
+    "ctaSubtitle": "Це демо-сценарій. Підключіть свій opencode сервер, щоб робити це справді.",
+    "connectButton": "Підключити свій сервер",
+    "setupGuideLink": "Як налаштувати сервер"
+  },
+  "update": {
+    "available": "Доступне оновлення",
+    "body": "Вийшла версія {{version}}. У вас — {{current}}.",
+    "action": "Отримати",
+    "dismiss": "Не зараз",
+    "upToDate": "Остання версія"
+  },
+  "files": {
+    "title": "Файли",
+    "filter": "Фільтрувати цю теку",
+    "up": "На рівень вгору",
+    "empty": "Ця тека порожня.",
+    "binary": "Бінарний файл: не показується.",
+    "clipped": "Показано першу частину довгого файлу.",
+    "copy": "Копіювати",
+    "copied": "Скопійовано"
+  },
+  "terminal": {
+    "title": "Термінал",
+    "status": {
+      "connecting": "Підключення…",
+      "connected": "Підключено",
+      "closed": "Відключено",
+      "error": "Помилка з'єднання"
+    },
+    "connectionFailed": "Не вдалося відкрити з'єднання терміналу",
+    "reconnect": "Перепідключитися",
+    "reconnectTitle": "Запустити нову оболонку?",
+    "reconnectMessage": "Це відкриє свіжу оболонку на комп'ютері; стара закриється.",
+    "placeholder": "Введіть команду"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "Натисніть, щоб почати. Натисніть, щоб стрибнути.",
+    "over": "З'ЄДНАННЯ ВТРАНЕ. ЗНОВУ.",
+    "retry": "Натисніть, щоб повторити",
+    "best": "НАЙКРАЩЕ",
+    "play": "Офлайн? Грай у RIG RUN",
+    "hide": "Назад до RIG",
+    "quip1": "Спробували вимкнути і увімкнути?",
+    "quip2": "У мене це працює.",
+    "quip3": "Помилка 404: навичку не знайдено.",
+    "quip4": "Підозріть DNS."
+  },
+  "scan": {
+    "title": "Сканувати QR",
+    "button": "Сканувати QR для сполучення",
+    "hint": "НАПРЯМУЙТЕ НА QR НА КОМП'ЮТЕРІ",
+    "sub": "Сполучення відбудеться автоматично.",
+    "invalid": "Це не QR-код OpenCode для сполучення.",
+    "permissionTitle": "Камера для сканування",
+    "permissionBody": "Камера використовується тільки для зчитування QR-коду сполучення. Нічого не записується і не надсилається.",
+    "allow": "Дозволити камеру"
+  },
+  "guide": {
+    "title": "Посібник налаштування",
+    "skip": "Пропустити",
+    "next": "Далі",
+    "back": "Назад",
+    "scanNow": "Відкрити сканер",
+    "copy": "Скопіювати команду",
+    "copied": "Скопійовано",
+    "fullGuide": "Повний посібник на GitHub",
+    "os": {
+      "windows": "Windows",
+      "unix": "macOS / Linux"
+    },
+    "computer": {
+      "title": "Виконайте одну команду на комп'ютері",
+      "body": "Відкрийте PowerShell (Windows) або Terminal (macOS / Linux), вставте команду, натисніть Enter. Вона встановить відсутні компоненти, запустить сервер і покаже QR-код.",
+      "tip": "Порада: надішліть цю сторінку на комп'ютер або введіть адресу з повного посібника там."
+    },
+    "tailscale": {
+      "title": "Tailscale на цьому телефоні",
+      "body": "Встановіть Tailscale і увійдіть під тим самим обліковим записом, що й на комп'ютері. Це створить приватний канал між ними. Той самий Wi-Fi і вибрали LAN-режим? Пропустіть цей крок.",
+      "open": "Відкрити Google Play"
+    },
+    "scan": {
+      "title": "Відскануйте QR-код",
+      "body": "На вашому комп'ютері відкрилася сторінка з двома QR-кодами. Натисніть кнопку нижче і спрямуйте камеру на другий QR-код. Потім натисніть Підключитися."
+    }
+  },
+  "launcher": {
+    "offlineTitle": "Сервер на вашому комп'ютері вимкнено",
+    "hint": "Запустіть його звідси (комп'ютер має бути увімкнений і в мережі).",
+    "start": "Запустити",
+    "retry": "Спробувати знову",
+    "starting": "Запуск сервера… до 30 с",
+    "failed": {
+      "unreachable": "Не вдається дістатися комп'ютера. Можливо, він у сні, офлайн або його лаунчер не запущений.",
+      "unauthorized": "Лаунчер відхилив пароль. Сполучіться з комп'ютером знову.",
+      "timeout": "Сервер не запустився. Перевірте комп'ютер.",
+      "no-server": "На комп'ютері ще нічого не налаштовано. Запустіть інсталятор там.",
+      "error": "Не вдалося запустити сервер."
+    }
+  },
+  "share": {
+    "title": "Поділитися з OpenCode",
+    "newSession": "Нова сесія з цим",
+    "orPick": "Або додати до існуючої сесії",
+    "nothing": "Нічого придатного не поділено.",
+    "images": "{{count}} фото",
+    "files": "{{count}} файлів",
+    "skippedTitle": "Деякі елементи пропущено",
+    "failedTitle": "Не вдалося поділитися",
+    "failedMessage": "Не вдалося підготувати спільний вміст. Спробуйте знову."
+  },
+  "phone": {
+    "section": "Інструменти телефону для AI-агента",
+    "master": "Дозволити агенту використовувати мій телефон",
+    "masterHint": "Працює, поки цей додаток відкритий. Все нижче вимкнено.",
+    "noBridge": "Сполучіться з комп'ютером, налаштованим через --phone-tools, спочатку.",
+    "asksEachTime": "Питає кожного разу",
+    "recent": "Останні запити",
+    "confirmTitle": "Агент хоче використати ваш телефон",
+    "allow": "Дозволити",
+    "decline": "Відхилити",
+    "tools": {
+      "phone_info": "Інфо про телефон (модель, батарея)",
+      "phone_notify": "Показати сповіщення",
+      "phone_speak": "Промовити вголос",
+      "phone_clipboard_write": "Записати в буфер",
+      "phone_clipboard_read": "Зчитати буфер",
+      "phone_location": "Місцезнаходження",
+      "phone_photo": "Зробити фото"
+    },
+    "confirm": {
+      "phone_clipboard_write": "Покласти текст у буфер обміну?",
+      "phone_clipboard_read": "Дозволити зчитати те, що в буфері?",
+      "phone_location": "Поділитися поточним місцезнаходженням?",
+      "phone_photo": "Відкрити камеру і надіслати зроблене фото?"
+    },
+    "outcome": {
+      "done": "виконано",
+      "declined": "відхилено",
+      "off": "заблоковано",
+      "error": "помилка"
+    }
+  },
+  "permissionBanner": {
+    "more": "+{{count}} ще"
+  },
+  "voice": {
+    "listening": "Слухаю… говоріть зараз",
+    "thinking": "Думаю…",
+    "speaking": "Говорю…",
+    "stop": "Кінець"
+  }
+}

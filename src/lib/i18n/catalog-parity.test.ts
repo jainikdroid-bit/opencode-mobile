@@ -44,3 +44,32 @@ test("no translation value is an empty string", () => {
     }
   }
 })
+
+// Every shipped language must have exactly the English keys and the same {{placeholders}} in every value:
+// a missing key shows the raw key path to users, a dropped placeholder shows "undefined" or loses a number.
+import fs from "node:fs"
+import path from "node:path"
+
+const I18N_DIR = import.meta.dirname
+
+function placeholders(value: string): string[] {
+  return (value.match(/\{\{\w+\}\}/g) ?? []).sort()
+}
+
+function valueAt(catalog: unknown, key: string): string {
+  return String(key.split(".").reduce<unknown>((acc, part) => (acc as Record<string, unknown>)?.[part], catalog))
+}
+
+for (const file of fs.readdirSync(I18N_DIR).filter((f) => f.endsWith(".json") && f !== "en.json")) {
+  test(`${file} has the same keys and placeholders as en.json`, () => {
+    const catalog = JSON.parse(fs.readFileSync(path.join(I18N_DIR, file), "utf8"))
+    const enKeys = new Set(flattenKeys(en))
+    const keys = new Set(flattenKeys(catalog))
+    assert.deepEqual([...enKeys].filter((k) => !keys.has(k)), [], `${file}: keys missing`)
+    assert.deepEqual([...keys].filter((k) => !enKeys.has(k)), [], `${file}: unknown keys`)
+    for (const key of enKeys) {
+      assert.deepEqual(placeholders(valueAt(catalog, key)), placeholders(valueAt(en, key)), `${file}: placeholders differ in "${key}"`)
+      assert.notEqual(valueAt(catalog, key).trim(), "", `${file}: "${key}" is empty`)
+    }
+  })
+}

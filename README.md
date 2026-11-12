@@ -10,10 +10,24 @@
 </p>
 
 <p align="center">
+  <b>English</b> ·
+  <a href="docs/readme/README.ru.md">Русский</a> ·
+  <a href="docs/readme/README.zh-Hans.md">中文</a> ·
+  <a href="docs/readme/README.es.md">Español</a> ·
+  <a href="docs/readme/README.de.md">Deutsch</a> ·
+  <a href="docs/readme/README.fr.md">Français</a> ·
+  <a href="docs/readme/README.pt.md">Português</a> ·
+  <a href="docs/readme/README.ja.md">日本語</a> ·
+  <a href="docs/readme/README.ko.md">한국어</a> ·
+  <a href="docs/readme/README.uk.md">Українська</a> ·
+  <a href="docs/readme/README.tr.md">Türkçe</a>
+</p>
+
+<p align="center">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-22d3ee?labelColor=07080c" />
   <img alt="Platform: Android" src="https://img.shields.io/badge/platform-Android-34f5a5?labelColor=07080c" />
   <img alt="Built with Expo" src="https://img.shields.io/badge/built%20with-Expo-ff3df0?labelColor=07080c" />
-  <img alt="UI languages" src="https://img.shields.io/badge/UI-EN%20%7C%20RU%20%7C%20%E4%B8%AD%E6%96%87-8a93a8?labelColor=07080c" />
+  <img alt="UI languages" src="https://img.shields.io/badge/UI-11%20languages-8a93a8?labelColor=07080c" />
 </p>
 
 <p align="center">
@@ -48,6 +62,15 @@ switches. No config editing on the computer.
 **Listen and dictate in your language.** Read any reply aloud; voice input follows the app or device
 language instead of being English-only.
 
+**Start the server from your phone.** If the server on your computer is off, the app shows a **Start it** button.
+
+**Answer the agent from anywhere.** When the agent asks for approval, a banner with Deny / Always / Allow appears on
+any screen, and the notification has the same buttons.
+
+**Talk to it.** Tap the headset: speak, hear the reply, and it listens again.
+
+**Share to OpenCode.** Send text, links, images and small files from any app into a session. Search and pin sessions.
+
 **Give the agent a phone (optional).** Ready-made tools let an agent look at and tap the screen, read the
 battery, send notifications, take photos and more, always behind per-action approval. See
 [agent phone tools](#agent-phone-tools).
@@ -76,25 +99,35 @@ No connection? Tap the unplugged RIG to play **RIG RUN**, an endless runner: jum
 
 Tokens live in [`src/theme/cyber.ts`](src/theme/cyber.ts); the logo is [`docs/brand/rig.svg`](docs/brand/rig.svg).
 
-## Quick start (about two minutes)
+## Install in three steps (about two minutes)
 
-**1. Computer, one command.** Open PowerShell and paste:
+Full guide with troubleshooting: **[docs/INSTALL.md](docs/INSTALL.md)**. It is also available in
+[Русский](docs/INSTALL.ru.md), [中文](docs/INSTALL.zh-Hans.md), [Español](docs/INSTALL.es.md), [Deutsch](docs/INSTALL.de.md),
+[Français](docs/INSTALL.fr.md), [Português](docs/INSTALL.pt.md), [日本語](docs/INSTALL.ja.md), [한국어](docs/INSTALL.ko.md),
+[Українська](docs/INSTALL.uk.md) and [Türkçe](docs/INSTALL.tr.md).
+
+**1. Computer: paste one command.** Open PowerShell (Windows) and paste:
 
 ```powershell
 & ([scriptblock]::Create((irm https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.ps1)))
 ```
 
-It installs what is missing (Node.js, opencode, Tailscale), asks you to sign in to Tailscale once, starts the server and
-opens a page with two QR codes. macOS / Linux: `curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.sh | sh`.
-No Tailscale account wanted and the phone is on the same Wi-Fi? Add `-Mode lan`.
+macOS / Linux, in Terminal:
 
-**2. Phone, install.** Scan the first QR code (or open [Releases](https://github.com/jainikdroid-bit/opencode-mobile/releases/latest)),
+```sh
+curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.sh | sh
+```
+
+It installs what is missing (Node.js, opencode, Tailscale), asks you to sign in to Tailscale once, starts the server and
+opens a page with two QR codes.
+
+**2. Phone: install.** Scan the first QR code (or open [Releases](https://github.com/jainikdroid-bit/opencode-mobile/releases/latest)),
 download the APK and open it. Install Tailscale on the phone too and sign in with the same account.
 
-**3. Phone, pair.** Open the app, tap **Scan QR to pair**, point it at the second QR code, tap **Connect**.
+**3. Phone: pair.** Open the app, tap **Scan QR to pair**, point it at the second QR code, tap **Connect**.
 
-Both the script and the app walk you through it step by step (skip with `-NoGuide` / the **Skip guide** button). Details and troubleshooting: [docs/INSTALL.md](docs/INSTALL.md) ([по-русски](docs/INSTALL.ru.md)). Re-running the command is safe: it repairs instead of duplicating,
-`-Doctor` checks everything, `-Stop` shuts it down.
+Re-running the command is safe (it repairs instead of duplicating). No Tailscale wanted? `-Mode lan` (same Wi-Fi) or
+`-Mode tunnel` (free Cloudflare tunnel, see the guide for the trade-off).
 
 ### Let an AI agent do it
 

@@ -1,0 +1,623 @@
+{
+  "common": {
+    "cancel": "キャンセル",
+    "ok": "OK",
+    "error": "エラー",
+    "delete": "削除",
+    "retry": "再試行",
+    "save": "保存",
+    "close": "閉じる",
+    "shareReport": "レポートを共有"
+  },
+  "settings": {
+    "sections": {
+      "security": "セキュリティ",
+      "notifications": "通知",
+      "privacy": "プライバシー",
+      "about": "アプリについて",
+      "mcp": "コネクタ (MCP)"
+    },
+    "security": {
+      "biometricOpen": {
+        "label": "開封時に生体認証を要求",
+        "descriptionEnabled": "Face ID または Touch ID でアプリを解除",
+        "descriptionUnavailable": "生体認証は利用できません"
+      },
+      "biometricSend": {
+        "label": "送信時に生体認証を要求",
+        "description": "メッセージ送信前に認証"
+      },
+      "lockNow": {
+        "label": "今すぐロック",
+        "description": "再開封時に認証を要求"
+      }
+    },
+    "notifications": {
+      "disabledNotice": "システムレベルで通知が無効になっています。設定で有効にしてください。"
+    },
+    "privacy": {
+      "privacyPolicy": {
+        "label": "プライバシーポリシー",
+        "description": "収集するデータとその方法"
+      }
+    },
+    "about": {
+      "version": "バージョン",
+      "github": {
+        "label": "GitHub",
+        "description": "ソースコードを表示"
+      },
+      "docs": {
+        "label": "ドキュメント",
+        "description": "OpenCode の使い方"
+      }
+    },
+    "language": {
+      "label": "言語",
+      "title": "言語を選択",
+      "system": "システム既定",
+      "en": "英語",
+      "zhHans": "簡体字中国語",
+      "ru": "ロシア語"
+    },
+    "footer": {
+      "appName": "OpenCode Mobile",
+      "tagline": "どこからでも AI コーディングアシスタントに接続"
+    },
+    "alerts": {
+      "notificationsDisabledTitle": "通知が無効",
+      "notificationsDisabledMessage": "デバイス設定で OpenCode の通知を有効にしてください。"
+    },
+    "mcp": {
+      "description": "エージェントがパソコンで使えるツール：メール、ブラウザ、電話など。ここでオン/オフを切り替えます。",
+      "empty": "このサーバーはコネクタを報告していません。",
+      "refresh": "更新",
+      "state": {
+        "connected": "接続済み",
+        "disabled": "オフ",
+        "failed": "失敗",
+        "needs_auth": "パソコンでのサインインが必要",
+        "other": "不明"
+      }
+    }
+  },
+  "session": {
+    "titleFallback": "セッション",
+    "toolbar": {
+      "auto": "自動"
+    },
+    "banners": {
+      "reconnecting": "再接続中…（{{attempt}} 回目）",
+      "connected": "接続済み ✓",
+      "reverted": "メッセージを元に戻しました — 送信を確認してください",
+      "undo": "元に戻す",
+      "dismiss": "閉じる"
+    },
+    "sheet": {
+      "thinking": "考え中",
+      "tool": "ツール",
+      "input": "入力",
+      "result": "結果",
+      "error": "エラー",
+      "file": "ファイル"
+    },
+    "empty": {
+      "title": "会話を始める",
+      "hint": "/ でコマンド",
+      "suggestions": {
+        "explain": "このプロジェクトを説明して",
+        "bugs": "バグを見つけて修正",
+        "tests": "テストを書く",
+        "changes": "最近の変更を要約"
+      }
+    },
+    "loadingOlder": "古いメッセージを読み込み中...",
+    "input": {
+      "placeholderListening": "聞き取り中...",
+      "placeholderFollowUp": "フォローアップを送信...",
+      "placeholderDefault": "メッセージを入力..."
+    },
+    "actions": {
+      "editMessage": "メッセージを編集",
+      "replace": "置き換え",
+      "selectText": "テキストを選択",
+      "copyAll": "すべてコピー",
+      "copied": "コピーしました"
+    },
+    "alerts": {
+      "messageActionsTitle": "メッセージの操作",
+      "notSupportedTitle": "未対応",
+      "notSupportedMessage": "送信済みメッセージの編集には新しい opencode サーバーが必要です。サーバーを更新して再度お試しください。",
+      "revertAuthFailedTitle": "認証に失敗",
+      "revertAuthFailedMessage": "サーバーの資格情報が拒否されました。接続を確認して再度お試しください。",
+      "editFailedTitle": "編集に失敗",
+      "editFailedMessage": "このメッセージに戻れませんでした。再度お試しください。",
+      "replaceDraftTitle": "下書きを置き換えますか？",
+      "replaceDraftMessage": "送信していないメッセージがコンポーザーにあります。このメッセージを編集すると置き換えられます。",
+      "cameraPermissionTitle": "権限が必要です",
+      "cameraPermissionMessage": "写真撮影にはカメラアクセスが必要です。",
+      "emptyClipboardTitle": "クリップボードが空",
+      "emptyClipboardMessage": "クリップボードにテキストまたは画像が含まれていません。",
+      "authRequiredTitle": "認証が必要です",
+      "authRequiredMessage": "送信には生体認証が必要です。再度お試しください。",
+      "sendFailedTitle": "メッセージが送信されません",
+      "sendFailedMessage": "メッセージを送信できませんでした。接続を確認して再度お試しください。",
+      "replyFailedTitle": "返信に失敗",
+      "replyFailedMessage": "応答を送信できませんでした。再度お試しください。",
+      "rejectFailedTitle": "拒否に失敗",
+      "rejectFailedMessage": "応答を送信できませんでした。再度お試しください。",
+      "imageFailedTitle": "画像が添付されません",
+      "imageFailedMessage": "1つ以上の画像を処理できませんでした。別の写真をお試しください。",
+      "speechErrorTitle": "音声入力が失敗",
+      "speechErrorMessage": "音声入力を使用できませんでした。マイク権限を確認して再度お試しください。"
+    }
+  },
+  "connection": {
+    "shared": {
+      "connectionType": "接続タイプ",
+      "types": {
+        "local": "ローカル",
+        "tunnel": "トンネル",
+        "cloud": "クラウド"
+      },
+      "name": "名前",
+      "namePlaceholder": "マイサーバー",
+      "serverUrl": "サーバー URL",
+      "directoryOptional": "プロジェクトディレクトリ（任意）",
+      "authentication": "認証",
+      "username": "ユーザー名",
+      "password": "パスワード",
+      "alerts": {
+        "enterName": "接続名を入力してください",
+        "enterUrl": "サーバー URL を入力してください",
+        "invalidUrlTitle": "無効な URL",
+        "invalidUrlMessage": "http:// または https:// を含む完全な URL を入力してください。例：http://192.168.1.100:4096",
+        "connectionFailedTitle": "接続に失敗",
+        "unknownError": "不明なエラー",
+        "saveFailedTitle": "接続を保存できません",
+        "saveFailedMessage": "接続テストは成功しましたが、保存に失敗しました。再度お試しください。"
+      }
+    },
+    "add": {
+      "quick": {
+        "title": "OpenCode に接続",
+        "subtitle": "パソコンの IP アドレスを入力して接続",
+        "ipAddressLabel": "IP アドレス",
+        "nameOptionalLabel": "名前（任意）",
+        "namePlaceholder": "マイ Mac",
+        "passwordIfSetLabel": "パスワード（サーバーで設定されている場合）",
+        "passwordPlaceholder": "なしなら空のまま",
+        "usernameHintPrefix": "ユーザー名は既定で ",
+        "usernameHintMiddle": " です。カスタムユーザー名なら ",
+        "usernameHintSuffix": " を使ってください。",
+        "advancedOptionsLink": "詳細オプション",
+        "connectButton": "接続",
+        "helpTitle": "IP の探し方：",
+        "helpMacPrefix": "Mac で実行：",
+        "helpTailscalePrefix": "Tailscale の例：",
+        "helpProtocolPrefix": "ローカルと Tailscale のアドレスには ",
+        "helpProtocolMiddle": " を使います。TLS を設定している場合は ",
+        "helpProtocolSuffix": " を使ってください。",
+        "helpRunningPrefix": "OpenCode が実行されていることを確認：",
+        "connectCardTitle": "OpenCode Connect",
+        "connectCardBadge": "セルフホスト",
+        "connectCardDesc": "ワンタップで電話とパソコンをペアリング：そこで tools/opencode-connect.ps1 を実行し、カメラで QR コードをスキャン完了。プライベートネットワークのみ — インターネットに公開されません。",
+        "advancedLink": "詳細オプション（トンネル、クラウド、認証）"
+      },
+      "advanced": {
+        "backToQuick": "シンプルモード",
+        "urlHintPrefix": "ローカル/Tailscale の例：",
+        "urlHintOr": " または ",
+        "urlHintUse": " を使用",
+        "urlHintSuffix": " は TLS が設定されている場合にのみ。",
+        "directoryHint": "サーバーの現在のディレクトリを使うなら空のままにしてください。または別のフォルダーで作業するパスを指定してください。",
+        "saveButton": "接続を保存"
+      },
+      "alerts": {
+        "enterIp": "パソコンの IP アドレスを入力してください",
+        "connectionFailedMessage": "{{summary}}\n\n対象：{{target}}\nエラー：{{error}}"
+      }
+    },
+    "edit": {
+      "notFound": "接続が見つかりません",
+      "directoryHint": "サーバーの現在のディレクトリを使うなら空のままにしてください。セッションはこのフォルダーに作成されます。",
+      "passwordLabel": "パスワード（既存を維持するなら空のまま）",
+      "testButton": "接続をテスト",
+      "saveButton": "変更を保存",
+      "deleteButton": "接続を削除",
+      "alerts": {
+        "successTitle": "成功",
+        "successMessage": "接続成功！",
+        "connectionFailedMessage": "{{summary}}\n\n（{{detail}}）",
+        "noDetail": "詳細なし",
+        "deleteTitle": "接続を削除",
+        "deleteMessage": "「{{name}}」を削除してもよろしいですか？"
+      }
+    },
+    "pair": {
+      "pasteButton": "ペアリングリンクを貼り付け",
+      "clipboardEmpty": "クリップボードに OpenCode ペアリングリンクがありません。まず opencode-connect で表示されたリンクをコピーするか、カメラで QR コードをスキャンしてください。",
+      "invalidTitle": "無効なペアリングリンク",
+      "invalidMessage": "このリンクは有効な OpenCode ペアリングリンクではありません。",
+      "screenTitle": "パソコンとペアリング",
+      "confirmText": "このサーバーをアプリに追加しますか？",
+      "confirmWarning": "自分自身のパソコンでこのリンクを作成した場合のみ続行してください。",
+      "connect": "接続",
+      "connecting": "接続中...",
+      "failedTitle": "接続できませんでした"
+    }
+  },
+  "nav": {
+    "sessionsTab": "セッション",
+    "connectionsTab": "接続",
+    "settingsTab": "設定",
+    "addConnectionTitle": "接続を追加",
+    "editConnectionTitle": "接続を編集"
+  },
+  "connectionsList": {
+    "activeBadge": "アクティブ",
+    "lastConnected": "最終接続：{{date}}",
+    "actionsAlert": {
+      "message": "どうしますか？",
+      "edit": "編集"
+    },
+    "empty": {
+      "title": "接続なし",
+      "subtitle": "OpenCode サーバーに接続を追加"
+    },
+    "header": "タップで切り替え、長押しでオプション",
+    "preferences": {
+      "title": "環境設定",
+      "pageSizeLabel": "ページあたりのメッセージ数",
+      "pageSizeHint": "セッションを開くときに読み込むメッセージ数。少ないほど高速。"
+    }
+  },
+  "sessionsList": {
+    "untitledSession": "タイトルなしセッション",
+    "time": {
+      "justNow": "たった今",
+      "minutesAgo": "{{count}} 分前",
+      "hoursAgo": "{{count}} 時間前",
+      "daysAgo": "{{count}} 日前"
+    },
+    "filesCount": "{{count}} ファイル",
+    "actions": {
+      "rename": "名前を変更",
+      "pin": "ピン留め",
+      "unpin": "ピン留め解除"
+    },
+    "alerts": {
+      "renameFailedTitle": "名前変更に失敗",
+      "renameFailedMessage": "セッションの名前を変更できませんでした。再度お試しください。",
+      "deleteTitle": "セッションを削除",
+      "deleteMessage": "「{{title}}」を削除しますか？",
+      "deleteFailedTitle": "削除に失敗",
+      "deleteFailedMessage": "セッションを削除できませんでした。再度お試しください。",
+      "createFailedMessage": "セッションの作成に失敗しました。接続を確認して再度お試しください。"
+    },
+    "empty": {
+      "noConnectionTitle": "接続なし",
+      "noConnectionSubtitle": "ネットワークまたは Tailscale 経由で opencode serve を実行しているパソコンに接続して開始してください。",
+      "setupGuideLink": "サーバーのセットアップ方法",
+      "addConnectionButton": "接続を追加",
+      "tryDemoButton": "デモを試す（サーバー不要）",
+      "authFailedTitle": "認証に失敗",
+      "authFailedSubtitle": "{{name}} が資格情報を拒否しました。再接続するにはユーザー名とパスワードを確認してください。",
+      "checkCredentialsButton": "資格情報を確認",
+      "noSessions": "まだセッションはありません"
+    },
+    "newSessionModal": {
+      "title": "新規セッション",
+      "currentProjectLabel": "現在のプロジェクト",
+      "serverDefault": "サーバー既定",
+      "recentProjectsLabel": "最近のプロジェクト",
+      "serverProjectsLabel": "サーバープロジェクト",
+      "browseFoldersLabel": "フォルダーを閲覧...",
+      "browseFoldersHint": "サーバーのファイルシステムを探索",
+      "enterPathLabel": "パスを手動で入力",
+      "createInButton": "{{dir}} で作成",
+      "createSessionButton": "セッションを作成"
+    },
+    "renameModal": {
+      "title": "セッションの名前を変更"
+    },
+    "search": "セッションを検索",
+    "pinned": "ピン留め済み",
+    "noMatches": "検索結果にセッションがありません。"
+  },
+  "notifications": {
+    "categories": {
+      "permissions": {
+        "label": "権限リクエスト",
+        "description": "ツールが承認を必要とする場合"
+      },
+      "questions": {
+        "label": "質問",
+        "description": "アシスタントが入力を必要とする場合"
+      },
+      "completed": {
+        "label": "タスク完了",
+        "description": "セッションの処理が終了した場合"
+      },
+      "errors": {
+        "label": "エラー",
+        "description": "セッションで問題が発生した場合"
+      },
+      "connection": {
+        "label": "接続",
+        "description": "アプリが長時間接続を失った場合"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "問題が発生しました",
+    "subtitle": "予期しないエラーが発生しました。自動的に報告されました。詳細なレポートを共有していただければ、より早く修正できます。",
+    "errorLabel": "エラー",
+    "unknownError": "不明なエラー",
+    "stackLabel": "スタック",
+    "componentLabel": "コンポーネント",
+    "shareButton": "レポートを共有",
+    "tryAgainButton": "再試行"
+  },
+  "authGate": {
+    "title": "OpenCode ロック済み",
+    "subtitle": "認証してセッションにアクセス",
+    "unlockButton": "ロック解除"
+  },
+  "chat": {
+    "permissionPrompt": {
+      "title": "権限が必要です",
+      "deny": "拒否",
+      "always": "常に許可",
+      "allow": "許可"
+    },
+    "questionPrompt": {
+      "headerFallback": "質問",
+      "answerPlaceholder": "回答を入力...",
+      "customAnswerLabel": "自分の回答を入力",
+      "dismiss": "閉じる",
+      "next": "次へ",
+      "submit": "送信"
+    },
+    "statusIndicator": {
+      "retrying": "再試行中（{{attempt}} 回目）...",
+      "working": "処理中...",
+      "thinking": "エージェントが考え中",
+      "tool": "{{tool}} を使用中",
+      "writing": "回答を作成中"
+    },
+    "slashPopover": {
+      "customBadge": "cmd"
+    },
+    "modelPicker": {
+      "title": "モデルを選択",
+      "searchPlaceholder": "モデルを検索...",
+      "source": {
+        "all": "すべて",
+        "local": "ローカル",
+        "cloud": "クラウド"
+      },
+      "localBadge": "パソコン上"
+    },
+    "variantPicker": {
+      "title": "推論レベル",
+      "autoLabel": "自動",
+      "autoDescription": "モデル既定の推論を使用",
+      "effort": {
+        "low": "高速、簡易推論",
+        "medium": "バランスの取れた推論と速度",
+        "high": "詳細な徹底推論"
+      }
+    },
+    "directorySwitcher": {
+      "title": "プロジェクトを切り替え",
+      "serverDefaultLabel": "サーバー既定",
+      "browseLabel": "閲覧...",
+      "recentProjectsLabel": "最近のプロジェクト",
+      "usesServerDir": "サーバーの作業ディレクトリを使用"
+    },
+    "directoryBrowserSheet": {
+      "noActiveConnection": "アクティブな接続がありません",
+      "listFailed": "ディレクトリの一覧取得に失敗",
+      "title": "フォルダーを閲覧",
+      "jumpPlaceholder": "パスにジャンプ...",
+      "noSubfolders": "サブフォルダーはありません",
+      "enterPathHint": "パスを入力して閲覧を開始",
+      "useFolderButton": "{{folder}} を使用",
+      "thisFolderFallback": "このフォルダー"
+    },
+    "reasoningBlock": {
+      "label": "考え中",
+      "live": "エージェントが考え中...",
+      "done": "{{time}} 考えました"
+    },
+    "toolCallCard": {
+      "fallbackTitle": "ツール",
+      "patternOnly": "パターン：{{pattern}}",
+      "patternWithPath": "パターン：{{pattern}}（{{path}}）"
+    },
+    "sessionInfo": {
+      "noUsageData": "まだ使用データはありません",
+      "loading": "読み込み中...",
+      "loadAllMessages": "すべてのメッセージを読み込む",
+      "jumpToBeginning": "先頭にジャンプ",
+      "pills": {
+        "in": "入力",
+        "out": "出力",
+        "think": "推論",
+        "cacheRead": "キャッシュ読",
+        "cacheWrite": "キャッシュ書"
+      },
+      "meta": {
+        "created": "作成",
+        "updated": "更新",
+        "messages": "メッセージ",
+        "changes": "変更",
+        "shared": "共有",
+        "yes": "はい"
+      },
+      "time": {
+        "justNow": "たった今",
+        "minutesAgo": "{{count}} 分前",
+        "hoursAgo": "{{count}} 時間前",
+        "daysAgo": "{{count}} 日前"
+      }
+    }
+  },
+  "demo": {
+    "title": "デモ",
+    "banner": "デモ — サンプル会話、サーバー未接続",
+    "ctaTitle": "気に入りましたか？",
+    "ctaSubtitle": "これはスクリプト付きデモです。自分の opencode サーバーを接続して実際に試してください。",
+    "connectButton": "自分のサーバーを接続",
+    "setupGuideLink": "サーバーのセットアップ方法"
+  },
+  "update": {
+    "available": "アップデートあり",
+    "body": "バージョン {{version}} がリリースされました。現在のバージョンは {{current}} です。",
+    "action": "入手",
+    "dismiss": "今はしない",
+    "upToDate": "最新です"
+  },
+  "files": {
+    "title": "ファイル",
+    "filter": "このフォルダーをフィルタ",
+    "up": "上一階層",
+    "empty": "このフォルダーは空です。",
+    "binary": "バイナリファイル：表示できません。",
+    "clipped": "長いファイルの最初の部分を表示中。",
+    "copy": "コピー",
+    "copied": "コピーしました"
+  },
+  "terminal": {
+    "title": "ターミナル",
+    "status": {
+      "connecting": "接続中...",
+      "connected": "接続済み",
+      "closed": "切断済み",
+      "error": "接続エラー"
+    },
+    "connectionFailed": "ターミナル接続を開けませんでした",
+    "reconnect": "再接続",
+    "reconnectTitle": "新しいシェルを開始しますか？",
+    "reconnectMessage": "パソコンで新しいシェルを開きます。古いシェルは閉じられます。",
+    "placeholder": "コマンドを入力"
+  },
+  "game": {
+    "title": "RIG RUN",
+    "start": "タップして開始。タップしてジャンプ。",
+    "over": "接続が切れました。もう一度。",
+    "retry": "タップしてリトライ",
+    "best": "ベスト",
+    "play": "オフライン？RIG RUN をプレイ",
+    "hide": "RIG に戻る",
+    "quip1": "オフにしてオンにし直しましたか？",
+    "quip2": "私のマシンでは動きます。",
+    "quip3": "エラー 404：スキルが見つかりません。",
+    "quip4": "DNS のせいにして。"
+  },
+  "scan": {
+    "title": "QR スキャン",
+    "button": "QR をスキャンしてペアリング",
+    "hint": "パソコンの QR にカメラを向けて",
+    "sub": "自動的にペアリングされます。",
+    "invalid": "これは OpenCode のペアリングコードではありません。",
+    "permissionTitle": "スキャン用のカメラ",
+    "permissionBody": "カメラはペアリング QR コードを読むためだけに使われます。記録や送信はありません。",
+    "allow": "カメラを許可"
+  },
+  "guide": {
+    "title": "セットアップガイド",
+    "skip": "ガイドをスキップ",
+    "next": "次へ",
+    "back": "戻る",
+    "scanNow": "スキャナーを開く",
+    "copy": "コマンドをコピー",
+    "copied": "コピーしました",
+    "fullGuide": "GitHub の完全ガイド",
+    "os": {
+      "windows": "Windows",
+      "unix": "macOS / Linux"
+    },
+    "computer": {
+      "title": "パソコンで 1 つのコマンドを実行",
+      "body": "PowerShell（Windows）または Terminal（macOS / Linux）を開き、コマンドを貼り付けて Enter を押してください。不足しているものをインストールし、サーバーを開始、QR コードを表示します。",
+      "tip": "ヒント：このページをパソコンに送信するか、完全ガイドのアドレスを入力してください。"
+    },
+    "tailscale": {
+      "title": "この電話で Tailscale",
+      "body": "Tailscale をインストールし、パソコンで使ったのと同じアカウントでサインインしてください。2 台の間にプライベートリンクを作ります。同じ Wi-Fi で LAN モードを選んだらこのステップはスキップしてください。",
+      "open": "Google Play を開く"
+    },
+    "scan": {
+      "title": "QR コードをスキャン",
+      "body": "パソコンで 2 つの QR コードを含むページが開きました。下のボタンをタップし、カメラを 2 番目の QR に向けてから接続をタップしてください。"
+    }
+  },
+  "launcher": {
+    "offlineTitle": "パソコンのサーバーがオフです",
+    "hint": "ここから開始（パソコンはオンでオンラインである必要があります）。",
+    "start": "開始",
+    "retry": "再試行",
+    "starting": "サーバー起動中... 最大 30 秒",
+    "failed": {
+      "unreachable": "パソコンに到達できません。スリープ中、オフライン、またはランナーが実行されていない可能性があります。",
+      "unauthorized": "ランナーがパスワードを拒否しました。パソコンと再度ペアリングしてください。",
+      "timeout": "サーバーが起動しませんでした。パソコンを確認してください。",
+      "no-server": "パソコンでまだセットアップされていません。そこでインストーラーを実行してください。",
+      "error": "サーバーを開始できませんでした。"
+    }
+  },
+  "share": {
+    "title": "OpenCode に共有",
+    "newSession": "これで新規セッション",
+    "orPick": "既存のセッションに追加",
+    "nothing": "共有できるものはありませんでした。",
+    "images": "{{count}} 枚の画像",
+    "files": "{{count}} 個のファイル",
+    "skippedTitle": "一部の項目がスキップされました",
+    "failedTitle": "共有できません",
+    "failedMessage": "共有コンテンツを準備できませんでした。再度お試しください。"
+  },
+  "phone": {
+    "section": "AI エージェント用の電話ツール",
+    "master": "エージェントに電話を使わせる",
+    "masterHint": "このアプリを開いている間動作。すべて以下はオフで始まります。",
+    "noBridge": "--phone-tools でセットアップされたパソコンとペアリングしてください。",
+    "asksEachTime": "毎回確認",
+    "recent": "最近のリクエスト",
+    "confirmTitle": "エージェントが電話を使おうとしています",
+    "allow": "許可",
+    "decline": "拒否",
+    "tools": {
+      "phone_info": "電話情報（モデル、バッテリー）",
+      "phone_notify": "通知を表示",
+      "phone_speak": "音声読み上げ",
+      "phone_clipboard_write": "クリップボードに書き込み",
+      "phone_clipboard_read": "クリップボードを読み取り",
+      "phone_location": "位置情報",
+      "phone_photo": "写真を撮影"
+    },
+    "confirm": {
+      "phone_clipboard_write": "テキストをクリップボードに置きますか？",
+      "phone_clipboard_read": "クリップボードの内容を読み取らせますか？",
+      "phone_location": "現在の位置情報を共有しますか？",
+      "phone_photo": "カメラを開き、撮影した写真を送りますか？"
+    },
+    "outcome": {
+      "done": "完了",
+      "declined": "拒否",
+      "off": "ブロック",
+      "error": "失敗"
+    }
+  },
+  "permissionBanner": {
+    "more": "+{{count}} 件-more"
+  },
+  "voice": {
+    "listening": "聞き取り中…今すぐ話して",
+    "thinking": "考え中...",
+    "speaking": "読み上げ中...",
+    "stop": "終了"
+  }
+}
