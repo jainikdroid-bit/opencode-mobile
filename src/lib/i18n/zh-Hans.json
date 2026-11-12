@@ -473,5 +473,29 @@
     "action": "去获取",
     "dismiss": "暂不",
     "upToDate": "已是最新"
+  },
+  "files": {
+    "title": "文件",
+    "filter": "筛选此文件夹",
+    "up": "返回上一级",
+    "empty": "此文件夹为空。",
+    "binary": "二进制文件，不显示。",
+    "clipped": "仅显示长文件的开头部分。",
+    "copy": "复制",
+    "copied": "已复制"
+  },
+  "terminal": {
+    "title": "终端",
+    "status": {
+      "connecting": "正在连接…",
+      "connected": "已连接",
+      "closed": "已断开",
+      "error": "连接错误"
+    },
+    "connectionFailed": "无法打开终端连接",
+    "reconnect": "重新连接",
+    "reconnectTitle": "启动新的 Shell？",
+    "reconnectMessage": "将在电脑上打开新的 Shell，旧的会被关闭。",
+    "placeholder": "输入命令"
   }
 }

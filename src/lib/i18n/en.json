@@ -473,5 +473,29 @@
     "action": "Get it",
     "dismiss": "Not now",
     "upToDate": "Up to date"
+  },
+  "files": {
+    "title": "Files",
+    "filter": "Filter this folder",
+    "up": "Up one level",
+    "empty": "This folder is empty.",
+    "binary": "Binary file: not shown.",
+    "clipped": "Showing the first part of a long file.",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "terminal": {
+    "title": "Terminal",
+    "status": {
+      "connecting": "Connecting…",
+      "connected": "Connected",
+      "closed": "Disconnected",
+      "error": "Connection error"
+    },
+    "connectionFailed": "Could not open the terminal connection",
+    "reconnect": "Reconnect",
+    "reconnectTitle": "Start a new shell?",
+    "reconnectMessage": "This opens a fresh shell on the computer; the old one is closed.",
+    "placeholder": "Type a command"
   }
 }

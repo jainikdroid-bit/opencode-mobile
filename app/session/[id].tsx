@@ -616,6 +616,20 @@ export default function SessionScreen() {
               <Text style={[s.dirText, isDark && s.dirTextDark]}>{shortDir}</Text>
             </View>
           )}
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: "/files", params: { directory: currentSession?.directory ?? "" } })}
+            hitSlop={8}
+            testID="header-files"
+          >
+            <Ionicons name="folder-open-outline" size={20} color={isDark ? "#888888" : "#666666"} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: "/terminal", params: { directory: currentSession?.directory ?? "" } })}
+            hitSlop={8}
+            testID="header-terminal"
+          >
+            <Ionicons name="terminal-outline" size={20} color={isDark ? "#888888" : "#666666"} />
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => setShowInfo((v) => !v)} hitSlop={8}>
             <Ionicons
               name={showInfo ? "stats-chart" : "stats-chart-outline"}
@@ -626,7 +640,7 @@ export default function SessionScreen() {
         </View>
       ),
     })
-  }, [navigation, currentSession?.title, shortDir, showInfo, isDark, t])
+  }, [navigation, currentSession?.title, currentSession?.directory, shortDir, showInfo, isDark, t, router])
 
   return (
     <>
