@@ -18,8 +18,11 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
   const [transcript, setTranscript] = useState("")
   const [error, setError] = useState<string | null>(null)
   const pending = useRef("")
+  // True only while this hook instance started a recognition session.
+  const started = useRef(false)
 
   useSpeechRecognitionEvent("start", () => {
+    started.current = true
     setListening(true)
     setError(null)
     setTranscript("")
@@ -27,6 +30,7 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
   })
 
   useSpeechRecognitionEvent("end", () => {
+    started.current = false
     setListening(false)
     // Deliver final transcript
     if (pending.current.trim()) {
@@ -43,8 +47,10 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
   })
 
   useSpeechRecognitionEvent("error", (event) => {
-    // "no-speech" is not really an error — user just didn't say anything
-    if (event.error === "no-speech") {
+    // "no-speech" is not really an error — user just didn't say anything.
+    // "aborted" is emitted by abort() on Android even when nothing was
+    // listening (module-global event), so it must not surface as a failure.
+    if (event.error === "no-speech" || event.error === "aborted") {
       setListening(false)
       return
     }
@@ -58,6 +64,7 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
       setError("Microphone permission denied")
       return
     }
+    started.current = true
     ExpoSpeechRecognitionModule.start({
       lang: "en-US",
       interimResults: true,
@@ -71,16 +78,18 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
 
   const cancel = useCallback(() => {
     pending.current = ""
+    started.current = false
     ExpoSpeechRecognitionModule.abort()
     setListening(false)
     setTranscript("")
   }, [])
 
   // Stop the native recognition session when the screen unmounts — otherwise
-  // the mic stays hot in the background. abort() is a no-op when not listening.
+  // the mic stays hot in the background. Only abort if this instance started
+  // listening: on Android abort() emits a global "aborted" error even when idle.
   useEffect(() => {
     return () => {
-      ExpoSpeechRecognitionModule.abort()
+      if (started.current) ExpoSpeechRecognitionModule.abort()
     }
   }, [])
 

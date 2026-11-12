@@ -123,8 +123,6 @@ export const useConnections = create<ConnectionsState>((set, get) => ({
       // Create client for active connection
       let client: Client | null = null
       let base: ClientBase | null = null
-      let project: Project | null = null
-      let home: string | null = null
       if (active) {
         const password = await SecureStore.getItemAsync(`${PASSWORDS_PREFIX}${active.id}`)
         const auth = buildAuth(active.username, password)
@@ -135,29 +133,33 @@ export const useConnections = create<ConnectionsState>((set, get) => ({
         // Persist a probe that was only just discovered, so the next launch
         // picks the same transport without probing again.
         if (resolved) await SecureStore.setItemAsync(CONNECTIONS_KEY, JSON.stringify(connections))
-        // Fetch current project info and server paths
-        try {
-          const [proj, paths] = await Promise.all([
-            client.project.current().catch(() => null),
-            client.path.get().catch(() => null),
-          ])
-          project = proj
-          home = paths?.home || null
-        } catch {
-          // Server might be offline
-        }
       }
 
+      // Publish the client immediately so the SSE stream and catalog load can
+      // start without waiting on metadata requests that may hang on a flaky
+      // network (#189). Project/home fill in as soon as they arrive.
       set({
         connections,
         activeConnection: active,
         client,
         clientBase: base,
-        currentProject: project,
-        serverHome: home,
+        currentProject: null,
+        serverHome: null,
         recentDirectories,
         isLoading: false,
       })
+
+      if (client) {
+        const loaded = client
+        void Promise.all([
+          loaded.project.current().catch(() => null),
+          loaded.path.get().catch(() => null),
+        ]).then(([proj, paths]) => {
+          // Ignore the result if the active client changed in the meantime.
+          if (get().client !== loaded) return
+          set({ currentProject: proj, serverHome: paths?.home || null })
+        })
+      }
     } catch (error) {
       set({ error: "Failed to load connections", isLoading: false })
     }
