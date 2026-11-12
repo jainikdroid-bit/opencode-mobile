@@ -2,7 +2,7 @@
   "expo": {
     "name": "OpenCode",
     "slug": "opencode-mobile",
-    "version": "0.6.1",
+    "version": "0.7.0",
     "orientation": "portrait",
     "scheme": "opencode",
     "userInterfaceStyle": "automatic",
@@ -35,7 +35,7 @@
     },
     "android": {
       "package": "cc.agentlabs.opencode",
-      "versionCode": 48,
+      "versionCode": 49,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -72,6 +72,13 @@
         {
           "microphonePermission": "OpenCode uses the microphone to capture your voice when using speech-to-text input.",
           "speechRecognitionPermission": "OpenCode uses speech recognition so you can dictate prompts to your AI coding agent hands-free."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "OpenCode uses the camera to scan the pairing QR code shown on your computer.",
+          "recordAudioAndroid": false
         }
       ],
       "expo-localization"

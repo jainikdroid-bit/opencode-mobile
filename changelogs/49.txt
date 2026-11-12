@@ -1,0 +1,5 @@
+v0.7.0 — Pair in one scan
+
+• Scan QR to pair: the app reads the QR code from your computer and connects after one tap.
+• One-command computer setup (Windows PowerShell and macOS/Linux shell): installs what is missing, signs in to Tailscale once, starts the server, shows the QR.
+• AI-agent runbook (docs/AI-SETUP.md): any AI agent can set the whole thing up with JSON output and clear safety rules.

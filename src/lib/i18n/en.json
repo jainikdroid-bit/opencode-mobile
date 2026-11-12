@@ -510,5 +510,43 @@
     "quip2": "It works on my machine.",
     "quip3": "Error 404: skill not found.",
     "quip4": "Blame the DNS."
+  },
+  "scan": {
+    "title": "Scan QR",
+    "button": "Scan QR to pair",
+    "hint": "POINT AT THE QR ON YOUR COMPUTER",
+    "sub": "It pairs automatically.",
+    "invalid": "This is not an OpenCode pairing code.",
+    "permissionTitle": "Camera for scanning",
+    "permissionBody": "The camera is only used to read the pairing QR code. Nothing is recorded or sent anywhere.",
+    "allow": "Allow camera"
+  },
+  "guide": {
+    "title": "Setup guide",
+    "skip": "Skip guide",
+    "next": "Next",
+    "back": "Back",
+    "scanNow": "Open scanner",
+    "copy": "Copy command",
+    "copied": "Copied",
+    "fullGuide": "Full guide on GitHub",
+    "os": {
+      "windows": "Windows",
+      "unix": "macOS / Linux"
+    },
+    "computer": {
+      "title": "Run one command on your computer",
+      "body": "Open PowerShell (Windows) or Terminal (macOS / Linux), paste the command, press Enter. It installs what is missing, starts the server and shows a QR code.",
+      "tip": "Tip: send this page to your computer, or type the address from the full guide there."
+    },
+    "tailscale": {
+      "title": "Tailscale on this phone",
+      "body": "Install Tailscale and sign in with the same account you used on the computer. It makes a private link between the two. Same Wi-Fi and chose LAN mode? Skip this step.",
+      "open": "Open Google Play"
+    },
+    "scan": {
+      "title": "Scan the QR code",
+      "body": "A page with two QR codes opened on your computer. Tap the button below and point the camera at the second one. Then tap Connect."
+    }
   }
 }

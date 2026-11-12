@@ -32,6 +32,8 @@ import { nameOf } from "../../src/lib/path-utils"
 import { SETUP_GUIDE_URL } from "../../src/lib/links"
 import { Mascot } from "../../src/components/Mascot"
 import { RunnerGame } from "../../src/components/RunnerGame"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { GUIDE_DONE_KEY, shouldAutoShowGuide } from "../../src/lib/guide"
 
 function formatTime(timestamp: number, t: (key: string, opts?: Record<string, unknown>) => string): string {
   const date = new Date(timestamp)
@@ -166,6 +168,13 @@ export default function SessionsScreen() {
   const [showNewSession, setShowNewSession] = useState(false)
   // "No connection" mini game (RIG RUN): shown in place of the unplugged mascot.
   const [playOffline, setPlayOffline] = useState(false)
+  // Setup guide: opens by itself once for someone with no server who has not skipped it.
+  const [guideFlag, setGuideFlag] = useState<{ loaded: boolean; done: boolean }>({ loaded: false, done: false })
+  useEffect(() => {
+    AsyncStorage.getItem(GUIDE_DONE_KEY)
+      .then((v) => setGuideFlag({ loaded: true, done: v === "1" }))
+      .catch(() => setGuideFlag({ loaded: true, done: true }))
+  }, [])
   const [customDir, setCustomDir] = useState("")
   const [isCreating, setIsCreating] = useState(false)
   const [renaming, setRenaming] = useState<Session | null>(null)
@@ -237,6 +246,13 @@ export default function SessionsScreen() {
   }, [sessions, collapsedDirs])
 
   // Fetch server-known projects when the new session modal opens
+  useEffect(() => {
+    if (shouldAutoShowGuide({ ...guideFlag, hasConnection: !!activeConnection })) {
+      setGuideFlag({ loaded: true, done: true }) // once per launch, even if the stored flag is not written yet
+      router.push("/guide")
+    }
+  }, [guideFlag, activeConnection, router])
+
   useEffect(() => {
     if (!showNewSession || !client) return
     client.project
@@ -456,20 +472,26 @@ export default function SessionsScreen() {
           {t("sessionsList.empty.noConnectionSubtitle")}
         </Text>
         <TouchableOpacity
-          style={[styles.addButton, isDark && styles.addButtonDark]}
+          style={[styles.addButton, isDark && styles.addButtonDark, { flexDirection: "row", gap: 8, alignItems: "center", marginBottom: 10 }]}
+          onPress={() => router.push("/scan")}
+          testID="scan-qr-button"
+        >
+          <Ionicons name="qr-code-outline" size={20} color="#07080c" />
+          <Text style={[styles.addButtonText, isDark && styles.addButtonTextDark]}>{t("scan.button")}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.setupGuideLink}
           onPress={() => router.push("/connection/add")}
           testID="add-connection-button"
         >
-          <Text style={[styles.addButtonText, isDark && styles.addButtonTextDark]}>
-            {t("sessionsList.empty.addConnectionButton")}
-          </Text>
+          <Text style={styles.setupGuideLinkText}>{t("sessionsList.empty.addConnectionButton")}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setPlayOffline((v) => !v)} style={styles.setupGuideLink} testID="play-offline-game">
           <Text style={styles.setupGuideLinkText}>{playOffline ? t("game.hide") : t("game.play")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.setupGuideLink}
-          onPress={() => Linking.openURL(SETUP_GUIDE_URL)}
+          onPress={() => router.push("/guide")}
           testID="setup-guide-link"
         >
           <Text style={styles.setupGuideLinkText}>{t("sessionsList.empty.setupGuideLink")}</Text>

@@ -1,0 +1,10 @@
+# OpenCode Mobile
+
+> Android client for the opencode AI coding agent. Controls an opencode server on the user's own computer over their private Tailscale network (or LAN). No cloud relay, no telemetry.
+
+If the user asks you to install or set this up, follow the runbook exactly:
+
+- [AI setup runbook](docs/AI-SETUP.md): detect, install, pair, verify. JSON output, exit codes, safety rules, what only a human can do.
+- [Human install guide](docs/INSTALL.md)
+- Computer installer: tools/opencode-connect.ps1 (Windows) and tools/opencode-connect.sh (macOS/Linux); flags: -Doctor, -Json, -Stop, -Mode tailscale|lan|local.
+- Latest app: https://github.com/jainikdroid-bit/opencode-mobile/releases/latest

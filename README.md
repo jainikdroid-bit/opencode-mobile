@@ -76,22 +76,31 @@ No connection? Tap the unplugged RIG to play **RIG RUN**, an endless runner: jum
 
 Tokens live in [`src/theme/cyber.ts`](src/theme/cyber.ts); the logo is [`docs/brand/rig.svg`](docs/brand/rig.svg).
 
-## Quick start
+## Quick start (about two minutes)
 
-1. **Get the APK:** download it from [Releases](https://github.com/jainikdroid-bit/opencode-mobile/releases/latest) (verify with `SHA256SUMS`), or build it yourself (see [Build](#build)).
-2. **On the computer** (opencode and Tailscale installed, same Tailscale account as the phone):
+**1. Computer, one command.** Open PowerShell and paste:
 
-   ```powershell
-   pwsh -File tools/opencode-connect.ps1
-   ```
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.ps1)))
+```
 
-   It starts `opencode serve` on `127.0.0.1:4096`, forwards that port inside your tailnet, creates a random
-   password and prints a QR code. Stop it later with `-Stop`.
-3. **On the phone:** scan the QR code with the camera (or *Add connection → Paste pairing link*), check the
-   server shown, tap **Connect**.
+It installs what is missing (Node.js, opencode, Tailscale), asks you to sign in to Tailscale once, starts the server and
+opens a page with two QR codes. macOS / Linux: `curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.sh | sh`.
+No Tailscale account wanted and the phone is on the same Wi-Fi? Add `-Mode lan`.
 
-Prefer manual setup? *Add connection* also accepts a plain address such as `http://100.x.x.x:4096` plus the
-server password.
+**2. Phone, install.** Scan the first QR code (or open [Releases](https://github.com/jainikdroid-bit/opencode-mobile/releases/latest)),
+download the APK and open it. Install Tailscale on the phone too and sign in with the same account.
+
+**3. Phone, pair.** Open the app, tap **Scan QR to pair**, point it at the second QR code, tap **Connect**.
+
+Both the script and the app walk you through it step by step (skip with `-NoGuide` / the **Skip guide** button). Details and troubleshooting: [docs/INSTALL.md](docs/INSTALL.md) ([по-русски](docs/INSTALL.ru.md)). Re-running the command is safe: it repairs instead of duplicating,
+`-Doctor` checks everything, `-Stop` shuts it down.
+
+### Let an AI agent do it
+
+Tell your AI agent (Claude Code, opencode, Codex, ...): *"Set up OpenCode Mobile for me following
+https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md"*. The runbook is written for agents: JSON output,
+exit codes, exact commands, safety rules. You only click **Yes** on a Windows prompt, sign in to Tailscale once and tap **Connect** on the phone.
 
 ## Agent phone tools
 
