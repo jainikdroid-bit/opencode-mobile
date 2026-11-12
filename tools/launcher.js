@@ -182,6 +182,29 @@ function listenerPids(port) {
   } catch { return [] }
 }
 
+/** Tunnel mode: gateway on a local port + cloudflared pointed at it + telling the phone the current address. */
+function startTunnelMode(dir, state, deps) {
+  const { listen: listenGateway } = require('./gateway.js')
+  const { startTunnel, publishUrl } = require('./tunnel.js')
+  const server = Number(state.port) || 4096
+  const gatewayPort = Number(state.gatewayPort) || server - 3
+  listenGateway({ port: gatewayPort, ports: { server, launcher: Number(state.launcherPort) || server - 1, bridge: Number(state.bridgePort) || server - 2 } })
+  let current = ''
+  const remember = (url) => {
+    current = url
+    try {
+      const file = path.join(dir, 'state.json')
+      const fresh = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''))
+      fs.writeFileSync(file, JSON.stringify({ ...fresh, tunnelUrl: url, tunnelAt: Date.now() }, null, 2))
+    } catch { /* the installer rewrites the state file; the next address will be saved */ }
+    publishUrl(state.tunnelTopic, url).catch(() => {})
+  }
+  const tunnel = startTunnel({ binary: state.cloudflared, targetPort: gatewayPort, onUrl: remember })
+  setInterval(() => { if (current) publishUrl(state.tunnelTopic, current).catch(() => {}) }, 30 * 60_000).unref()
+  for (const signal of ['SIGTERM', 'SIGINT']) process.on(signal, () => { tunnel.stop(); process.exit(0) })
+  process.on('exit', () => tunnel.stop())
+}
+
 function main() {
   const dir = defaultDir()
   const deps = realDeps(dir)
@@ -198,6 +221,7 @@ function main() {
     console.log(`opencode launcher on ${host}:${port}`)
     // At sign-in: bring the server up too, unless the user turned that off.
     if (state.autostart !== false && deps.readPassword()) launcher.start().catch(() => {})
+    if (state.mode === 'tunnel') startTunnelMode(dir, state, deps)
     // Optional: let an AI agent use a few phone functions, gated by the phone (see phone-bridge.js).
     if (state.phoneTools) require('./phone-bridge.js').listen({ port: Number(state.bridgePort) || (Number(state.port) || 4096) - 2, host, readPassword: deps.readPassword })
   })

@@ -14,8 +14,12 @@ export interface PairingInfo {
   name: string
   /** Port of the launcher that can start the server from the phone (optional). */
   launcherPort?: number
+  /** Private ntfy.sh topic on which the computer announces its tunnel address (tunnel mode). */
+  tunnelTopic?: string
 }
 
+// ntfy.sh topic on which a tunnel-mode computer announces its address (same rule as tunnel-discovery.ts)
+const isValidTopic = (t: unknown): t is string => typeof t === "string" && /^[A-Za-z0-9_-]{16,64}$/.test(t)
 const MAX_NAME = 40
 const MAX_PASSWORD = 256
 // scheme://host[:port] only — a pairing link must not smuggle paths or creds.
@@ -45,11 +49,11 @@ export function parsePairingLink(input: string): PairingInfo | null {
     params[key] = value
   }
 
-  return buildPairing(params.url, params.password, params.name, params.launcher)
+  return buildPairing(params.url, params.password, params.name, params.launcher, params.topic)
 }
 
 /** Validate already-split fields (deep-link route params use this directly). */
-export function buildPairing(url?: string, password?: string, name?: string, launcher?: string | number): PairingInfo | null {
+export function buildPairing(url?: string, password?: string, name?: string, launcher?: string | number, topic?: string): PairingInfo | null {
   const serverUrl = (url ?? "").trim().replace(/\/+$/, "")
   if (!SERVER_URL.test(serverUrl)) return null
   const port = /:(\d{1,5})$/.exec(serverUrl)
@@ -61,7 +65,8 @@ export function buildPairing(url?: string, password?: string, name?: string, lau
   const label = (name ?? "").trim().slice(0, MAX_NAME)
   const host = serverUrl.replace(/^https?:\/\//, "")
   const launcherPort = parseLauncherPort(launcher)
-  return { url: serverUrl, password: secret || undefined, name: label || host, ...(launcherPort ? { launcherPort } : {}) }
+  const tunnelTopic = isValidTopic(topic) ? topic : undefined
+  return { url: serverUrl, password: secret || undefined, name: label || host, ...(launcherPort ? { launcherPort } : {}), ...(tunnelTopic ? { tunnelTopic } : {}) }
 }
 
 /** A launcher port is optional; anything that is not a valid TCP port is simply ignored. */

@@ -74,7 +74,8 @@ export function checkArgs(tool: PhoneToolName, args: unknown): { ok: true; args:
 }
 
 /** Same host as the server, bridge port = launcher port - 1 (see tools/connect.js). */
-export function bridgeUrl(serverUrl: string, launcherPort: number | undefined): string | null {
+export function bridgeUrl(serverUrl: string, launcherPort: number | undefined, tunnel = false): string | null {
+  if (tunnel && Number.isInteger(launcherPort)) return `${serverUrl.trim().replace(/\/+$/, "")}/__oc/bridge`
   if (!Number.isInteger(launcherPort) || (launcherPort as number) < 2) return null
   const m = /^(https?:\/\/)(\[[0-9a-fA-F:]+\]|[A-Za-z0-9.-]+)(?::\d{1,5})?\/?$/.exec(serverUrl.trim())
   return m ? `${m[1]}${m[2]}:${(launcherPort as number) - 1}` : null

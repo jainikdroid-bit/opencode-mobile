@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from "react"
+import { useEffect, useReducer, useRef, useState, useCallback, useMemo } from "react"
 import {
   View,
   Text,
@@ -41,6 +41,13 @@ import { useConnections } from "../../src/stores/connections"
 import { useAuth } from "../../src/stores/auth"
 import { useCatalog } from "../../src/stores/catalog"
 import { useSpeech } from "../../src/lib/speech"
+import { useSettings } from "../../src/stores/settings"
+import * as SpeechOut from "expo-speech"
+import { speakableText } from "../../src/lib/speakable"
+import { voiceReducer, VOICE_OFF, newReplyId, latestAssistant } from "../../src/lib/voice-loop"
+import { resolveSpeechLang } from "../../src/lib/speech-lang"
+import { deviceLocaleTags } from "../../src/lib/i18n/config"
+import { Mascot } from "../../src/components/Mascot"
 import { EmptyState } from "../../src/components/chat/EmptyState"
 import { messagePartsToSelectableText } from "../../src/lib/message-text"
 
@@ -118,6 +125,7 @@ export default function SessionScreen() {
   // Derive sending state for this specific session
   const isSending = useSessions((s) => !!(currentSession && s.sending[currentSession.id]))
 
+
   const { authenticateForMessage } = useAuth()
   const { client, clientForDirectory } = useConnections()
 
@@ -152,12 +160,93 @@ export default function SessionScreen() {
   const [showConnectedFlash, setShowConnectedFlash] = useState(false)
   const prevReconnecting = useRef(false)
 
-  // Voice input — transcript appends to the text input on completion
+  // --- Live voice conversation: listen -> send -> wait for the reply -> read it aloud -> listen again ---
+  const [voice, dispatchVoice] = useReducer(voiceReducer, VOICE_OFF)
+  const voiceRef = useRef(voice)
+  voiceRef.current = voice
+  const messagesRef = useRef(messages)
+  messagesRef.current = messages
+  const partsRef = useRef(parts)
+  partsRef.current = parts
+  const idBeforeSend = useRef<string | null>(null)
+  const spokenText = useRef("")
+  const sawBusy = useRef(false)
+  const sendVoiceRef = useRef<(text: string) => void>(() => {})
+
+  // Voice input — transcript appends to the text input on completion (or, in voice mode, is sent straight away)
   const speech = useSpeech(
     useCallback((text: string) => {
+      if (voiceRef.current.phase === "listening") {
+        idBeforeSend.current = latestAssistant(messagesRef.current)?.id ?? null
+        dispatchVoice({ type: "heard", text })
+        sendVoiceRef.current(text)
+        return
+      }
       setInput((prev) => (prev ? prev + " " + text : text))
     }, []),
+    useCallback(() => dispatchVoice({ type: "silence" }), []),
   )
+
+  const stopVoice = useCallback(() => {
+    dispatchVoice({ type: "stop" })
+    SpeechOut.stop()
+    speech.cancel()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // listening: open the microphone for one utterance
+  useEffect(() => {
+    if (voice.phase !== "listening") return
+    const id = setTimeout(() => void speech.start({ once: true }), 350)
+    return () => clearTimeout(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.phase, voice.silences])
+
+  // thinking: wait until the agent is done, then pick up the new answer
+  useEffect(() => {
+    if (voice.phase !== "thinking") {
+      sawBusy.current = false
+      return
+    }
+    const finish = () =>
+      setTimeout(() => {
+        const id = newReplyId(messagesRef.current, idBeforeSend.current)
+        spokenText.current = id ? speakableText(partsRef.current[id] || []) : ""
+        dispatchVoice({ type: "replyReady", hasText: !!spokenText.current })
+      }, 500)
+    if (isSending) {
+      sawBusy.current = true
+      return
+    }
+    const id = sawBusy.current ? finish() : setTimeout(() => finish(), 10_000)
+    return () => clearTimeout(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.phase, isSending])
+
+  // speaking: read the answer aloud, then listen again
+  useEffect(() => {
+    if (voice.phase !== "speaking") return
+    const done = () => dispatchVoice({ type: "spoken" })
+    SpeechOut.speak(spokenText.current, {
+      language: resolveSpeechLang(useSettings.getState().locale, deviceLocaleTags()),
+      onDone: done,
+      onStopped: done,
+      onError: done,
+    })
+    return () => {
+      void SpeechOut.stop()
+    }
+  }, [voice.phase])
+
+  useEffect(
+    () => () => {
+      void SpeechOut.stop()
+    },
+    [],
+  )
+  useEffect(() => {
+    if (voice.phase !== "off" && speech.error) dispatchVoice({ type: "fail" })
+  }, [voice.phase, speech.error])
 
   // Surface speech recognition failures (e.g. mic permission denied). Keyed
   // on the error value itself so it only fires once per distinct error, not
@@ -443,6 +532,14 @@ export default function SessionScreen() {
   }, [])
 
   // --- Send ---
+  sendVoiceRef.current = (text: string) => {
+    scrollToBottom(true)
+    sendMessage(text, model || undefined, agent || undefined, [], variant || undefined).catch((err) => {
+      console.error("Voice send failed:", err)
+      dispatchVoice({ type: "fail" })
+    })
+  }
+
   const handleSend = async () => {
     if (!input.trim() && attachments.length === 0) return
     const authenticated = await authenticateForMessage()
@@ -844,6 +941,16 @@ export default function SessionScreen() {
         </View>
 
         {/* Attachment preview */}
+        {voice.phase !== "off" ? (
+          <View style={s.voiceBar} testID="voice-bar">
+            <Mascot state={voice.phase === "listening" ? "idle" : voice.phase === "thinking" ? "thinking" : "writing"} size={44} />
+            <Text style={s.voiceText}>{t(`voice.${voice.phase}`)}</Text>
+            <TouchableOpacity style={s.voiceStop} onPress={stopVoice} testID="voice-stop">
+              <Ionicons name="close" size={16} color="#ffffff" />
+              <Text style={s.voiceStopText}>{t("voice.stop")}</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
         <ImageAttachments attachments={attachments} isDark={isDark} onRemove={removeAttachment} />
 
         {/* Input */}
@@ -885,10 +992,15 @@ export default function SessionScreen() {
               </TouchableOpacity>
             )}
             {/* Mic button: when no input, not sending, and not listening */}
-            {!isSending && !input.trim() && attachments.length === 0 && !speech.listening && (
-              <TouchableOpacity style={s.micBtn} onPress={speech.start}>
-                <Ionicons name="mic" size={22} color={isDark ? "#8a93a8" : "#8a93a8"} />
-              </TouchableOpacity>
+            {!isSending && !input.trim() && attachments.length === 0 && !speech.listening && voice.phase === "off" && (
+              <>
+                <TouchableOpacity style={s.micBtn} onPress={() => void speech.start()}>
+                  <Ionicons name="mic" size={22} color={isDark ? "#8a93a8" : "#8a93a8"} />
+                </TouchableOpacity>
+                <TouchableOpacity style={s.micBtn} onPress={() => dispatchVoice({ type: "start" })} testID="voice-start">
+                  <Ionicons name="headset" size={22} color="#22d3ee" />
+                </TouchableOpacity>
+              </>
             )}
             {/* Listening indicator: tap to stop */}
             {speech.listening && (
@@ -1071,6 +1183,10 @@ const s = StyleSheet.create({
     marginLeft: 8,
   },
   sendBtnDisabled: { backgroundColor: "#cccccc" },
+  voiceBar: { flexDirection: "row", alignItems: "center", gap: 10, marginHorizontal: 12, marginBottom: 6, padding: 8, borderRadius: 10, borderWidth: 1, borderColor: "#22d3ee", backgroundColor: "#0d1018" },
+  voiceText: { flex: 1, color: "#e8ecf4", fontSize: 14 },
+  voiceStop: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: "#7f1d1d", borderRadius: 8, paddingHorizontal: 12, height: 36 },
+  voiceStopText: { color: "#ffffff", fontWeight: "600", fontSize: 13 },
   micBtn: {
     width: 40,
     height: 40,

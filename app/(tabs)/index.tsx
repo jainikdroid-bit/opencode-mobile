@@ -621,7 +621,7 @@ export default function SessionsScreen() {
 
       {error && canStartFromPhone(activeConnection) ? (
         <StartServerBar
-          target={{ serverUrl: activeConnection.url, launcherPort: activeConnection.launcherPort as number, auth: clientBase?.auth }}
+          target={{ serverUrl: activeConnection.url, launcherPort: activeConnection.launcherPort as number, auth: clientBase?.auth, tunnel: !!activeConnection.tunnelTopic }}
           onStarted={() => {
             reconnect()
             onRefresh()

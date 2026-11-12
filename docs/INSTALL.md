@@ -48,9 +48,16 @@ The first time you open the app it also shows a short setup guide. Tap **Skip gu
   if the server is ever off, the app shows a **Start it** button. The computer must be on and online (it cannot be woken).
   Opt out of the helper with `-NoAutostart`; remove everything with `-Uninstall`.
 
+### No VPN? Tunnel mode (optional)
+
+Prefer not to install Tailscale on the phone? Run the installer with `-Mode tunnel` (`--mode tunnel` on macOS/Linux). It downloads the free `cloudflared` client, opens an outbound-only Cloudflare quick tunnel (no account, no open ports) and pairs the phone to that public address. The address changes when the tunnel restarts; the computer announces the new one on a private, random `ntfy.sh` topic and the app switches to it by itself.
+
+Trade-off, honestly: the address is on the public internet. It is protected by the long random password (wrong guesses from one client are blocked for a minute after 10 tries) and an unguessable address, but anyone who gets your pairing link can use your agent. Tailscale mode stays the recommended default.
+
 ### Handy features
 
 - **Share to OpenCode:** in any app (browser, gallery, files) tap Share, pick OpenCode, choose a session; text, links, images and small text files land in the message box.
+- **Voice conversation:** tap the headset button next to the microphone: you speak, the agent answers and reads the reply aloud, then it listens again. It stops after three silent rounds or when you press End.
 - **Quick permissions:** when the agent asks to run something, a banner with Deny / Always / Allow shows on any screen, and the notification has Allow and Deny buttons.
 - **Search and pin sessions:** search box on the Sessions screen; long-press a session to pin it to the top.
 - **Phone tools for the agent (optional):** run the installer with `-PhoneTools` (`--phone-tools` on macOS/Linux), then switch on *Settings, Phone tools for the AI agent* in the app. The agent can then show notifications, speak, read or write the clipboard, get your location or ask you to take a photo. Everything is off by default, sensitive actions ask you every time, and it works only while the app is open.

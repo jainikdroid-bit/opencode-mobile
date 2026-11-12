@@ -23,7 +23,7 @@ export function usePhoneBridge() {
   }, [])
 
   useEffect(() => {
-    const base = connection ? bridgeUrl(connection.url, connection.launcherPort) : null
+    const base = connection ? bridgeUrl(connection.url, connection.launcherPort, !!connection.tunnelTopic) : null
     if (!loaded || !enabled || !base) return
     let stopped = false
     let foreground = AppState.currentState === "active"

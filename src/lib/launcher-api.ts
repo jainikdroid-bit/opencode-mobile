@@ -7,12 +7,14 @@ export interface LauncherTarget {
   serverUrl: string
   launcherPort: number
   auth?: { username: string; password: string }
+  /** tunnel mode: launcher lives under /__oc/launcher on the one public address */
+  tunnel?: boolean
 }
 
 const START_TIMEOUT_MS = 45_000 // the launcher waits up to 30 s for the server to answer
 
 export async function startServerFromPhone(target: LauncherTarget): Promise<StartOutcome> {
-  const base = launcherUrl(target.serverUrl, target.launcherPort)
+  const base = launcherUrl(target.serverUrl, target.launcherPort, target.tunnel)
   if (!base) return { kind: "failed", reason: "error", detail: "bad launcher address" }
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), START_TIMEOUT_MS)

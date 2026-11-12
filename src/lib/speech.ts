@@ -11,12 +11,13 @@ interface SpeechState {
 }
 
 interface SpeechActions {
-  start: () => Promise<void>
+  /** once: stop by itself after the first pause (used by the live voice conversation) */
+  start: (options?: { once?: boolean }) => Promise<void>
   stop: () => void
   cancel: () => void
 }
 
-export function useSpeech(onResult: (text: string) => void): SpeechState & SpeechActions {
+export function useSpeech(onResult: (text: string) => void, onSilence?: () => void): SpeechState & SpeechActions {
   const [listening, setListening] = useState(false)
   const [transcript, setTranscript] = useState("")
   const [error, setError] = useState<string | null>(null)
@@ -39,6 +40,8 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
     // Deliver final transcript
     if (pending.current.trim()) {
       onResult(pending.current.trim())
+    } else {
+      onSilence?.()
     }
     setTranscript("")
     pending.current = ""
@@ -62,7 +65,7 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
     setListening(false)
   })
 
-  const start = useCallback(async () => {
+  const start = useCallback(async (options?: { once?: boolean }) => {
     const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync()
     if (!result.granted) {
       setError("Microphone permission denied")
@@ -72,7 +75,7 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
     ExpoSpeechRecognitionModule.start({
       lang: resolveSpeechLang(locale, deviceLocaleTags()),
       interimResults: true,
-      continuous: true,
+      continuous: !options?.once,
     })
   }, [locale])
 

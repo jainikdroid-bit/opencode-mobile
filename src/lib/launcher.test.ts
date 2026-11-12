@@ -31,3 +31,8 @@ test("only connections paired with a launcher offer the start button", () => {
   assert.equal(canStartFromPhone(null), false)
   assert.equal(canStartFromPhone({ launcherPort: 0 }), false)
 })
+
+test("tunnel mode puts the launcher under a path of the public address", () => {
+  assert.equal(launcherUrl("https://a-b.trycloudflare.com/", 4095, true), "https://a-b.trycloudflare.com/__oc/launcher")
+  assert.equal(launcherUrl("http://100.1.2.3:4096", 4095), "http://100.1.2.3:4095")
+})

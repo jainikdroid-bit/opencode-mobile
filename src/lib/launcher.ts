@@ -2,10 +2,10 @@
 // tools/opencode-connect.* keeps running there (see tools/launcher.js). Pure helpers, no React/Expo imports.
 
 /** http://100.1.2.3:4096 + 4095 -> http://100.1.2.3:4095 (same host, launcher port). */
-export function launcherUrl(serverUrl: string, launcherPort: number): string | null {
+export function launcherUrl(serverUrl: string, launcherPort: number, tunnel = false): string | null {
   const m = /^(https?:\/\/)(\[[0-9a-fA-F:]+\]|[A-Za-z0-9.-]+)(?::\d{1,5})?\/?$/.exec(serverUrl.trim())
   if (!m || !Number.isInteger(launcherPort) || launcherPort < 1 || launcherPort > 65535) return null
-  return `${m[1]}${m[2]}:${launcherPort}`
+  return tunnel ? `${serverUrl.trim().replace(/\/+$/, "")}/__oc/launcher` : `${m[1]}${m[2]}:${launcherPort}`
 }
 
 export type StartOutcome =

@@ -49,9 +49,9 @@ function newPassword() {
 }
 
 /** opencode://connect link; the launcher port is optional. */
-function buildLink({ url, password, name, launcherPort }) {
+function buildLink({ url, password, name, launcherPort, topic }) {
   const e = encodeURIComponent
-  return `opencode://connect?url=${e(url)}&password=${e(password)}&name=${e(name)}${launcherPort ? `&launcher=${launcherPort}` : ''}`
+  return `opencode://connect?url=${e(url)}&password=${e(password)}&name=${e(name)}${launcherPort ? `&launcher=${launcherPort}` : ''}${topic ? `&topic=${e(topic)}` : ''}`
 }
 
 /** First private IPv4 address of a non-internal interface. */
@@ -104,7 +104,7 @@ function run(opts, io) {
   let state = {}
   try { state = JSON.parse(readFile(stateFile)) } catch { state = {} }
   const mode = opts.mode || state.mode || 'tailscale'
-  if (!['tailscale', 'lan', 'local'].includes(mode)) return fail('args', `unknown mode "${mode}" (use tailscale, lan or local)`)
+  if (!['tailscale', 'lan', 'local', 'tunnel'].includes(mode)) return fail('args', `unknown mode "${mode}" (use tailscale, lan, local or tunnel)`)
   let port = Number(opts.port || state.port || 4096)
   const name = opts.name || state.name || os.hostname()
   result.mode = mode
@@ -164,7 +164,7 @@ function run(opts, io) {
       result.doctor = {
         node: true, opencode: !!findOpencode(), tailscaleInstalled: !!ts, tailscaleState: tsState, tailscaleIp: tsIp,
         launcherListening: listening(launcherPortOf()), passwordSaved: !!pw, port, serverListening: isUp,
-        serverHealthy: !!(pw && isUp && (await health(port, pw))), platform: process.platform,
+        serverHealthy: !!(pw && isUp && (await health(port, pw))), platform: process.platform, ...(mode === 'tunnel' ? { tunnelUrl: state.tunnelUrl || null } : {}),
       }
       for (const [k, v] of Object.entries(result.doctor)) say(`  ${k.padEnd(20)} ${v}`)
       result.ok = true; result.stage = 'doctor'
@@ -241,10 +241,18 @@ function run(opts, io) {
       bindHost = lan; linkHost = lan
     }
     if (opts.hostname) linkHost = opts.hostname
+    let cloudflared = null
+    if (mode === 'tunnel' && !opts.dryrun) {
+      if (opts.noinstall && !fs.existsSync(path.join(dir, WIN ? 'cloudflared.exe' : 'cloudflared')) && !which(WIN ? 'cloudflared.exe' : 'cloudflared')) return fail('cloudflared', 'cloudflared is missing and --no-install was given.')
+      cloudflared = await ensureCloudflared(dir, say)
+      if (!cloudflared) return need('install-cloudflared', 'Install cloudflared from https://github.com/cloudflare/cloudflared/releases and run this again.')
+      note('cloudflared', 'ok', cloudflared)
+    }
 
     if (opts.dryrun) {
       say(`\nWould start: opencode serve --hostname ${bindHost} --port ${port}`)
       if (mode === 'tailscale') say(`Would run: tailscale serve --bg --tcp ${port} tcp://127.0.0.1:${port}`)
+      if (mode === 'tunnel') say('Would start a free Cloudflare quick tunnel (outbound only) to a local gateway; the address is sent to the phone through a private ntfy.sh topic.')
       say(`Phone would connect to: http://${linkHost}:${port}`)
       result.ok = true; result.stage = 'dry-run'
       return finish(0)
@@ -276,21 +284,29 @@ function run(opts, io) {
     const launcherPort = port - 1
     const bridgePort = port - 2
     const phoneToolsWasOn = !!state.phoneTools
+    const tunnelWasOn = state.mode === 'tunnel' && !!state.tunnelUrl
     const phoneTools = !!(opts.phonetools || state.phoneTools)
     const autostartOn = !opts.noautostart && mode !== 'local'
-    state = { port, mode, name, launcherPort, launcherHost: bindHost, autostart: autostartOn, phoneTools, ...(phoneTools ? { bridgePort } : {}) }
+    const launcherAlive = listening(launcherPort)
+    const tunnelOn = mode === 'tunnel'
+    const tunnelTopic = tunnelOn ? state.tunnelTopic || `ocx-${crypto.randomBytes(12).toString('hex')}` : undefined
+    state = {
+      port, mode, name, launcherPort, launcherHost: bindHost, autostart: autostartOn, phoneTools, ...(phoneTools ? { bridgePort } : {}),
+      ...(tunnelOn ? { gatewayPort: port - 3, bridgePort, tunnelTopic, cloudflared, ...(launcherAlive && state.tunnelUrl ? { tunnelUrl: state.tunnelUrl } : {}) } : {}),
+    }
     fs.writeFileSync(stateFile, JSON.stringify(state, null, 2))
 
     // ----- 4b. launcher: lets the phone start the server later -----
     const launcherJs = path.join(dir, 'launcher.js')
     const bundled = path.join(__dirname, 'launcher.js')
     if (path.resolve(bundled) !== path.resolve(launcherJs) && fs.existsSync(bundled)) fs.copyFileSync(bundled, launcherJs)
-    for (const extra of phoneTools ? ['phone-bridge.js', 'phone-mcp.js'] : []) {
+    for (const extra of [...(phoneTools ? ['phone-bridge.js', 'phone-mcp.js'] : []), ...(mode === 'tunnel' ? ['gateway.js', 'tunnel.js'] : [])]) {
       const src = path.join(__dirname, extra)
       const dest = path.join(dir, extra)
       if (path.resolve(src) !== path.resolve(dest) && fs.existsSync(src)) fs.copyFileSync(src, dest)
     }
     if (phoneTools && !phoneToolsWasOn) launcherLib.stopPort(launcherPort) // restart so the launcher starts the bridge
+    if (mode === 'tunnel' && !tunnelWasOn && listening(launcherPort)) launcherLib.stopPort(launcherPort) // restart into tunnel mode
     if (!fs.existsSync(launcherJs)) { try { fs.writeFileSync(launcherJs, await download(`${BASE_URL}/launcher.js`)) } catch { /* reported below */ } }
     if (!fs.existsSync(launcherJs)) note('launcher', 'skip', 'could not fetch launcher.js (starting the server from the phone will not work)')
     else {
@@ -323,8 +339,16 @@ function run(opts, io) {
       if (mode === 'tailscale') io.out('  2. Install Tailscale from Google Play and sign in with the same account.')
       io.out(`  ${mode === 'tailscale' ? 3 : 2}. Open the app, tap 'Scan QR to pair', point the camera at the QR code, tap Connect.`)
     }
-    const serverUrl = `http://${linkHost}:${port}`
-    const link = buildLink({ url: serverUrl, password, name, launcherPort })
+    let serverUrl = `http://${linkHost}:${port}`
+    if (mode === 'tunnel') {
+      say('Waiting for the tunnel address (up to 60 s)...')
+      for (let i = 0; i < 120 && !currentTunnelUrl(stateFile); i++) await sleep(500)
+      serverUrl = currentTunnelUrl(stateFile)
+      if (!serverUrl) return fail('tunnel', 'The tunnel did not come up. Check that this computer can reach the internet and run again.')
+      note('tunnel', 'ok', serverUrl)
+      say('Tunnel mode: the address is public but needs the long password, and repeated wrong guesses are blocked. Do not share the pairing link.')
+    }
+    const link = buildLink({ url: serverUrl, password, name, launcherPort, topic: mode === 'tunnel' ? state.tunnelTopic : undefined })
     Object.assign(result, { serverUrl, pairingLink: link, launcherPort, ok: true, stage: 'ready', message: 'Install the app on the phone, then scan the pairing QR or open the pairing link on the phone.' })
 
     if (!opts.noqr) await showQr({ dir, link, opts, io, say })
@@ -363,6 +387,30 @@ function unregisterOpencodeMcp() {
   } catch { return false }
 }
 
+/** cloudflared for tunnel mode: use the one on PATH, else download the single binary next to our state (no admin rights). */
+async function ensureCloudflared(dir, say) {
+  const own = path.join(dir, WIN ? 'cloudflared.exe' : 'cloudflared')
+  const found = which(WIN ? 'cloudflared.exe' : 'cloudflared')
+  if (found) return found
+  if (fs.existsSync(own)) return own
+  const arch = process.arch === 'arm64' ? 'arm64' : 'amd64'
+  if (process.platform === 'darwin') {
+    const brew = which('brew')
+    if (brew) { say('Installing cloudflared (Homebrew)...'); sh(brew, ['install', 'cloudflared']) }
+    return which('cloudflared')
+  }
+  const asset = WIN ? `cloudflared-windows-${arch}.exe` : `cloudflared-linux-${arch}`
+  say('Downloading cloudflared (free tunnel client, about 40 MB)...')
+  try {
+    fs.writeFileSync(own, await download(`https://github.com/cloudflare/cloudflared/releases/latest/download/${asset}`), { mode: 0o755 })
+    return own
+  } catch { return null }
+}
+
+function currentTunnelUrl(stateFile) {
+  try { return JSON.parse(fs.readFileSync(stateFile, 'utf8').replace(/^\uFEFF/, '')).tunnelUrl || '' } catch { return '' }
+}
+
 function installTailscale(say) {
   say('Installing Tailscale (your system may ask for permission)...')
   if (WIN) {
@@ -386,9 +434,10 @@ function openExternal(target) {
   } catch { /* no browser available */ }
 }
 
-function download(url) {
+function download(url, hops = 0) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
+      if ([301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location && hops < 5) { res.resume(); return resolve(download(new URL(res.headers.location, url).toString(), hops + 1)) }
       if (res.statusCode !== 200) { res.resume(); return reject(new Error('HTTP ' + res.statusCode)) }
       const chunks = []
       res.on('data', (c) => chunks.push(c))
@@ -419,7 +468,7 @@ async function showQr({ dir, link, opts, io, say }) {
   spawn(process.execPath, ['-e', `setTimeout(()=>{try{require('fs').rmSync(${JSON.stringify(page)},{force:true})}catch(e){}},300000)`], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
 }
 
-module.exports = { registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
+module.exports = { currentTunnelUrl, registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
 
 if (require.main === module) {
   const io = { out: (t) => process.stdout.write(t + '\n'), err: (t) => process.stderr.write(t + '\n') }

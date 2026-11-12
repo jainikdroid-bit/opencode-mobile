@@ -1,0 +1,4 @@
+v0.10.0 — Voice conversation and VPN-free tunnel mode
+
+• Voice conversation: tap the headset next to the microphone, speak, hear the reply, and it listens again.
+• Tunnel mode (optional): connect through a free Cloudflare tunnel instead of Tailscale. The app follows the changing address automatically.

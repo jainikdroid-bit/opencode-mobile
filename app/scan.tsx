@@ -25,7 +25,7 @@ export default function ScanScreen() {
     handled.current = true
     router.replace({
       pathname: "/connect",
-      params: { url: pairing.url, password: pairing.password ?? "", name: pairing.name, launcher: pairing.launcherPort ? String(pairing.launcherPort) : "" },
+      params: { url: pairing.url, password: pairing.password ?? "", name: pairing.name, launcher: pairing.launcherPort ? String(pairing.launcherPort) : "", topic: pairing.tunnelTopic ?? "" },
     })
     return true
   }

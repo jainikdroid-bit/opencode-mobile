@@ -613,5 +613,11 @@
   },
   "permissionBanner": {
     "more": "+{{count}} more"
+  },
+  "voice": {
+    "listening": "Listening… speak now",
+    "thinking": "Thinking…",
+    "speaking": "Speaking…",
+    "stop": "End"
   }
 }

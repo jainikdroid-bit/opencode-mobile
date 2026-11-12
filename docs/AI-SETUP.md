@@ -95,6 +95,10 @@ model configured, the model picker will be empty: run `opencode auth login` (or 
 | Phone camera does nothing on the QR | Normal for some camera apps; use the app's own **Scan QR to pair**. |
 | Needs to work without Tailscale at home | `-Mode lan` (ask the person first; binds the Wi-Fi address only, password protected). |
 
+## Optional: tunnel mode (no VPN)
+
+`-Mode tunnel` publishes the server through a free Cloudflare quick tunnel (outbound only; `cloudflared` is downloaded into the state directory, no admin rights). This puts the server on the public internet behind the password: ask the person first, prefer `-Mode tailscale`, and never show or log the pairing link (it contains the password and the private ntfy topic). `-Uninstall` stops the tunnel; delete the state directory to remove `cloudflared` and the topic.
+
 ## Optional: phone tools for the agent
 
 `-PhoneTools` / `--phone-tools` starts a mailbox (`tools/phone-bridge.js`, port = server port - 2, tailnet only, same password) and adds an MCP server named `phone` to `~/.config/opencode/opencode.json` (merged, other entries untouched; `-Uninstall` removes only that entry). Ask the person first: it changes their opencode config and lets the agent request phone functions. The phone app still decides: every tool is off until the person switches it on in *Settings*, location/photo/clipboard ask every time, and nothing works while the app is closed. Do not try to bypass those switches.
@@ -106,5 +110,5 @@ and the autostart entry (Windows Startup `opencode-connect.vbs`, macOS LaunchAge
 
 ## Flags (both scripts)
 
-`-Mode tailscale|lan|local`, `-Port`, `-Name`, `-HostName` (host shown in the link), `-NoInstall`, `-Json`, `-NoOpen`, `-NoQr`,
+`-Mode tailscale|lan|local|tunnel`, `-Port`, `-Name`, `-HostName` (host shown in the link), `-NoInstall`, `-Json`, `-NoOpen`, `-NoQr`,
 `-Rotate`, `-NoAutostart`, `-Uninstall`, `-Status`, `-Doctor`, `-Stop`, `-DryRun`, `-NoGuide`. On macOS/Linux the same flags are `--mode`, `--json`, `--no-guide`, ... (`opencode-connect.sh`; both styles are accepted everywhere). Environment: `OPENCODE_CONNECT_DIR` overrides the state directory. The core is `tools/connect.js` (Node.js); the `.ps1`/`.sh` files only make sure Node exists.

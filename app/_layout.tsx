@@ -19,6 +19,7 @@ import { ErrorBoundary } from "../src/components/ErrorBoundary"
 import * as notifications from "../src/lib/notifications"
 import { PermissionBanner } from "../src/components/PermissionBanner"
 import { replyPermission } from "../src/lib/permission-actions"
+import { useTunnelDiscovery } from "../src/lib/useTunnelDiscovery"
 import { usePhoneBridge } from "../src/lib/usePhoneBridge"
 import { ShareIntentProvider, useShareIntentContext } from "expo-share-intent"
 
@@ -130,6 +131,7 @@ function RootLayout() {
 
   const isLoading = authLoading || connectionsLoading
   usePhoneBridge()
+  useTunnelDiscovery()
   const { hasShareIntent } = useShareIntentContext()
   useEffect(() => {
     // Another app shared something with us: let the user pick the conversation.

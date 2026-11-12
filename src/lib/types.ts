@@ -15,6 +15,8 @@ export interface ServerConnection {
   directory?: string
   // Port of the launcher on the computer that can start the server from the phone (OpenCode Connect pairing)
   launcherPort?: number
+  // Tunnel mode: private ntfy.sh topic on which the computer announces its changing public address
+  tunnelTopic?: string
   // When last successfully connected
   lastConnected?: number
   // Is this the active connection?

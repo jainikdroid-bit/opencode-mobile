@@ -613,5 +613,11 @@
   },
   "permissionBanner": {
     "more": "ещё {{count}}"
+  },
+  "voice": {
+    "listening": "Слушаю… говорите",
+    "thinking": "Думаю…",
+    "speaking": "Говорю…",
+    "stop": "Завершить"
   }
 }
