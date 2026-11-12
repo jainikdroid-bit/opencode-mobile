@@ -56,7 +56,7 @@ test("both roles get header buttons, adjacent and right-aligned", () => {
   // A button label that is itself selectable text is how a tap turns into a
   // selection instead of an action.
   const chipLabels = src.split("\n").filter((line) => /<Text selectable/.test(line))
-  assert.equal(chipLabels.length, 2, "both chips render a label")
+  assert.equal(chipLabels.length, 3, "all three chips (Listen, Select text, Edit) render a label")
   for (const line of chipLabels) {
     assert.ok(line.includes("selectable={false}"), line)
     assert.ok(line.includes("s.selectChipText"), line)

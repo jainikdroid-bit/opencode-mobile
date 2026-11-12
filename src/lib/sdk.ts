@@ -176,6 +176,11 @@ export interface Agent {
   steps?: number
 }
 
+export interface McpStatus {
+  status: "connected" | "disabled" | "failed" | "needs_auth" | "needs_client_registration" | string
+  error?: string
+}
+
 export interface Command {
   name: string
   description?: string
@@ -716,6 +721,17 @@ function createV2Client(config: ClientConfig) {
       list: async (): Promise<Command[]> => {
         const body = await request<{ data: V2CommandInfo[] }>(config, appendQuery("/api/command", loc()))
         return (body.data || []).map(toCommand)
+      },
+    },
+
+    mcp: {
+      // Connector (MCP server) status as the server reports it, keyed by name.
+      status: () => request<Record<string, McpStatus>>(config, "/mcp"),
+      connect: async (name: string): Promise<void> => {
+        await request<unknown>(config, `/mcp/${encodeURIComponent(name)}/connect`, { method: "POST" })
+      },
+      disconnect: async (name: string): Promise<void> => {
+        await request<unknown>(config, `/mcp/${encodeURIComponent(name)}/disconnect`, { method: "POST" })
       },
     },
 

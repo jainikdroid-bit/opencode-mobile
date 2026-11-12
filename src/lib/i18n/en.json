@@ -14,7 +14,8 @@
       "security": "Security",
       "notifications": "Notifications",
       "privacy": "Privacy",
-      "about": "About"
+      "about": "About",
+      "mcp": "Connectors (MCP)"
     },
     "security": {
       "biometricOpen": {
@@ -72,6 +73,18 @@
       "privacyNotSavedMessage": "Crash reporting is off for this session, but your choice could not be saved. Please try again.",
       "notificationsDisabledTitle": "Notifications Disabled",
       "notificationsDisabledMessage": "Enable notifications for OpenCode in your device settings to receive alerts."
+    },
+    "mcp": {
+      "description": "Tools your agent can use on the computer: mail, browser, phone and more. Switch them on or off here.",
+      "empty": "This server reports no connectors.",
+      "refresh": "Refresh",
+      "state": {
+        "connected": "Connected",
+        "disabled": "Off",
+        "failed": "Failed",
+        "needs_auth": "Needs sign-in on the computer",
+        "other": "Unknown"
+      }
     }
   },
   "session": {

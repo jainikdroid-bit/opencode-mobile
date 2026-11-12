@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useEffect, useState } from "react"
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Platform } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { Markdown } from "../markdown"
@@ -6,6 +6,11 @@ import { ToolCallCard } from "./ToolCallCard"
 import { ReasoningBlock } from "./ReasoningBlock"
 import type { Message, Part } from "../../lib/sdk"
 import { hasSelectableContent } from "../../lib/message-text"
+import * as Speech from "expo-speech"
+import { speakableText } from "../../lib/speakable"
+import { deviceLocaleTags } from "../../lib/i18n/config"
+import { resolveSpeechLang } from "../../lib/speech-lang"
+import { useSettings } from "../../stores/settings"
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 
@@ -32,6 +37,26 @@ interface Props {
 export const MessageBubble = memo(
   function MessageBubble({ message, parts, isDark, onSelectText, onEdit }: Props) {
     const isUser = message.role === "user"
+    const locale = useSettings((st) => st.locale)
+    const [speaking, setSpeaking] = useState(false)
+    const spokenText = isUser ? "" : speakableText(parts)
+    // Stop reading if this bubble goes away while it is speaking.
+    useEffect(() => () => { if (speaking) Speech.stop() }, [speaking])
+    const toggleSpeak = () => {
+      if (speaking) {
+        Speech.stop()
+        setSpeaking(false)
+        return
+      }
+      Speech.stop() // another bubble may be speaking
+      setSpeaking(true)
+      Speech.speak(spokenText, {
+        language: resolveSpeechLang(locale, deviceLocaleTags()),
+        onDone: () => setSpeaking(false),
+        onStopped: () => setSpeaking(false),
+        onError: () => setSpeaking(false),
+      })
+    }
 
     const textParts = parts.filter((p) => p.type === "text")
     const reasoningParts = parts.filter((p) => p.type === "reasoning")
@@ -65,8 +90,20 @@ export const MessageBubble = memo(
               here is a bubble-wide gesture: a long-press on the bubble competed
               with horizontal scrolling in code blocks and with text selection.
               Labels are explicitly non-selectable so a tap can't be swallowed. */}
-          {(onSelectText || onEdit) && (
+          {(onSelectText || onEdit || spokenText.length > 0) && (
             <View style={s.actions}>
+              {spokenText.length > 0 && (
+                <TouchableOpacity
+                  style={[s.selectChip, isDark && s.selectChipDark]}
+                  hitSlop={8}
+                  onPress={toggleSpeak}
+                  testID={`message-speak-${message.id}`}
+                >
+                  <Text selectable={false} style={[s.selectChipText, isDark && s.selectChipTextDark]}>
+                    {speaking ? "Stop" : "Listen"}
+                  </Text>
+                </TouchableOpacity>
+              )}
               {onSelectText && hasSelectableContent(parts) && (
                 <TouchableOpacity
                   style={[s.selectChip, isDark && s.selectChipDark]}

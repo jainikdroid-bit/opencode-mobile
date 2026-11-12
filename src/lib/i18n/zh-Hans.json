@@ -14,7 +14,8 @@
       "security": "安全",
       "notifications": "通知",
       "privacy": "隐私",
-      "about": "关于"
+      "about": "关于",
+      "mcp": "连接器 (MCP)"
     },
     "security": {
       "biometricOpen": {
@@ -72,6 +73,18 @@
       "privacyNotSavedMessage": "本次会话已关闭崩溃报告，但您的选择未能保存。请重试。",
       "notificationsDisabledTitle": "通知已关闭",
       "notificationsDisabledMessage": "请在设备设置中为 OpenCode 启用通知以接收提醒。"
+    },
+    "mcp": {
+      "description": "智能体在电脑上可使用的工具：邮件、浏览器、手机等。可在此开启或关闭。",
+      "empty": "此服务器没有报告任何连接器。",
+      "refresh": "刷新",
+      "state": {
+        "connected": "已连接",
+        "disabled": "已关闭",
+        "failed": "失败",
+        "needs_auth": "需要在电脑上登录",
+        "other": "未知"
+      }
     }
   },
   "session": {
