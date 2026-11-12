@@ -14,6 +14,7 @@ import {
   Linking,
 } from "react-native"
 import { router } from "expo-router"
+import * as Clipboard from "expo-clipboard"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
 import { useConnections } from "../../src/stores/connections"
@@ -25,6 +26,7 @@ import { buildAuth } from "../../src/lib/auth"
 import { AnalyticsEvent, track } from "../../src/lib/analytics"
 import { submitWaitlistSignup, buildWaitlistMailtoUrl, needsManualEscapeHatch, type QueuedSignup } from "../../src/lib/waitlist"
 import { flushPendingSignups, queuePendingSignup, readPendingSignups, dropPendingSignup } from "../../src/lib/waitlist-queue-storage"
+import { parsePairingLink } from "../../src/lib/pairing"
 import appJson from "../../app.json"
 
 // Same read as sentry.ts: app.json is the single source of the user-visible
@@ -169,6 +171,20 @@ export default function AddConnectionScreen() {
         ],
       )
     }
+  }
+
+  // OpenCode Connect: take a pairing link from the clipboard and hand it to the
+  // confirmation screen (same one the camera/QR deep link opens).
+  const handlePastePairingLink = async () => {
+    const pairing = parsePairingLink(await Clipboard.getStringAsync().catch(() => ""))
+    if (!pairing) {
+      Alert.alert(t("connection.pair.invalidTitle"), t("connection.pair.clipboardEmpty"))
+      return
+    }
+    router.push({
+      pathname: "/connect",
+      params: { url: pairing.url, password: pairing.password ?? "", name: pairing.name },
+    })
   }
 
   const handleAdvancedSave = async () => {
@@ -444,7 +460,7 @@ export default function AddConnectionScreen() {
           </Text>
         </View>
 
-        {/* OpenCode Connect — Coming Soon */}
+        {/* OpenCode Connect — self-hosted pairing (QR / link from tools/opencode-connect.ps1) */}
         <View style={[styles.connectCard, isDark && styles.connectCardDark]}>
           <View style={styles.connectCardHeader}>
             <Ionicons name="cloud-done-outline" size={28} color="#6366f1" />
@@ -460,65 +476,10 @@ export default function AddConnectionScreen() {
           <Text style={[styles.connectCardDesc, isDark && styles.hintDark]}>
             {t("connection.add.quick.connectCardDesc")}
           </Text>
-          {waitlistState === "joined" ? (
-            <View style={styles.waitlistSuccess} testID="waitlist-success">
-              <Ionicons name="checkmark-circle" size={20} color="#22c55e" />
-              <Text style={[styles.waitlistSuccessText, isDark && styles.textDark]}>
-                {t("connection.add.waitlist.successText")}
-              </Text>
-            </View>
-          ) : waitlistState === "queued" ? (
-            <View testID="waitlist-queued">
-              <View style={styles.waitlistSuccess}>
-                <Ionicons name="time-outline" size={20} color="#f59e0b" />
-                <Text style={[styles.waitlistSuccessText, isDark && styles.textDark]}>
-                  {t("connection.add.waitlist.queuedText")}
-                </Text>
-              </View>
-              {needsManualEscapeHatch(pendingSignup) && (
-                <TouchableOpacity
-                  style={styles.waitlistEscapeHatch}
-                  onPress={() => void openWaitlistMailto(pendingSignup?.email ?? waitlistEmail)}
-                  testID="waitlist-email-us"
-                >
-                  <Text style={styles.waitlistEscapeHatchText}>{t("connection.add.waitlist.emailUsLink")}</Text>
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity style={styles.waitlistEscapeHatch} onPress={() => void handleRetryQueued()} testID="waitlist-retry">
-                <Text style={styles.waitlistEscapeHatchText}>{t("common.retry")}</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <>
-              <TextInput
-                style={[styles.input, isDark && styles.inputDark, { marginTop: 12 }]}
-                placeholder="your@email.com"
-                placeholderTextColor={isDark ? "#666666" : "#999999"}
-                value={waitlistEmail}
-                onChangeText={setWaitlistEmail}
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-                editable={waitlistState !== "submitting"}
-                testID="waitlist-email-input"
-              />
-              <TouchableOpacity
-                style={styles.waitlistButton}
-                onPress={handleJoinWaitlist}
-                disabled={waitlistState === "submitting"}
-                testID="waitlist-submit-button"
-              >
-                {waitlistState === "submitting" ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
-                  <>
-                    <Ionicons name="mail-outline" size={16} color="#ffffff" />
-                    <Text style={styles.waitlistButtonText}>{t("connection.add.waitlist.joinButton")}</Text>
-                  </>
-                )}
-              </TouchableOpacity>
-            </>
-          )}
+          <TouchableOpacity style={styles.waitlistButton} onPress={handlePastePairingLink} testID="pair-paste-button">
+            <Ionicons name="clipboard-outline" size={16} color="#ffffff" />
+            <Text style={styles.waitlistButtonText}>{t("connection.pair.pasteButton")}</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Advanced mode link */}

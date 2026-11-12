@@ -217,6 +217,13 @@ function RootLayout() {
                 }}
               />
               <Stack.Screen
+                name="connect"
+                options={{
+                  title: t("connection.pair.screenTitle"),
+                  presentation: "modal",
+                }}
+              />
+              <Stack.Screen
                 name="connection/[id]"
                 options={{
                   title: t("nav.editConnectionTitle"),

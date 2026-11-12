@@ -187,8 +187,8 @@
         "helpProtocolSuffix": ".",
         "helpRunningPrefix": "Make sure OpenCode is running:",
         "connectCardTitle": "OpenCode Connect",
-        "connectCardBadge": "Coming Soon",
-        "connectCardDesc": "Bridge your phone to your opencode server — no tunnel setup, no firewall config. One-tap connect from anywhere.",
+        "connectCardBadge": "Self-hosted",
+        "connectCardDesc": "Pair your phone with your computer in one tap: run tools/opencode-connect.ps1 there, scan the QR code with your camera, done. Private network only — nothing is exposed to the internet.",
         "advancedLink": "Advanced options (tunnels, cloud, auth)"
       },
       "waitlist": {
@@ -230,6 +230,18 @@
         "deleteTitle": "Delete Connection",
         "deleteMessage": "Are you sure you want to delete \"{{name}}\"?"
       }
+    },
+    "pair": {
+      "pasteButton": "Paste pairing link",
+      "clipboardEmpty": "The clipboard has no OpenCode pairing link. Copy the link shown by opencode-connect first, or scan its QR code with your camera.",
+      "invalidTitle": "Invalid pairing link",
+      "invalidMessage": "This link is not a valid OpenCode pairing link.",
+      "screenTitle": "Pair with computer",
+      "confirmText": "Add this server to the app?",
+      "confirmWarning": "Only continue if you created this link yourself on your own computer.",
+      "connect": "Connect",
+      "connecting": "Connecting…",
+      "failedTitle": "Could not connect"
     }
   },
   "nav": {

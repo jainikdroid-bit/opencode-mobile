@@ -187,8 +187,8 @@
         "helpProtocolSuffix": "。",
         "helpRunningPrefix": "请确保 OpenCode 正在运行：",
         "connectCardTitle": "OpenCode Connect",
-        "connectCardBadge": "即将上线",
-        "connectCardDesc": "将手机桥接到您的 opencode 服务器 — 无需配置隧道或防火墙。一键连接，随时随地。",
+        "connectCardBadge": "自托管",
+        "connectCardDesc": "一键将手机与电脑配对：在电脑上运行 tools/opencode-connect.ps1，用相机扫描二维码即可。仅限私有网络，不会向互联网暴露任何内容。",
         "advancedLink": "高级选项（隧道、云端、身份验证）"
       },
       "waitlist": {
@@ -230,6 +230,18 @@
         "deleteTitle": "删除连接",
         "deleteMessage": "确定要删除 \"{{name}}\" 吗？"
       }
+    },
+    "pair": {
+      "pasteButton": "粘贴配对链接",
+      "clipboardEmpty": "剪贴板中没有 OpenCode 配对链接。请先复制 opencode-connect 显示的链接，或用相机扫描其二维码。",
+      "invalidTitle": "配对链接无效",
+      "invalidMessage": "这不是有效的 OpenCode 配对链接。",
+      "screenTitle": "与电脑配对",
+      "confirmText": "将此服务器添加到应用？",
+      "confirmWarning": "仅当您在自己的电脑上创建了此链接时才继续。",
+      "connect": "连接",
+      "connecting": "正在连接…",
+      "failedTitle": "无法连接"
     }
   },
   "nav": {

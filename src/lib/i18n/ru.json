@@ -187,8 +187,8 @@
         "helpProtocolSuffix": ".",
         "helpRunningPrefix": "Убедитесь, что OpenCode запущен:",
         "connectCardTitle": "OpenCode Connect",
-        "connectCardBadge": "Скоро",
-        "connectCardDesc": "Свяжите телефон с вашим сервером opencode — без настройки туннелей и фаервола. Подключение в одно касание откуда угодно.",
+        "connectCardBadge": "Свой сервер",
+        "connectCardDesc": "Свяжите телефон с компьютером в одно касание: запустите там tools/opencode-connect.ps1, наведите камеру на QR-код — готово. Только по частной сети, наружу в интернет ничего не открывается.",
         "advancedLink": "Расширенные настройки (туннели, облако, аутентификация)"
       },
       "waitlist": {
@@ -230,6 +230,18 @@
         "deleteTitle": "Удалить подключение",
         "deleteMessage": "Вы уверены, что хотите удалить \"{{name}}\"?"
       }
+    },
+    "pair": {
+      "pasteButton": "Вставить ссылку сопряжения",
+      "clipboardEmpty": "В буфере обмена нет ссылки сопряжения OpenCode. Скопируйте ссылку из opencode-connect или наведите камеру на её QR-код.",
+      "invalidTitle": "Неверная ссылка",
+      "invalidMessage": "Это не ссылка сопряжения OpenCode.",
+      "screenTitle": "Сопряжение с компьютером",
+      "confirmText": "Добавить этот сервер в приложение?",
+      "confirmWarning": "Продолжайте, только если вы сами создали эту ссылку на своём компьютере.",
+      "connect": "Подключиться",
+      "connecting": "Подключаюсь…",
+      "failedTitle": "Не удалось подключиться"
     }
   },
   "nav": {

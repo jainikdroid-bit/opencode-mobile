@@ -215,3 +215,13 @@ Copyright (c) 2026 VIBE TECHNOLOGIES, LLC
 - [sst/opencode](https://github.com/sst/opencode) — the AI coding agent this app connects to (MIT)
 - [Expo](https://expo.dev) — the React Native toolchain powering the app
 - Every contributor who filed a bug, opened a PR, or starred the repo
+
+## OpenCode Connect (self-hosted pairing)
+
+Pair the phone with your computer in one scan, with no hosted relay and nothing exposed to the internet:
+
+1. On the computer run `pwsh -File tools/opencode-connect.ps1`. It starts `opencode serve` bound to `127.0.0.1`, forwards it to your Tailscale address with `tailscale serve --tcp`, generates a random password and prints a QR code.
+2. Scan the QR code with the phone camera (it opens `opencode://connect?...` in the app), check the server shown, tap **Connect**. Or copy the printed link and use **Add connection → Paste pairing link**.
+3. Stop with `pwsh -File tools/opencode-connect.ps1 -Stop`.
+
+The phone and the computer must be on the same Tailscale account. The pairing link contains the password, so treat it like one.
