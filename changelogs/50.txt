@@ -1,0 +1,5 @@
+v0.8.0 — Start the server from the phone
+
+• If the server on your computer is off, the app shows a "Start it" button that starts it for you (the computer must be on and online).
+• A tiny hidden launcher is installed with the computer setup and starts at sign-in (Windows, macOS, Linux). Opt out with -NoAutostart, remove with -Uninstall.
+• The computer setup is now one cross-platform Node.js core; the .ps1/.sh files are thin wrappers.

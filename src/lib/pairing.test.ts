@@ -32,3 +32,12 @@ test("buildPairing trims, strips trailing slash and caps the name", () => {
   assert.equal(info?.name.length, 40)
   assert.equal(buildPairing("", "p", "n"), null)
 })
+
+test("an optional launcher port travels in the link and is validated", () => {
+  const info = parsePairingLink("opencode://connect?url=http%3A%2F%2F100.1.1.1%3A4096&password=p&name=Home&launcher=4095")
+  assert.equal(info?.launcherPort, 4095)
+  assert.equal(parsePairingLink("opencode://connect?url=http%3A%2F%2Fa%3A4096&launcher=abc")?.launcherPort, undefined)
+  assert.equal(parsePairingLink("opencode://connect?url=http%3A%2F%2Fa%3A4096&launcher=70000")?.launcherPort, undefined)
+  assert.equal(parsePairingLink("opencode://connect?url=http%3A%2F%2Fa%3A4096")?.launcherPort, undefined)
+  assert.equal(buildPairing("http://a:4096", "p", "n", 4095)?.launcherPort, 4095)
+})

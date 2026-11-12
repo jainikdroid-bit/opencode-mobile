@@ -548,5 +548,19 @@
       "title": "Scan the QR code",
       "body": "A page with two QR codes opened on your computer. Tap the button below and point the camera at the second one. Then tap Connect."
     }
+  },
+  "launcher": {
+    "offlineTitle": "The server on your computer is off",
+    "hint": "Start it from here (the computer must be on and online).",
+    "start": "Start it",
+    "retry": "Try again",
+    "starting": "Starting the server… up to 30 s",
+    "failed": {
+      "unreachable": "Cannot reach the computer. It may be asleep, offline, or its launcher is not running.",
+      "unauthorized": "The launcher refused the password. Pair with the computer again.",
+      "timeout": "The server did not come up. Check the computer.",
+      "no-server": "Nothing is set up on the computer yet. Run the installer there.",
+      "error": "Could not start the server."
+    }
   }
 }

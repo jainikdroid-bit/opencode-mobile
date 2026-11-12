@@ -3,7 +3,7 @@
 //
 // A pairing link is produced by tools/opencode-connect.ps1 on the computer
 // (shown as a QR code) and consumed by the app:
-//   opencode://connect?url=<server url>&password=<password>&name=<label>
+//   opencode://connect?url=<server url>&password=<password>&name=<label>[&launcher=<port>]
 // The server stays bound to 127.0.0.1 on the computer and is reached over the
 // owner's private network (e.g. `tailscale serve`), so nothing is exposed to
 // the public internet and no hosted relay is involved.
@@ -12,6 +12,8 @@ export interface PairingInfo {
   url: string
   password?: string
   name: string
+  /** Port of the launcher that can start the server from the phone (optional). */
+  launcherPort?: number
 }
 
 const MAX_NAME = 40
@@ -43,11 +45,11 @@ export function parsePairingLink(input: string): PairingInfo | null {
     params[key] = value
   }
 
-  return buildPairing(params.url, params.password, params.name)
+  return buildPairing(params.url, params.password, params.name, params.launcher)
 }
 
 /** Validate already-split fields (deep-link route params use this directly). */
-export function buildPairing(url?: string, password?: string, name?: string): PairingInfo | null {
+export function buildPairing(url?: string, password?: string, name?: string, launcher?: string | number): PairingInfo | null {
   const serverUrl = (url ?? "").trim().replace(/\/+$/, "")
   if (!SERVER_URL.test(serverUrl)) return null
   const port = /:(\d{1,5})$/.exec(serverUrl)
@@ -58,5 +60,13 @@ export function buildPairing(url?: string, password?: string, name?: string): Pa
 
   const label = (name ?? "").trim().slice(0, MAX_NAME)
   const host = serverUrl.replace(/^https?:\/\//, "")
-  return { url: serverUrl, password: secret || undefined, name: label || host }
+  const launcherPort = parseLauncherPort(launcher)
+  return { url: serverUrl, password: secret || undefined, name: label || host, ...(launcherPort ? { launcherPort } : {}) }
+}
+
+/** A launcher port is optional; anything that is not a valid TCP port is simply ignored. */
+export function parseLauncherPort(value: string | number | undefined): number | undefined {
+  if (value === undefined || value === "") return undefined
+  const n = typeof value === "number" ? value : /^\d{1,5}$/.test(value) ? Number(value) : NaN
+  return Number.isInteger(n) && n >= 1 && n <= 65535 ? n : undefined
 }

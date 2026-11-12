@@ -44,8 +44,20 @@ The first time you open the app it also shows a short setup guide. Tap **Skip gu
 
 ## Afterwards
 
-- Next time just open the app. If the computer restarted, run the command from step 1 again (it repairs, never duplicates),
-  or add `-Autostart` once so the server starts when you sign in.
+- Next time just open the app. A small hidden helper (the launcher) starts with your computer and brings the server up;
+  if the server is ever off, the app shows a **Start it** button. The computer must be on and online (it cannot be woken).
+  Opt out of the helper with `-NoAutostart`; remove everything with `-Uninstall`.
+
+| | Computer | Phone |
+|---|---|---|
+| Windows 10/11 | tested | - |
+| Linux | supported (systemd or XDG autostart), lightly tested | - |
+| macOS | supported (LaunchAgent), not yet tested on real hardware | - |
+| Android | - | tested |
+| iOS | - | the code is compatible, but no iOS build has been made or tested |
+
+On Linux/macOS use `curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/main/tools/opencode-connect.sh | sh`
+(flags after `-s --`, e.g. `sh -s -- --no-guide`).
 - Check everything: `... -Doctor`. Stop the server: `... -Stop`.
 - Phone camera ignores the QR? Use the app's own **Scan QR to pair**, or copy the link the script prints into
   **Add Connection, Paste pairing link**.

@@ -32,6 +32,8 @@ import { nameOf } from "../../src/lib/path-utils"
 import { SETUP_GUIDE_URL } from "../../src/lib/links"
 import { Mascot } from "../../src/components/Mascot"
 import { RunnerGame } from "../../src/components/RunnerGame"
+import { StartServerBar } from "../../src/components/StartServerBar"
+import { canStartFromPhone } from "../../src/lib/launcher"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { GUIDE_DONE_KEY, shouldAutoShowGuide } from "../../src/lib/guide"
 
@@ -197,6 +199,7 @@ export default function SessionsScreen() {
     switchDirectory,
     addRecentDirectory,
     recentDirectories,
+    clientBase,
   } = useConnections()
   const authError = useEvents((s) => s.authError)
   const reconnect = useEvents((s) => s.connect)
@@ -585,6 +588,16 @@ export default function SessionsScreen() {
           <Text style={styles.errorText}>{error}</Text>
         </View>
       )}
+
+      {error && canStartFromPhone(activeConnection) ? (
+        <StartServerBar
+          target={{ serverUrl: activeConnection.url, launcherPort: activeConnection.launcherPort as number, auth: clientBase?.auth }}
+          onStarted={() => {
+            reconnect()
+            onRefresh()
+          }}
+        />
+      ) : null}
 
       <UpdateBanner isDark={isDark} />
 

@@ -17,11 +17,11 @@ import { Mascot } from "../src/components/Mascot"
 export default function ConnectScreen() {
   const isDark = useColorScheme() === "dark"
   const { t } = useTranslation()
-  const params = useLocalSearchParams<{ url?: string; password?: string; name?: string }>()
+  const params = useLocalSearchParams<{ url?: string; password?: string; name?: string; launcher?: string }>()
   const { addConnection, testConnection, setActiveConnection } = useConnections()
   const [busy, setBusy] = useState(false)
 
-  const pairing = buildPairing(params.url, params.password, params.name)
+  const pairing = buildPairing(params.url, params.password, params.name, params.launcher)
 
   const close = () => (router.canGoBack() ? router.back() : router.replace("/"))
 
@@ -40,7 +40,7 @@ export default function ConnectScreen() {
     }
     try {
       await addConnection(
-        { name: pairing.name, type: "local", url: pairing.url, api: result.api, serverVersion: result.serverVersion },
+        { name: pairing.name, type: "local", url: pairing.url, api: result.api, serverVersion: result.serverVersion, launcherPort: pairing.launcherPort },
         pairing.password,
       )
       // Pairing means "use this computer now": switch to the connection just added

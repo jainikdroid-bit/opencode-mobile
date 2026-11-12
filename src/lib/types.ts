@@ -13,6 +13,8 @@ export interface ServerConnection {
   // Password stored separately in SecureStore
   // Directory to use for this connection
   directory?: string
+  // Port of the launcher on the computer that can start the server from the phone (OpenCode Connect pairing)
+  launcherPort?: number
   // When last successfully connected
   lastConnected?: number
   // Is this the active connection?

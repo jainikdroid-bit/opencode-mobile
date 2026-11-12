@@ -21,7 +21,7 @@ Everything else is yours. Do not ask the person to open a terminal, edit files o
 - The pairing link and `%LOCALAPPDATA%\opencode-connect\password` are secrets. Show the link only to the
   person, in the current conversation. Never put it in commits, issues, logs you upload or shared chats.
 - Do not stop or restart anything the person did not ask about. `-Stop` only affects what this tool started.
-- Ask before using `-Mode lan` (reachable by every device on the Wi-Fi) or `-Autostart`.
+- Ask before using `-Mode lan` (reachable by every device on the Wi-Fi). A hidden launcher with autostart is installed by default (it can only start/stop/report the opencode server, same password, loopback + tailnet only); tell the person, and use `-NoAutostart` if they decline.
 
 ## Step 0: detect
 
@@ -98,9 +98,9 @@ model configured, the model picker will be empty: run `opencode auth login` (or 
 ## Undo
 
 `-Stop` stops the server and removes the Tailscale forward. To remove everything: also delete `%LOCALAPPDATA%\opencode-connect`
-and the Startup script `opencode-connect.vbs` if `-Autostart` was used.
+and the autostart entry (Windows Startup `opencode-connect.vbs`, macOS LaunchAgent `com.opencode.connect`, Linux systemd user unit `opencode-connect.service` or XDG autostart) — `-Uninstall` removes it.
 
 ## Flags (both scripts)
 
 `-Mode tailscale|lan|local`, `-Port`, `-Name`, `-HostName` (host shown in the link), `-NoInstall`, `-Json`, `-NoOpen`, `-NoQr`,
-`-Rotate`, `-Autostart`, `-Status`, `-Doctor`, `-Stop`, `-DryRun`. Environment: `OPENCODE_CONNECT_DIR` overrides the state directory.
+`-Rotate`, `-NoAutostart`, `-Uninstall`, `-Status`, `-Doctor`, `-Stop`, `-DryRun`, `-NoGuide`. On macOS/Linux the same flags are `--mode`, `--json`, `--no-guide`, ... (`opencode-connect.sh`; both styles are accepted everywhere). Environment: `OPENCODE_CONNECT_DIR` overrides the state directory. The core is `tools/connect.js` (Node.js); the `.ps1`/`.sh` files only make sure Node exists.

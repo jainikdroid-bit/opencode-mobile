@@ -142,7 +142,7 @@ export default function AddConnectionScreen() {
     }
     router.push({
       pathname: "/connect",
-      params: { url: pairing.url, password: pairing.password ?? "", name: pairing.name },
+      params: { url: pairing.url, password: pairing.password ?? "", name: pairing.name, launcher: pairing.launcherPort ? String(pairing.launcherPort) : "" },
     })
   }
 
