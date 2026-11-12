@@ -1,5 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from "react"
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition"
+import { deviceLocaleTags } from "./i18n/config"
+import { resolveSpeechLang } from "./speech-lang"
+import { useSettings } from "../stores/settings"
 
 interface SpeechState {
   listening: boolean
@@ -17,6 +20,7 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
   const [listening, setListening] = useState(false)
   const [transcript, setTranscript] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const locale = useSettings((s) => s.locale)
   const pending = useRef("")
   // True only while this hook instance started a recognition session.
   const started = useRef(false)
@@ -66,11 +70,11 @@ export function useSpeech(onResult: (text: string) => void): SpeechState & Speec
     }
     started.current = true
     ExpoSpeechRecognitionModule.start({
-      lang: "en-US",
+      lang: resolveSpeechLang(locale, deviceLocaleTags()),
       interimResults: true,
       continuous: true,
     })
-  }, [])
+  }, [locale])
 
   const stop = useCallback(() => {
     ExpoSpeechRecognitionModule.stop()
