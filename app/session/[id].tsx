@@ -447,6 +447,9 @@ export default function SessionScreen() {
     const files = [...attachments]
     setInput("")
     setAttachments([])
+    // Sending always brings the conversation back to the newest message, even when
+    // the user had scrolled up — otherwise the reply streams in out of sight.
+    scrollToBottom(true)
 
     // Server slash commands (no attachments for commands)
     if (text.startsWith("/") && files.length === 0) {
@@ -470,6 +473,7 @@ export default function SessionScreen() {
     // No need to abort - just send and it will be processed after current response.
     try {
       await sendMessage(text, model || undefined, agent || undefined, files, variant || undefined)
+      scrollToBottom(true)
     } catch (err) {
       console.error("Send failed:", err)
       // Restore the user's text and attachments so their input isn't lost.

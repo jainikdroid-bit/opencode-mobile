@@ -1,235 +1,111 @@
-# OpenCode Mobile
-
-**The open-source Android client for the [opencode](https://github.com/sst/opencode) AI coding agent.**
-AI-assisted coding from your phone — Android, via Google Play, F-Droid, or a direct APK.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![F-Droid repo](https://img.shields.io/badge/F--Droid-add_our_repo-1976D2?logo=f-droid)](https://dzianisv.github.io/opencode-mobile/fdroid/repo)
-[![Download APK](https://img.shields.io/badge/Download-APK-green?logo=android)](https://github.com/dzianisv/opencode-mobile/releases/latest)
-[![Google Play](https://img.shields.io/badge/Google_Play-Available-4CAF50?logo=google-play)](https://play.google.com/store/apps/details?id=cc.agentlabs.opencode)
-
-> **Not affiliated with opencode.** OpenCode Mobile is an independent, community-built client and is
-> not made by, endorsed by, or affiliated with the opencode / Anomaly team. It talks to an opencode
-> server you run yourself, using opencode's open HTTP API.
-
----
-
-**New: tap "Try a Demo" in the app to see the agent fix a real bug — reasoning, a grep, a diff, a permission prompt — in about 30 seconds, no server needed.**
-
----
-
-## Install (Android)
-
-There are **three working ways** to install OpenCode Mobile today, all for Android:
-
-1. **Google Play** — **https://play.google.com/store/apps/details?id=cc.agentlabs.opencode**
-
-2. **F-Droid (self-hosted repo)** — add our self-hosted repo to any F-Droid client, then install/update from there:
-   ```
-   https://dzianisv.github.io/opencode-mobile/fdroid/repo
-   ```
-   In the F-Droid app: **Settings → Repositories → + (add)** and paste the URL above. Current version: **v0.4.7**.
-
-3. **Direct signed APK** — download the latest release and install it manually:
-   **https://github.com/dzianisv/opencode-mobile/releases/latest**
-
-> iOS is not available (see [Roadmap](#roadmap)). IzzyOnDroid submission is pending.
-
----
-
-OpenCode Mobile is a React Native / Expo app that brings the power of the [opencode](https://github.com/sst/opencode) AI coding agent to your phone. Connect to your own self-hosted opencode server over your local network, a Cloudflare Tunnel, ngrok, or Tailscale — and write, review, and ship code from anywhere. The mobile client is **free and open-source** under the MIT license. There is no feature gate, no telemetry you did not opt into, and no ad network.
-
----
+<h1 align="center">OpenCode Mobile</h1>
 
 <p align="center">
-  <img src="distribution/demo.gif" width="240" alt="OpenCode Mobile demo — connect to your server, browse sessions, and watch the AI agent stream a reply" />
+  <b>Your coding agent, in your pocket.</b><br/>
+  Private, local-first and alive: you can see when the agent is thinking, using a tool or writing.
 </p>
 
-<sub>Real on-device capture: add a connection, browse sessions, and watch the agent stream a response. Verified end-to-end on an Android emulator against a live opencode server (build cc.agentlabs.opencode).</sub>
+<p align="center">
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue" />
+  <img alt="Platform: Android" src="https://img.shields.io/badge/platform-Android-3ddc84?logo=android&logoColor=white" />
+  <img alt="Built with Expo" src="https://img.shields.io/badge/built%20with-Expo-000020?logo=expo" />
+  <img alt="Languages" src="https://img.shields.io/badge/UI-EN%20%7C%20RU%20%7C%20中文-8b5cf6" />
+</p>
 
----
+<p align="center">
+  <img src="docs/screens/thinking.png" width="19%" alt="The agent is thinking: animated activity bar with a timer" />
+  <img src="docs/screens/models.png" width="19%" alt="Model picker with All / Local / Cloud filter" />
+  <img src="docs/screens/connect.png" width="19%" alt="One-scan pairing with your computer" />
+  <img src="docs/screens/connectors.png" width="19%" alt="MCP connectors with on/off switches" />
+  <img src="docs/screens/empty.png" width="19%" alt="Friendly start screen with one-tap prompts" />
+</p>
 
-## Features
+A native Android client for the [opencode](https://github.com/sst/opencode) agent. It talks only to the
+server **you** run, over your own network. Nothing goes through a relay or a hosted service.
 
-- **Offline demo mode** — tap "Try a Demo" to see a full bug-fix walkthrough (reasoning → grep → diff → permission prompt) with zero setup, right from the empty state
-- **Multi-connection** — manage multiple opencode servers (local network, Cloudflare Tunnel, ngrok, or Tailscale)
-- **Biometric unlock** — Face ID, Touch ID, or Android fingerprint protects the app and individual message sends
-- **Streaming chat** — token-by-token streaming responses directly from your opencode server
-- **Diff viewer** — inline side-by-side diffs of every file change the agent makes
-- **Tool call approval** — review and approve (or reject) tool calls before the agent executes them
-- **Secure credential storage** — server credentials stored in the Android Keystore via `expo-secure-store`
-- **Session management** — browse, create, and resume coding sessions
+> Independent community client; not affiliated with the opencode team.
 
----
+## Highlights
 
-## Get OpenCode Mobile
+**See what the agent is doing.** A live activity bar names the phase (*Agent is thinking*, *Using bash*,
+*Writing the answer*), pulses while it works and keeps a timer. While a reasoning model thinks, its block
+breathes, previews the last lines of the thought and collapses to *Thought for 0:12* when done.
 
-Package: `cc.agentlabs.opencode` · Android only · current version v0.4.7
+**Pair with your computer in one scan.** Run one script on the computer, point the phone camera at the QR
+code, confirm, done. The server stays on `127.0.0.1` and is published only inside your Tailscale network.
 
-| Channel | Status | How |
-|---|---|---|
-| **Google Play** | **Live** | [play.google.com/store/apps/details?id=cc.agentlabs.opencode](https://play.google.com/store/apps/details?id=cc.agentlabs.opencode) |
-| **F-Droid (self-hosted repo)** | **Live** | Add [`https://dzianisv.github.io/opencode-mobile/fdroid/repo`](https://dzianisv.github.io/opencode-mobile/fdroid/repo) in your F-Droid client |
-| **Direct APK** | **Live** | [github.com/dzianisv/opencode-mobile/releases/latest](https://github.com/dzianisv/opencode-mobile/releases/latest) |
-| IzzyOnDroid | Submission pending | Not live yet |
-| Apple App Store / iOS | Not available | See [Roadmap](#roadmap) |
+**Pick the brain, local or cloud.** The model picker has *All / Local / Cloud* chips with counts. Models
+served from your own machine (llama.cpp, Ollama, LM Studio, anything on localhost, LAN or Tailscale) are
+marked *on your computer*, so switching from a hosted model to your local one is a single tap.
 
-> The three live, supported install channels are **Google Play**, the **F-Droid self-hosted repo**, and the **direct signed APK**, all Android. IzzyOnDroid is pending, and there is no iOS build.
+**Connectors on tap.** Settings lists the server's MCP connectors (mail, browser, phone, ...) with on/off
+switches. No config editing on the computer.
 
----
+**Listen and dictate in your language.** Read any reply aloud; voice input follows the app or device
+language instead of being English-only.
 
-## Quick Start
+**Give the agent a phone (optional).** Ready-made tools let an agent look at and tap the screen, read the
+battery, send notifications, take photos and more, always behind per-action approval. See
+[agent phone tools](#agent-phone-tools).
 
-**Don't have a server yet?** Install the app and tap **Try a Demo** on the Sessions screen first — no setup required. It plays back a scripted bug-fix session through the app's real chat, diff, and permission-approval UI, offline, in about 30 seconds.
+Also: streaming chat, inline diffs, tool-call approval, image attachments, several servers, biometric lock,
+credentials in the Android Keystore, dark mode.
 
-**Step 1 — Start opencode on your machine**
+## Quick start
+
+1. **Build or install the APK** (see [Build](#build)).
+2. **On the computer** (opencode and Tailscale installed, same Tailscale account as the phone):
+
+   ```powershell
+   pwsh -File tools/opencode-connect.ps1
+   ```
+
+   It starts `opencode serve` on `127.0.0.1:4096`, forwards that port inside your tailnet, creates a random
+   password and prints a QR code. Stop it later with `-Stop`.
+3. **On the phone:** scan the QR code with the camera (or *Add connection → Paste pairing link*), check the
+   server shown, tap **Connect**.
+
+Prefer manual setup? *Add connection* also accepts a plain address such as `http://100.x.x.x:4096` plus the
+server password.
+
+## Agent phone tools
+
+These run on the desktop side and plug into opencode as MCP servers.
+
+| Tool | What it gives the agent |
+|---|---|
+| [`@mobilenext/mobile-mcp`](https://www.npmjs.com/package/@mobilenext/mobile-mcp) | See the screen, tap, type, launch apps (adb, wireless debugging) |
+| [`tools/termux-mcp/phone_mcp.py`](tools/termux-mcp/phone_mcp.py) | Battery, location, notifications, camera, SMS, clipboard, speech, ... via Termux:API, run over SSH |
+
+Keep them behind a dedicated agent and approval, for example:
+
+```jsonc
+"permission": { "phone_*": "ask", "mobile_*": "ask" },
+"tools": { "phone_*": false, "mobile_*": false },
+"agent": { "phone": { "mode": "primary", "tools": { "phone_*": true, "mobile_*": true } } }
+```
+
+An opencode plugin can also ping the phone (`termux-notification` over SSH) when a long run finishes or
+needs approval, with no cloud service involved.
+
+## Build
+
+Requirements: Node 20+, JDK 17, Android SDK.
 
 ```bash
-# Install opencode (if you haven't already)
-npm install -g opencode-ai
-
-# Run opencode in server mode
-OPENCODE_SERVER_PASSWORD=yourpassword opencode serve --hostname 0.0.0.0 --port 4096
+npm ci
+npm run typecheck && npm test      # unit tests
+cd android && ./gradlew assembleRelease
 ```
 
-**Step 2 — Install OpenCode Mobile** via [Google Play, F-Droid, or a direct APK](#install-android) (or build from source — see [CONTRIBUTING.md](CONTRIBUTING.md)).
-
-**Step 3 — Add a connection in the app**
-
-Open the app, tap **Add Connection**, and choose your connection type:
-
-- **Local network** — your machine's LAN IP, e.g. `http://192.168.1.100:4096`
-- **Tunnel** — a Cloudflare Tunnel or ngrok URL, e.g. `https://my-opencode.trycloudflare.com`
-- **Tailscale** — your machine's Tailscale IP, e.g. `http://100.x.x.x:4096`
-- **opencode Cloud** *(planned — not yet shipped)* — one-tap managed hosting, no server to run
-
-Enter the password you set in Step 1, tap **Connect**, and you're in.
-
----
-
-## How It Works
-
-OpenCode Mobile is a thin client. It speaks the opencode HTTP + SSE API: listing sessions, sending messages, streaming responses, and subscribing to file-change events. All AI model calls are handled by your opencode server — you bring your own API keys (OpenAI, Anthropic, etc.) and the app never touches them. The app never proxies your code or conversation through our servers.
-
-```
-┌─────────────────────────────────────┐
-│         OpenCode Mobile             │
-│  (React Native / Expo, this repo)   │
-└──────────────┬──────────────────────┘
-               │  HTTP + SSE
-               │  (local network / tunnel)
-               ▼
-┌─────────────────────────────────────┐
-│       opencode server               │
-│  (github.com/sst/opencode, MIT)     │
-│  Running on your laptop / VPS       │
-└──────────────┬──────────────────────┘
-               │  API calls
-               ▼
-┌─────────────────────────────────────┐
-│   Your AI provider                  │
-│  (OpenAI / Anthropic / Gemini / …)  │
-│  Your keys, your bill               │
-└─────────────────────────────────────┘
-```
-
----
-
-## Project Status
-
-**Current version: v0.4.7**
-
-| Feature | Status |
-|---|---|
-| Offline demo mode | Stable |
-| First-run onboarding clarity | Stable |
-| Multi-connection management | Stable |
-| Session list + creation | Stable |
-| Streaming chat | Stable |
-| Diff viewer | Stable |
-| Biometric unlock | Stable |
-| Tool call approval UI | Stable |
-| Sentry crash reporting (opt-in) | Stable |
-| Cloudflare / ngrok tunnel wizard | Beta |
-| opencode Cloud one-tap connect | Planned |
-| iPad / tablet layout | Planned |
-| Offline session history | Planned |
-
----
-
-## Supporters and Sponsors
-
-OpenCode Mobile is built and maintained by [VIBE TECHNOLOGIES, LLC](https://agentlabs.cc/opencode). GitHub Sponsors help cover Sentry, EAS Build, and CI costs (~$60/month). The opencode Cloud hosted backend (planned, $10/mo) is the long-term revenue model.
-
-If OpenCode Mobile saves you time, consider sponsoring:
-
-**[github.com/sponsors/VibeTechnologies](https://github.com/sponsors/VibeTechnologies)**
-
-| Tier | Price | Perk |
-|---|---|---|
-| Supporter | $5/mo | Your name in `SUPPORTERS.md` |
-| Backer | $15/mo | Name + early access to opencode Cloud beta |
-| Business | $50/mo | Logo on [agentlabs.cc/opencode](https://agentlabs.cc/opencode) + quarterly support call |
-
-Questions or private support: [support@agentlabs.cc](mailto:support@agentlabs.cc)
-
----
-
-## Roadmap
-
-Tracked on the [GitHub Projects board](https://github.com/dzianisv/opencode-mobile/projects) and in the [open milestones](https://github.com/dzianisv/opencode-mobile/milestones).
-
-Near-term priorities:
-- opencode Cloud one-tap connect + managed hosting
-- F-Droid mainline acceptance (FCM audit + reproducible build verification)
-- Tunnel setup wizard (Cloudflare / ngrok / Tailscale)
-- iPad / tablet layout
-- Offline session history cache
-
----
-
-## Contributing
-
-We welcome bug reports, feature requests, and pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up a dev environment and the contribution process.
-
----
+The APK lands in `android/app/build/outputs/apk/release/`. A release build is signed with the debug key unless
+you provide your own signing config, so uninstall other builds of the app before installing it.
 
 ## Privacy
 
-OpenCode Mobile does not collect personal data. Optional Sentry crash reporting (opt-in, off by default) sends anonymised crash traces to Sentry. No analytics SDKs are bundled. Credentials are stored exclusively on-device in the OS keystore.
-
-Full privacy policy: [dzianisv.github.io/opencode-mobile/privacy](https://dzianisv.github.io/opencode-mobile/privacy/)
-
----
+The app talks only to the servers you add. Crash reports and anonymous usage events are **off unless you allow
+them** on first launch (Settings → Privacy). Credentials live in the Android Keystore.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
-
-Copyright (c) 2026 VIBE TECHNOLOGIES, LLC
-
----
-
-## Acknowledgments
-
-- [sst/opencode](https://github.com/sst/opencode) — the AI coding agent this app connects to (MIT)
-- [Expo](https://expo.dev) — the React Native toolchain powering the app
-- Every contributor who filed a bug, opened a PR, or starred the repo
-
-## OpenCode Connect (self-hosted pairing)
-
-Pair the phone with your computer in one scan, with no hosted relay and nothing exposed to the internet:
-
-1. On the computer run `pwsh -File tools/opencode-connect.ps1`. It starts `opencode serve` bound to `127.0.0.1`, forwards it to your Tailscale address with `tailscale serve --tcp`, generates a random password and prints a QR code.
-2. Scan the QR code with the phone camera (it opens `opencode://connect?...` in the app), check the server shown, tap **Connect**. Or copy the printed link and use **Add connection → Paste pairing link**.
-3. Stop with `pwsh -File tools/opencode-connect.ps1 -Stop`.
-
-The phone and the computer must be on the same Tailscale account. The pairing link contains the password, so treat it like one.
-
-## Giving the agent a phone (optional, desktop side)
-
-- **Screen control:** `@mobilenext/mobile-mcp` drives the phone through adb (screenshots, taps, typing, app launch). Enable wireless debugging on the phone, then add it to `opencode.json` as a local MCP.
-- **Phone functions:** `tools/termux-mcp/phone_mcp.py` runs in Termux (needs the Termux:API app and `pkg install termux-api python`) and exposes battery, location, notifications, camera, SMS, clipboard, TTS and more. Register it over SSH so nothing listens on the network: `"command": ["ssh", "-T", "phone", "python", "mcp/phone_mcp.py"]`.
-- **Keep it safe:** put these tools behind a dedicated agent and approval, e.g. `"permission": { "phone_*": "ask", "mobile_*": "ask" }` and `"tools": { "phone_*": false, "mobile_*": false }` with `agent.phone.tools` turning them back on.
-- **Notifications when the agent is done or waiting:** an OpenCode plugin can call `termux-notification` over SSH on `session.idle` / `permission.updated` (no cloud service involved).
-- **Connectors in the app:** Settings → Connectors (MCP) lists the server's MCP servers with on/off switches.
+MIT. See [LICENSE](LICENSE). Based on the MIT-licensed OpenCode Mobile project.
