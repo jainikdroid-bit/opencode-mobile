@@ -53,7 +53,7 @@ credentials in the Android Keystore, dark mode.
 
 ## Quick start
 
-1. **Build or install the APK** (see [Build](#build)).
+1. **Get the APK:** download it from [Releases](https://github.com/jainikdroid-bit/opencode-mobile/releases/latest) (verify with `SHA256SUMS`), or build it yourself (see [Build](#build)).
 2. **On the computer** (opencode and Tailscale installed, same Tailscale account as the phone):
 
    ```powershell
