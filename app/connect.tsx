@@ -17,7 +17,7 @@ export default function ConnectScreen() {
   const isDark = useColorScheme() === "dark"
   const { t } = useTranslation()
   const params = useLocalSearchParams<{ url?: string; password?: string; name?: string }>()
-  const { addConnection, testConnection } = useConnections()
+  const { addConnection, testConnection, setActiveConnection } = useConnections()
   const [busy, setBusy] = useState(false)
 
   const pairing = buildPairing(params.url, params.password, params.name)
@@ -42,6 +42,10 @@ export default function ConnectScreen() {
         { name: pairing.name, type: "local", url: pairing.url, api: result.api, serverVersion: result.serverVersion },
         pairing.password,
       )
+      // Pairing means "use this computer now": switch to the connection just added
+      // (addConnection only activates the very first one).
+      const added = useConnections.getState().connections.at(-1)
+      if (added) await setActiveConnection(added.id)
       router.replace("/")
     } catch {
       setBusy(false)
