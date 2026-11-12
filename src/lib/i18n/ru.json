@@ -610,5 +610,8 @@
       "off": "заблокировано",
       "error": "ошибка"
     }
+  },
+  "permissionBanner": {
+    "more": "ещё {{count}}"
   }
 }

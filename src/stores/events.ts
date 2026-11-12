@@ -410,6 +410,7 @@ export const useEvents = create<EventsState>((set, get) => ({
                   "A tool needs your approval",
                 ),
                 sessionId: req.sessionID,
+                requestId: req.id,
                 dedupeKey: `perm-${req.id}`,
                 dedupeCooldownMs: 60_000,
               })

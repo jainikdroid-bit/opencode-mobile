@@ -610,5 +610,8 @@
       "off": "blocked",
       "error": "failed"
     }
+  },
+  "permissionBanner": {
+    "more": "+{{count}} more"
   }
 }

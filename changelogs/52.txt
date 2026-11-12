@@ -1,0 +1,4 @@
+v0.9.1 — Quick permissions
+
+• When the agent asks for approval, a banner with Deny / Always / Allow appears on any screen, so you do not have to open the chat first.
+• Permission notifications now have Allow and Deny buttons: answer without opening the app.

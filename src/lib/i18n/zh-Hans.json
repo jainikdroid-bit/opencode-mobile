@@ -610,5 +610,8 @@
       "off": "已拦截",
       "error": "失败"
     }
+  },
+  "permissionBanner": {
+    "more": "还有 {{count}} 个"
   }
 }

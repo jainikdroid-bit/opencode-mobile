@@ -17,6 +17,8 @@ import { useSettings } from "../src/stores/settings"
 import { AuthGate } from "../src/components/AuthGate"
 import { ErrorBoundary } from "../src/components/ErrorBoundary"
 import * as notifications from "../src/lib/notifications"
+import { PermissionBanner } from "../src/components/PermissionBanner"
+import { replyPermission } from "../src/lib/permission-actions"
 import { usePhoneBridge } from "../src/lib/usePhoneBridge"
 import { ShareIntentProvider, useShareIntentContext } from "expo-share-intent"
 
@@ -51,7 +53,15 @@ function RootLayout() {
       else router.push("/")
     })
 
-    return unsubNotifications
+    // Allow / Deny pressed on a permission notification: answer without opening the app.
+    const unsubActions = notifications.onAction((reply, sessionId, requestId) => {
+      void replyPermission(sessionId, requestId, reply, true)
+    })
+
+    return () => {
+      unsubNotifications()
+      unsubActions()
+    }
   }, [])
 
   // Re-arm the biometric app-lock when the app leaves the foreground. Without
@@ -192,6 +202,7 @@ function RootLayout() {
                 }}
               />
             </Stack>
+              <PermissionBanner />
               <StatusBar style={isDark ? "light" : "dark"} />
             </AuthGate>
           </QueryClientProvider>

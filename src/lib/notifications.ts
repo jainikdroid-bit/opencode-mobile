@@ -1,4 +1,6 @@
 import * as Notifications from "expo-notifications"
+import i18n from "./i18n/config"
+import { ACTION_ALLOW, ACTION_DENY, PERMISSION_CATEGORY_ID, replyFromAction, type PermissionReply } from "./permission-reply"
 import * as Device from "expo-device"
 import { Platform, AppState } from "react-native"
 
@@ -59,6 +61,8 @@ export interface Payload {
   title: string
   body: string
   sessionId: string
+  /** set for permission requests: adds Allow / Deny buttons to the notification */
+  requestId?: string
   dedupeKey?: string
   dedupeCooldownMs?: number
 }
@@ -67,6 +71,7 @@ export interface Payload {
 interface NotificationData {
   category: Category
   sessionId: string
+  requestId?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -117,7 +122,15 @@ export async function granted(): Promise<boolean> {
   return status === "granted"
 }
 
+async function ensureActionCategory() {
+  await Notifications.setNotificationCategoryAsync(PERMISSION_CATEGORY_ID, [
+    { identifier: ACTION_DENY, buttonTitle: i18n.t("chat.permissionPrompt.deny"), options: { opensAppToForeground: false, isDestructive: true } },
+    { identifier: ACTION_ALLOW, buttonTitle: i18n.t("chat.permissionPrompt.allow"), options: { opensAppToForeground: false } },
+  ]).catch(() => {})
+}
+
 async function ensureChannel() {
+  await ensureActionCategory()
   if (Platform.OS !== "android") return
   await Notifications.setNotificationChannelAsync("prompts", {
     name: "Session Prompts & Updates",
@@ -152,7 +165,9 @@ export async function send(payload: Payload) {
       data: {
         category: payload.category,
         sessionId: payload.sessionId,
+        ...(payload.requestId ? { requestId: payload.requestId } : {}),
       } satisfies NotificationData as Record<string, unknown>,
+      ...(payload.requestId ? { categoryIdentifier: PERMISSION_CATEGORY_ID } : {}),
       sound: "default",
       ...(Platform.OS === "android" ? { channelId: "prompts" } : {}),
     },
@@ -166,12 +181,23 @@ export async function send(payload: Payload) {
 
 export function onTap(handler: (data: NotificationData) => void) {
   const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
+    if (response.actionIdentifier !== Notifications.DEFAULT_ACTION_IDENTIFIER) return // a button press, handled by onAction
     const raw = response.notification.request.content.data
     const data = raw as unknown as NotificationData | undefined
     if (!data) return
     if (data.sessionId || data.category === "connection") {
       handler(data)
     }
+  })
+  return () => subscription.remove()
+}
+
+/** Allow / Deny pressed on a permission notification (the app stays in the background). */
+export function onAction(handler: (reply: PermissionReply, sessionId: string, requestId: string) => void) {
+  const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
+    const reply = replyFromAction(response.actionIdentifier)
+    const data = response.notification.request.content.data as unknown as NotificationData | undefined
+    if (reply && data?.sessionId && data.requestId) handler(reply, data.sessionId, data.requestId)
   })
   return () => subscription.remove()
 }
