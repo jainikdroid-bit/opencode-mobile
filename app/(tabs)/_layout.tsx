@@ -2,6 +2,7 @@ import { Tabs } from "expo-router"
 import { useColorScheme } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
+import { cyber } from "../../src/theme/cyber"
 
 export default function TabLayout() {
   const colorScheme = useColorScheme()
@@ -11,16 +12,14 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: isDark ? "#ffffff" : "#0a0a0a",
-        tabBarInactiveTintColor: isDark ? "#666666" : "#999999",
-        tabBarStyle: {
-          backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
-          borderTopColor: isDark ? "#1a1a1a" : "#e5e5e5",
-        },
-        headerStyle: {
-          backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
-        },
-        headerTintColor: isDark ? "#ffffff" : "#0a0a0a",
+        tabBarActiveTintColor: cyber.cyan,
+        tabBarInactiveTintColor: cyber.muted,
+        tabBarLabelStyle: { fontFamily: cyber.mono, fontSize: 10, letterSpacing: 0.5 },
+        tabBarStyle: { backgroundColor: cyber.bg, borderTopColor: cyber.borderGlow },
+        headerStyle: { backgroundColor: cyber.bg },
+        headerTintColor: cyber.cyan,
+        headerTitleStyle: { color: cyber.text, fontFamily: cyber.mono, fontSize: 15 },
+        headerShadowVisible: false,
       }}
     >
       <Tabs.Screen

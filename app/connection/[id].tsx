@@ -208,7 +208,7 @@ export default function EditConnectionScreen() {
             <Ionicons
               name={opt.icon}
               size={20}
-              color={type === opt.type ? (isDark ? "#0a0a0a" : "#ffffff") : isDark ? "#888888" : "#666666"}
+              color={type === opt.type ? (isDark ? "#07080c" : "#ffffff") : isDark ? "#8a93a8" : "#8a93a8"}
             />
             <Text
               style={[
@@ -229,7 +229,7 @@ export default function EditConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder={t("connection.shared.namePlaceholder")}
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={name}
         onChangeText={setName}
       />
@@ -239,7 +239,7 @@ export default function EditConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="http://192.168.1.100:4096"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={url}
         onChangeText={setUrl}
         autoCapitalize="none"
@@ -252,7 +252,7 @@ export default function EditConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="/path/to/project"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={directory}
         onChangeText={setDirectory}
         autoCapitalize="none"
@@ -267,7 +267,7 @@ export default function EditConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="admin"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -278,7 +278,7 @@ export default function EditConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="••••••••"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -292,10 +292,10 @@ export default function EditConnectionScreen() {
           disabled={isTesting}
         >
           {isTesting ? (
-            <ActivityIndicator size="small" color={isDark ? "#ffffff" : "#0a0a0a"} />
+            <ActivityIndicator size="small" color={isDark ? "#ffffff" : "#07080c"} />
           ) : (
             <>
-              <Ionicons name="pulse" size={20} color={isDark ? "#ffffff" : "#0a0a0a"} />
+              <Ionicons name="pulse" size={20} color={isDark ? "#ffffff" : "#07080c"} />
               <Text style={[styles.testButtonText, isDark && styles.textDark]}>{t("connection.edit.testButton")}</Text>
             </>
           )}
@@ -307,7 +307,7 @@ export default function EditConnectionScreen() {
           disabled={isSaving}
         >
           {isSaving ? (
-            <ActivityIndicator size="small" color={isDark ? "#0a0a0a" : "#ffffff"} />
+            <ActivityIndicator size="small" color={isDark ? "#07080c" : "#ffffff"} />
           ) : (
             <Text style={[styles.saveButtonText, isDark && styles.saveButtonTextDark]}>
               {t("connection.edit.saveButton")}
@@ -316,7 +316,7 @@ export default function EditConnectionScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-          <Ionicons name="trash-outline" size={20} color="#ef4444" />
+          <Ionicons name="trash-outline" size={20} color="#ff4d6d" />
           <Text style={styles.deleteButtonText}>{t("connection.edit.deleteButton")}</Text>
         </TouchableOpacity>
       </View>
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   containerDark: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   center: {
     justifyContent: "center",
@@ -343,12 +343,12 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    color: "#666666",
+    color: "#8a93a8",
   },
   label: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginTop: 16,
     marginBottom: 8,
   },
@@ -366,22 +366,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 12,
     borderRadius: 8,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     gap: 6,
   },
   typeOptionDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
   },
   typeOptionSelected: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   typeOptionSelectedDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   typeLabel: {
     fontSize: 13,
     fontWeight: "500",
-    color: "#666666",
+    color: "#8a93a8",
   },
   textDark: {
     color: "#ffffff",
@@ -390,32 +390,32 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   typeLabelSelectedDark: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   input: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   inputDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
     color: "#ffffff",
   },
   hint: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 6,
   },
   hintDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginTop: 32,
     marginBottom: 8,
   },
@@ -431,25 +431,25 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e5e5e5",
+    borderColor: "#1c2333",
   },
   testButtonDark: {
-    borderColor: "#333333",
+    borderColor: "#262f45",
   },
   testButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   saveButton: {
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   saveButtonDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   saveButtonText: {
     fontSize: 16,
@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   saveButtonTextDark: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   deleteButton: {
     flexDirection: "row",
@@ -466,11 +466,11 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "#fef2f2",
+    backgroundColor: "#2a0f16",
   },
   deleteButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ef4444",
+    color: "#ff4d6d",
   },
 })

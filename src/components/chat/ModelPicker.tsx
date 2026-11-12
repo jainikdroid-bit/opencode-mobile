@@ -97,7 +97,7 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
       keyboardBlurBehavior="restore"
       android_keyboardInputMode="adjustResize"
       backgroundStyle={isDark ? s.sheetDark : s.sheet}
-      handleIndicatorStyle={{ backgroundColor: isDark ? "#666666" : "#cccccc" }}
+      handleIndicatorStyle={{ backgroundColor: isDark ? "#8a93a8" : "#cccccc" }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} opacity={0.5} />
       )}
@@ -124,7 +124,7 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
         <BottomSheetTextInput
           style={[s.search, isDark && s.searchDark]}
           placeholder={t("chat.modelPicker.searchPlaceholder")}
-          placeholderTextColor={isDark ? "#666666" : "#999999"}
+          placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
           value={search}
           onChangeText={setSearch}
           autoCorrect={false}
@@ -159,7 +159,7 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
                 </Text>
                 <Text style={[s.rowProvider, isDark && s.metaDark]}>{item.providerName || item.providerID}</Text>
               </View>
-              {active && <Ionicons name="checkmark-circle" size={20} color="#8b5cf6" />}
+              {active && <Ionicons name="checkmark-circle" size={20} color="#22d3ee" />}
             </TouchableOpacity>
           )
         }}
@@ -172,22 +172,22 @@ export function ModelPicker({ providers, selected, isDark, onSelect, sheetRef }:
 
 const s = StyleSheet.create({
   sheet: { backgroundColor: "#ffffff" },
-  sheetDark: { backgroundColor: "#1a1a1a" },
+  sheetDark: { backgroundColor: "#0d1018" },
   header: { paddingHorizontal: 16, paddingBottom: 12, gap: 10 },
-  title: { fontSize: 18, fontWeight: "700", color: "#0a0a0a" },
+  title: { fontSize: 18, fontWeight: "700", color: "#07080c" },
   textWhite: { color: "#ffffff" },
   search: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 10,
     fontSize: 15,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
-  searchDark: { backgroundColor: "#2a2a2a", color: "#ffffff" },
+  searchDark: { backgroundColor: "#1c2333", color: "#ffffff" },
   content: { paddingBottom: 40 },
   sectionHeader: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: "row",
@@ -202,33 +202,33 @@ const s = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: "#d4d4d4",
+    borderColor: "#1c2333",
   },
   sourceChipDark: { borderColor: "#404040" },
-  sourceChipActive: { backgroundColor: "#8b5cf6", borderColor: "#8b5cf6" },
+  sourceChipActive: { backgroundColor: "#22d3ee", borderColor: "#22d3ee" },
   sourceText: { fontSize: 13, color: "#525252" },
   sourceTextActive: { color: "#ffffff", fontWeight: "600" },
-  sectionHeaderDark: { backgroundColor: "#111111" },
+  sectionHeaderDark: { backgroundColor: "#0a0d14" },
   sectionTitle: {
     fontSize: 12,
     fontWeight: "700",
-    color: "#999999",
+    color: "#8a93a8",
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
-  metaDark: { color: "#666666" },
+  metaDark: { color: "#8a93a8" },
   row: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
   },
-  rowDark: { borderBottomColor: "#2a2a2a" },
-  rowSelected: { backgroundColor: "#f5f3ff" },
-  rowSelectedDark: { backgroundColor: "#1f1a2e" },
+  rowDark: { borderBottomColor: "#1c2333" },
+  rowSelected: { backgroundColor: "#141926" },
+  rowSelectedDark: { backgroundColor: "#0c1a26" },
   rowText: { flex: 1 },
-  rowName: { fontSize: 15, fontWeight: "500", color: "#0a0a0a" },
-  rowProvider: { fontSize: 12, color: "#999999", marginTop: 1 },
+  rowName: { fontSize: 15, fontWeight: "500", color: "#07080c" },
+  rowProvider: { fontSize: 12, color: "#8a93a8", marginTop: 1 },
 })

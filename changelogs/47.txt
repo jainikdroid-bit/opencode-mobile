@@ -1,0 +1,6 @@
+v0.6.0 — Cyberpunk RIG
+
+• New dark, minimal cyberpunk look and a mascot, RIG, that thinks, works, writes and loads with you.
+• Terminal: a real shell on your computer, with Esc/Tab/Ctrl/arrow keys.
+• Files: browse the project and read files.
+• New app icon and splash.

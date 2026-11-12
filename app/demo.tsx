@@ -46,7 +46,7 @@ export default function DemoScreen() {
       <Stack.Screen options={{ title: t("demo.title"), presentation: "card" }} />
       <View style={[s.container, isDark && s.containerDark]} testID="demo-screen">
         <View style={[s.banner, isDark && s.bannerDark]} testID="demo-banner">
-          <Ionicons name="play-circle-outline" size={16} color="#8b5cf6" />
+          <Ionicons name="play-circle-outline" size={16} color="#22d3ee" />
           <Text style={s.bannerText}>{t("demo.banner")}</Text>
         </View>
 
@@ -86,9 +86,9 @@ export default function DemoScreen() {
 
 const s = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#ffffff" },
-  containerDark: { backgroundColor: "#0a0a0a" },
+  containerDark: { backgroundColor: "#07080c" },
   textWhite: { color: "#ffffff" },
-  metaDark: { color: "#888888" },
+  metaDark: { color: "#8a93a8" },
 
   banner: {
     flexDirection: "row",
@@ -96,12 +96,12 @@ const s = StyleSheet.create({
     gap: 8,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    backgroundColor: "#f5f3ff",
+    backgroundColor: "#141926",
     borderBottomWidth: 1,
     borderBottomColor: "#e9d5ff",
   },
-  bannerDark: { backgroundColor: "#1a1030", borderBottomColor: "#2a1a4a" },
-  bannerText: { fontSize: 13, fontWeight: "600", color: "#6d28d9", flex: 1 },
+  bannerDark: { backgroundColor: "#0a1522", borderBottomColor: "#0f2a36" },
+  bannerText: { fontSize: 13, fontWeight: "600", color: "#0891b2", flex: 1 },
 
   scrollContent: { padding: 16, paddingBottom: 40 },
 
@@ -109,15 +109,15 @@ const s = StyleSheet.create({
     marginTop: 8,
     padding: 20,
     borderRadius: 16,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     alignItems: "center",
   },
-  ctaCardDark: { backgroundColor: "#1a1a1a" },
-  ctaTitle: { fontSize: 17, fontWeight: "700", color: "#0a0a0a", textAlign: "center" },
-  ctaSubtitle: { fontSize: 13, color: "#666666", marginTop: 6, textAlign: "center", lineHeight: 18 },
+  ctaCardDark: { backgroundColor: "#0d1018" },
+  ctaTitle: { fontSize: 17, fontWeight: "700", color: "#07080c", textAlign: "center" },
+  ctaSubtitle: { fontSize: 13, color: "#8a93a8", marginTop: 6, textAlign: "center", lineHeight: 18 },
   connectButton: {
     marginTop: 16,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -126,5 +126,5 @@ const s = StyleSheet.create({
   },
   connectButtonText: { color: "#ffffff", fontWeight: "600", fontSize: 15 },
   setupGuideLink: { marginTop: 14 },
-  setupGuideLinkText: { fontSize: 14, fontWeight: "600", color: "#6366f1" },
+  setupGuideLinkText: { fontSize: 14, fontWeight: "600", color: "#0891b2" },
 })

@@ -238,7 +238,7 @@ export default function AddConnectionScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.quickHeader}>
-          <Ionicons name="wifi" size={48} color={isDark ? "#ffffff" : "#0a0a0a"} />
+          <Ionicons name="wifi" size={48} color={isDark ? "#ffffff" : "#07080c"} />
           <Text style={[styles.quickTitle, isDark && styles.textDark]}>{t("connection.add.quick.title")}</Text>
           <Text style={[styles.quickSubtitle, isDark && styles.hintDark]}>{t("connection.add.quick.subtitle")}</Text>
         </View>
@@ -249,7 +249,7 @@ export default function AddConnectionScreen() {
           <TextInput
             style={[styles.input, styles.ipInput, isDark && styles.inputDark]}
             placeholder="192.168.1.100"
-            placeholderTextColor={isDark ? "#666666" : "#999999"}
+            placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
             value={ip}
             onChangeText={setIp}
             autoCapitalize="none"
@@ -261,7 +261,7 @@ export default function AddConnectionScreen() {
           <TextInput
             style={[styles.input, styles.portInput, isDark && styles.inputDark]}
             placeholder="4096"
-            placeholderTextColor={isDark ? "#666666" : "#999999"}
+            placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
             value={port}
             onChangeText={setPort}
             keyboardType="number-pad"
@@ -274,7 +274,7 @@ export default function AddConnectionScreen() {
         <TextInput
           style={[styles.input, isDark && styles.inputDark]}
           placeholder={t("connection.add.quick.namePlaceholder")}
-          placeholderTextColor={isDark ? "#666666" : "#999999"}
+          placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
           value={name}
           onChangeText={setName}
         />
@@ -284,7 +284,7 @@ export default function AddConnectionScreen() {
         <TextInput
           style={[styles.input, isDark && styles.inputDark]}
           placeholder={t("connection.add.quick.passwordPlaceholder")}
-          placeholderTextColor={isDark ? "#666666" : "#999999"}
+          placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -308,10 +308,10 @@ export default function AddConnectionScreen() {
           testID="connect-submit-button"
         >
           {isConnecting ? (
-            <ActivityIndicator size="small" color={isDark ? "#0a0a0a" : "#ffffff"} />
+            <ActivityIndicator size="small" color={isDark ? "#07080c" : "#ffffff"} />
           ) : (
             <>
-              <Ionicons name="flash" size={20} color={isDark ? "#0a0a0a" : "#ffffff"} />
+              <Ionicons name="flash" size={20} color={isDark ? "#07080c" : "#ffffff"} />
               <Text style={[styles.connectButtonText, isDark && styles.connectButtonTextDark]}>
                 {t("connection.add.quick.connectButton")}
               </Text>
@@ -351,7 +351,7 @@ export default function AddConnectionScreen() {
         {/* OpenCode Connect — self-hosted pairing (QR / link from tools/opencode-connect.ps1) */}
         <View style={[styles.connectCard, isDark && styles.connectCardDark]}>
           <View style={styles.connectCardHeader}>
-            <Ionicons name="cloud-done-outline" size={28} color="#6366f1" />
+            <Ionicons name="cloud-done-outline" size={28} color="#0891b2" />
             <View style={styles.connectCardTitles}>
               <Text style={[styles.connectCardTitle, isDark && styles.textDark]}>
                 {t("connection.add.quick.connectCardTitle")}
@@ -375,7 +375,7 @@ export default function AddConnectionScreen() {
           <Text style={[styles.advancedLinkText, isDark && styles.hintDark]}>
             {t("connection.add.quick.advancedLink")}
           </Text>
-          <Ionicons name="chevron-forward" size={16} color={isDark ? "#888888" : "#666666"} />
+          <Ionicons name="chevron-forward" size={16} color={isDark ? "#8a93a8" : "#8a93a8"} />
         </TouchableOpacity>
       </ScrollView>
       </KeyboardAvoidingView>
@@ -395,7 +395,7 @@ export default function AddConnectionScreen() {
       keyboardShouldPersistTaps="handled"
     >
       <TouchableOpacity style={styles.backToQuick} onPress={() => setMode("quick")}>
-        <Ionicons name="chevron-back" size={16} color={isDark ? "#888888" : "#666666"} />
+        <Ionicons name="chevron-back" size={16} color={isDark ? "#8a93a8" : "#8a93a8"} />
         <Text style={[styles.backToQuickText, isDark && styles.hintDark]}>{t("connection.add.advanced.backToQuick")}</Text>
       </TouchableOpacity>
 
@@ -420,7 +420,7 @@ export default function AddConnectionScreen() {
             <Ionicons
               name={opt.icon}
               size={20}
-              color={type === opt.type ? (isDark ? "#0a0a0a" : "#ffffff") : isDark ? "#888888" : "#666666"}
+              color={type === opt.type ? (isDark ? "#07080c" : "#ffffff") : isDark ? "#8a93a8" : "#8a93a8"}
             />
             <Text
               style={[
@@ -441,7 +441,7 @@ export default function AddConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder={t("connection.shared.namePlaceholder")}
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={name}
         onChangeText={setName}
       />
@@ -457,7 +457,7 @@ export default function AddConnectionScreen() {
               ? "https://your-tunnel.trycloudflare.com"
               : "https://api.opencode.ai"
         }
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={url}
         onChangeText={setUrl}
         autoCapitalize="none"
@@ -479,7 +479,7 @@ export default function AddConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="/path/to/project"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={directory}
         onChangeText={setDirectory}
         autoCapitalize="none"
@@ -494,7 +494,7 @@ export default function AddConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="admin"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -505,7 +505,7 @@ export default function AddConnectionScreen() {
       <TextInput
         style={[styles.input, isDark && styles.inputDark]}
         placeholder="password"
-        placeholderTextColor={isDark ? "#666666" : "#999999"}
+        placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -518,7 +518,7 @@ export default function AddConnectionScreen() {
         disabled={isConnecting}
       >
         {isConnecting ? (
-          <ActivityIndicator size="small" color={isDark ? "#0a0a0a" : "#ffffff"} />
+          <ActivityIndicator size="small" color={isDark ? "#07080c" : "#ffffff"} />
         ) : (
           <Text style={[styles.connectButtonText, isDark && styles.connectButtonTextDark]}>
             {t("connection.add.advanced.saveButton")}
@@ -536,7 +536,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   containerDark: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   content: {
     padding: 16,
@@ -550,12 +550,12 @@ const styles = StyleSheet.create({
   quickTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginTop: 16,
   },
   quickSubtitle: {
     fontSize: 15,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 8,
     textAlign: "center",
   },
@@ -570,7 +570,7 @@ const styles = StyleSheet.create({
   ipColon: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   portInput: {
     width: 80,
@@ -582,11 +582,11 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     marginTop: 24,
   },
   connectButtonDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   connectButtonText: {
     fontSize: 18,
@@ -594,26 +594,26 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   connectButtonTextDark: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   helpBox: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 12,
     padding: 16,
     marginTop: 24,
   },
   helpBoxDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
   },
   helpTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginBottom: 8,
   },
   helpText: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     lineHeight: 20,
   },
   code: {
@@ -624,13 +624,13 @@ const styles = StyleSheet.create({
   },
   usernameHint: {
     fontSize: 12,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 6,
     marginBottom: 4,
     lineHeight: 18,
   },
   usernameHintLink: {
-    color: "#6366f1",
+    color: "#0891b2",
     fontWeight: "600",
   },
   advancedLink: {
@@ -643,7 +643,7 @@ const styles = StyleSheet.create({
   },
   advancedLinkText: {
     fontSize: 14,
-    color: "#666666",
+    color: "#8a93a8",
   },
   backToQuick: {
     flexDirection: "row",
@@ -653,13 +653,13 @@ const styles = StyleSheet.create({
   },
   backToQuickText: {
     fontSize: 14,
-    color: "#666666",
+    color: "#8a93a8",
   },
   // Original styles
   label: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginTop: 16,
     marginBottom: 8,
   },
@@ -677,22 +677,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 12,
     borderRadius: 8,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     gap: 6,
   },
   typeOptionDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
   },
   typeOptionSelected: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   typeOptionSelectedDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   typeLabel: {
     fontSize: 13,
     fontWeight: "500",
-    color: "#666666",
+    color: "#8a93a8",
   },
   textDark: {
     color: "#ffffff",
@@ -701,46 +701,46 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   typeLabelSelectedDark: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   hint: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 8,
   },
   hintDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   input: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   inputDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
     color: "#ffffff",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     marginTop: 32,
     marginBottom: 8,
   },
   connectCard: {
-    backgroundColor: "#f0f0ff",
+    backgroundColor: "#141926",
     borderRadius: 12,
     padding: 16,
     marginTop: 24,
     borderWidth: 1,
-    borderColor: "#c7d2fe",
+    borderColor: "#1c2333",
   },
   connectCardDark: {
-    backgroundColor: "#1e1b4b",
-    borderColor: "#3730a3",
+    backgroundColor: "#0c1a26",
+    borderColor: "#155e75",
   },
   connectCardHeader: {
     flexDirection: "row",
@@ -757,10 +757,10 @@ const styles = StyleSheet.create({
   connectCardTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   connectCardBadge: {
-    backgroundColor: "#6366f1",
+    backgroundColor: "#0891b2",
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 4,
@@ -772,7 +772,7 @@ const styles = StyleSheet.create({
   },
   connectCardDesc: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     lineHeight: 20,
   },
   pairButton: {
@@ -782,7 +782,7 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 12,
     borderRadius: 8,
-    backgroundColor: "#6366f1",
+    backgroundColor: "#0891b2",
     marginTop: 12,
   },
   pairButtonText: {

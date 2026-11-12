@@ -184,7 +184,7 @@ export function DirectoryBrowserSheet({
       keyboardBlurBehavior="restore"
       android_keyboardInputMode="adjustResize"
       backgroundStyle={isDark ? s.sheetDark : s.sheet}
-      handleIndicatorStyle={{ backgroundColor: isDark ? "#666666" : "#cccccc" }}
+      handleIndicatorStyle={{ backgroundColor: isDark ? "#8a93a8" : "#cccccc" }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} opacity={0.5} />
       )}
@@ -197,7 +197,7 @@ export function DirectoryBrowserSheet({
             <Ionicons
               name="arrow-up-circle-outline"
               size={22}
-              color={canGoUp ? (isDark ? "#8b5cf6" : "#6d28d9") : isDark ? "#3a3a3a" : "#dddddd"}
+              color={canGoUp ? (isDark ? "#22d3ee" : "#0891b2") : isDark ? "#262f45" : "#dddddd"}
             />
           </TouchableOpacity>
           <Text style={[s.path, isDark && s.dimDark]} numberOfLines={1} ellipsizeMode="head">
@@ -218,7 +218,7 @@ export function DirectoryBrowserSheet({
               <Ionicons
                 name={root.label === "Home" ? "home-outline" : "layers-outline"}
                 size={14}
-                color={browseDir === root.path ? "#ffffff" : isDark ? "#c4b5fd" : "#6d28d9"}
+                color={browseDir === root.path ? "#ffffff" : isDark ? "#67e8f9" : "#0891b2"}
               />
               <Text
                 style={[
@@ -239,7 +239,7 @@ export function DirectoryBrowserSheet({
         <BottomSheetTextInput
           style={[s.input, isDark && s.inputDark]}
           placeholder={t("chat.directoryBrowserSheet.jumpPlaceholder")}
-          placeholderTextColor={isDark ? "#666666" : "#999999"}
+          placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
           value={jumpPath}
           onChangeText={setJumpPath}
           onSubmitEditing={goJump}
@@ -250,7 +250,7 @@ export function DirectoryBrowserSheet({
         />
         {jumpPath.trim() && (
           <TouchableOpacity style={[s.goBtn, isDark && s.goBtnDark]} onPress={goJump}>
-            <Ionicons name="arrow-forward" size={18} color={isDark ? "#0a0a0a" : "#ffffff"} />
+            <Ionicons name="arrow-forward" size={18} color={isDark ? "#07080c" : "#ffffff"} />
           </TouchableOpacity>
         )}
       </View>
@@ -267,7 +267,7 @@ export function DirectoryBrowserSheet({
             <Ionicons
               name="folder-outline"
               size={20}
-              color={item.ignored ? (isDark ? "#555555" : "#bbbbbb") : isDark ? "#888888" : "#666666"}
+              color={item.ignored ? (isDark ? "#555555" : "#bbbbbb") : isDark ? "#8a93a8" : "#8a93a8"}
             />
             <Text style={[s.rowLabel, isDark && s.white, item.ignored && s.rowLabelDim]} numberOfLines={1}>
               {item.name}
@@ -279,7 +279,7 @@ export function DirectoryBrowserSheet({
         ListHeaderComponent={
           loading ? (
             <View style={s.centerBox}>
-              <ActivityIndicator color={isDark ? "#ffffff" : "#0a0a0a"} />
+              <ActivityIndicator color={isDark ? "#ffffff" : "#07080c"} />
             </View>
           ) : error ? (
             <View style={s.centerBox}>
@@ -305,7 +305,7 @@ export function DirectoryBrowserSheet({
           disabled={!browseDir}
           testID="directory-select-button"
         >
-          <Ionicons name="checkmark-circle" size={18} color={isDark ? "#0a0a0a" : "#ffffff"} />
+          <Ionicons name="checkmark-circle" size={18} color={isDark ? "#07080c" : "#ffffff"} />
           <Text style={[s.selectBtnText, isDark && s.selectBtnTextDark]} numberOfLines={1}>
             {t("chat.directoryBrowserSheet.useFolderButton", {
               folder: browseDir ? nameOf(browseDir) : t("chat.directoryBrowserSheet.thisFolderFallback"),
@@ -319,9 +319,9 @@ export function DirectoryBrowserSheet({
 
 const s = StyleSheet.create({
   sheet: { backgroundColor: "#ffffff" },
-  sheetDark: { backgroundColor: "#1a1a1a" },
+  sheetDark: { backgroundColor: "#0d1018" },
   header: { paddingHorizontal: 16, paddingBottom: 8, gap: 8 },
-  title: { fontSize: 18, fontWeight: "700", color: "#0a0a0a" },
+  title: { fontSize: 18, fontWeight: "700", color: "#07080c" },
   white: { color: "#ffffff" },
   pathRow: {
     flexDirection: "row",
@@ -331,9 +331,9 @@ const s = StyleSheet.create({
   path: {
     flex: 1,
     fontSize: 12,
-    color: "#666666",
+    color: "#8a93a8",
   },
-  dimDark: { color: "#888888" },
+  dimDark: { color: "#8a93a8" },
   rootsRow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -348,16 +348,16 @@ const s = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 14,
-    backgroundColor: "#e8e5f0",
+    backgroundColor: "#141926",
   },
-  rootChipDark: { backgroundColor: "#2a2040" },
-  rootChipActive: { backgroundColor: "#8b5cf6" },
+  rootChipDark: { backgroundColor: "#0f2a36" },
+  rootChipActive: { backgroundColor: "#22d3ee" },
   rootChipText: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#6d28d9",
+    color: "#0891b2",
   },
-  rootChipTextDark: { color: "#c4b5fd" },
+  rootChipTextDark: { color: "#67e8f9" },
   rootChipTextActive: { color: "#ffffff" },
   inputWrap: {
     flexDirection: "row",
@@ -371,23 +371,23 @@ const s = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     paddingHorizontal: 12,
-    backgroundColor: "#f5f5f5",
-    color: "#0a0a0a",
+    backgroundColor: "#141926",
+    color: "#07080c",
     fontSize: 14,
   },
   inputDark: {
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#1c2333",
     color: "#ffffff",
   },
   goBtn: {
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     alignItems: "center",
     justifyContent: "center",
   },
-  goBtnDark: { backgroundColor: "#ffffff" },
+  goBtnDark: { backgroundColor: "#22d3ee" },
   list: {
     paddingHorizontal: 16,
     paddingBottom: 8,
@@ -399,30 +399,30 @@ const s = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 11,
     borderRadius: 10,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     marginBottom: 6,
   },
-  rowDark: { backgroundColor: "#2a2a2a" },
+  rowDark: { backgroundColor: "#1c2333" },
   rowLabel: {
     flex: 1,
     fontSize: 14,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
-  rowLabelDim: { color: "#999999" },
+  rowLabelDim: { color: "#8a93a8" },
   centerBox: {
     paddingVertical: 24,
     alignItems: "center",
   },
   errorText: {
     fontSize: 13,
-    color: "#ef4444",
+    color: "#ff4d6d",
     textAlign: "center",
     paddingHorizontal: 16,
   },
   emptyText: {
     fontSize: 13,
-    color: "#999999",
+    color: "#8a93a8",
     textAlign: "center",
     paddingVertical: 24,
   },
@@ -430,7 +430,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: "#e5e5e5",
+    borderTopColor: "#1c2333",
   },
   selectBtn: {
     flexDirection: "row",
@@ -439,14 +439,14 @@ const s = StyleSheet.create({
     gap: 8,
     height: 46,
     borderRadius: 12,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
-  selectBtnDark: { backgroundColor: "#ffffff" },
+  selectBtnDark: { backgroundColor: "#22d3ee" },
   selectBtnDisabled: { opacity: 0.5 },
   selectBtnText: {
     fontSize: 15,
     fontWeight: "600",
     color: "#ffffff",
   },
-  selectBtnTextDark: { color: "#0a0a0a" },
+  selectBtnTextDark: { color: "#07080c" },
 })

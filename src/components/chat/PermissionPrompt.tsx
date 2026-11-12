@@ -13,7 +13,7 @@ export function PermissionPrompt({ permission, isDark, onReply }: Props) {
   return (
     <View style={[s.card, isDark && s.cardDark]}>
       <View style={s.header}>
-        <Ionicons name="shield-outline" size={18} color="#f59e0b" />
+        <Ionicons name="shield-outline" size={18} color="#ffb800" />
         <Text style={[s.title, isDark && s.textWhite]}>{t("chat.permissionPrompt.title")}</Text>
       </View>
       <Text style={[s.type, isDark && s.typeDark]}>
@@ -51,13 +51,13 @@ const s = StyleSheet.create({
   typeDark: { color: "#d4a574" },
   actions: { flexDirection: "row", gap: 8 },
   btn: { flex: 1, paddingVertical: 10, borderRadius: 8, alignItems: "center" },
-  deny: { backgroundColor: "#fef2f2" },
+  deny: { backgroundColor: "#2a0f16" },
   denyText: { color: "#dc2626", fontWeight: "600", fontSize: 14 },
-  always: { backgroundColor: "#f5f5f5" },
-  alwaysDark: { backgroundColor: "#2a2a2a" },
-  alwaysText: { color: "#0a0a0a", fontWeight: "600", fontSize: 14 },
-  allow: { backgroundColor: "#0a0a0a" },
-  allowDark: { backgroundColor: "#ffffff" },
+  always: { backgroundColor: "#141926" },
+  alwaysDark: { backgroundColor: "#1c2333" },
+  alwaysText: { color: "#07080c", fontWeight: "600", fontSize: 14 },
+  allow: { backgroundColor: "#07080c" },
+  allowDark: { backgroundColor: "#22d3ee" },
   allowText: { color: "#ffffff", fontWeight: "600", fontSize: 14 },
-  allowTextDark: { color: "#0a0a0a" },
+  allowTextDark: { color: "#07080c" },
 })

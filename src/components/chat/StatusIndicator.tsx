@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 import { useEvents } from "../../stores/events"
 import { useSessions } from "../../stores/sessions"
 import { agentPhase, formatElapsed, type AgentPhase } from "../../lib/agent-phase"
+import { Mascot, type MascotState } from "../Mascot"
 
 interface Props {
   sessionID: string
@@ -12,6 +13,14 @@ interface Props {
 }
 
 type IconName = keyof typeof Ionicons.glyphMap
+
+// How the mascot acts for each thing the agent can be doing.
+const MASCOT_STATE: Record<AgentPhase["kind"], MascotState> = {
+  thinking: "thinking",
+  tool: "working",
+  writing: "writing",
+  working: "loading",
+}
 
 const PHASE_ICON: Record<AgentPhase["kind"], IconName> = {
   thinking: "bulb",
@@ -21,10 +30,10 @@ const PHASE_ICON: Record<AgentPhase["kind"], IconName> = {
 }
 
 const PHASE_COLOR: Record<AgentPhase["kind"], string> = {
-  thinking: "#f59e0b",
+  thinking: "#ffb800",
   tool: "#06b6d4",
-  writing: "#22c55e",
-  working: "#8b5cf6",
+  writing: "#34f5a5",
+  working: "#22d3ee",
 }
 
 /** Three dots that rise and fade in turn: "the agent is busy" without a spinner. */
@@ -172,7 +181,7 @@ export function StatusIndicator({ sessionID, isDark }: Props) {
       accessibilityLabel={label}
       testID="status-indicator"
     >
-      <PhaseOrb kind={phase.kind} color={color} />
+      <Mascot state={MASCOT_STATE[phase.kind]} size={44} />
       <Text style={[s.text, isDark && s.textDark]} numberOfLines={1}>
         {label}
       </Text>
@@ -190,17 +199,17 @@ const s = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 16,
     paddingVertical: 9,
-    backgroundColor: "#f8f7ff",
+    backgroundColor: "#141926",
     borderTopWidth: 2,
   },
-  barDark: { backgroundColor: "#15152a" },
+  barDark: { backgroundColor: "#0a1522" },
   orbWrap: { width: 30, height: 30, alignItems: "center", justifyContent: "center" },
   halo: { position: "absolute", width: 30, height: 30, borderRadius: 15 },
   text: { flexShrink: 1, fontSize: 14, color: "#4c1d95", fontWeight: "600" },
-  textDark: { color: "#c4b5fd" },
+  textDark: { color: "#67e8f9" },
   dots: { flexDirection: "row", alignItems: "center", gap: 4, height: 14, marginTop: 4 },
   dot: { width: 5, height: 5, borderRadius: 2.5 },
   spacer: { flex: 1 },
-  elapsed: { fontSize: 12, color: "#7c3aed", fontVariant: ["tabular-nums"] },
-  elapsedDark: { color: "#a78bfa" },
+  elapsed: { fontSize: 12, color: "#0891b2", fontVariant: ["tabular-nums"] },
+  elapsedDark: { color: "#22d3ee" },
 })

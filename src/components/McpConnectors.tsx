@@ -69,7 +69,7 @@ export function McpConnectors({ isDark }: { isDark: boolean }) {
             <Switch
               value={isOn(row.state)}
               onValueChange={(on) => void toggle(row, on)}
-              trackColor={{ false: "#767577", true: "#22c55e" }}
+              trackColor={{ false: "#767577", true: "#34f5a5" }}
             />
           )}
         </View>
@@ -85,12 +85,12 @@ export function McpConnectors({ isDark }: { isDark: boolean }) {
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", paddingVertical: 8 },
   rowText: { flex: 1, paddingRight: 12 },
-  name: { fontSize: 16, fontWeight: "600", color: "#111111" },
+  name: { fontSize: 16, fontWeight: "600", color: "#0a0d14" },
   textDark: { color: "#ffffff" },
-  hint: { fontSize: 13, color: "#666666", paddingVertical: 2 },
-  hintDark: { color: "#999999" },
-  failed: { color: "#ef4444" },
+  hint: { fontSize: 13, color: "#8a93a8", paddingVertical: 2 },
+  hintDark: { color: "#8a93a8" },
+  failed: { color: "#ff4d6d" },
   spinner: { paddingVertical: 12 },
   refresh: { paddingVertical: 10, alignItems: "flex-start" },
-  refreshText: { fontSize: 14, color: "#6366f1", fontWeight: "600" },
+  refreshText: { fontSize: 14, color: "#0891b2", fontWeight: "600" },
 })

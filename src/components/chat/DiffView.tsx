@@ -55,10 +55,10 @@ const s = StyleSheet.create({
   container: {
     borderRadius: 6,
     overflow: "hidden",
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#141926",
     marginTop: 6,
   },
-  containerDark: { backgroundColor: "#1a1a1a" },
+  containerDark: { backgroundColor: "#0d1018" },
 
   line: {
     flexDirection: "row",
@@ -74,10 +74,10 @@ const s = StyleSheet.create({
     width: 16,
     fontSize: 12,
     fontFamily: mono,
-    color: "#999999",
+    color: "#8a93a8",
     lineHeight: 20,
   },
-  prefixDark: { color: "#666666" },
+  prefixDark: { color: "#8a93a8" },
 
   text: {
     // flex:1 is what makes the fold happen inside the row instead of pushing the
@@ -85,7 +85,7 @@ const s = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontFamily: mono,
-    color: "#0a0a0a",
+    color: "#07080c",
     lineHeight: 20,
   },
   textDark: { color: "#e5e5e5" },

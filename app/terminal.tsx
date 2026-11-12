@@ -201,7 +201,7 @@ export default function TerminalScreen() {
     ])
   }
 
-  const dot = status === "connected" ? "#22c55e" : status === "connecting" ? "#f59e0b" : "#ef4444"
+  const dot = status === "connected" ? "#34f5a5" : status === "connecting" ? "#ffb800" : "#ff4d6d"
 
   return (
     <View style={[s.container, isDark && s.containerDark]} testID="terminal-screen">
@@ -287,24 +287,24 @@ export default function TerminalScreen() {
 }
 
 const s = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0b0b0f" },
-  containerDark: { backgroundColor: "#0b0b0f" },
-  statusBar: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: "#f4f4f5" },
-  statusBarDark: { backgroundColor: "#141418" },
+  container: { flex: 1, backgroundColor: "#07080c" },
+  containerDark: { backgroundColor: "#07080c" },
+  statusBar: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: "#141926" },
+  statusBarDark: { backgroundColor: "#0d1018" },
   dot: { width: 8, height: 8, borderRadius: 4 },
   statusText: { flex: 1, fontSize: 12, color: "#444" },
   textDark: { color: "#d1d5db" },
-  reconnect: { color: "#6366f1", fontWeight: "600", fontSize: 13 },
-  web: { flex: 1, backgroundColor: "#0b0b0f" },
-  inputRow: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: "#16161c", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#2a2a33" },
-  prompt: { color: "#a78bfa", fontSize: 16, fontWeight: "700", fontFamily: "monospace" },
-  input: { flex: 1, height: 40, paddingHorizontal: 10, borderRadius: 8, backgroundColor: "#0b0b0f", color: "#e5e7eb", fontSize: 15, fontFamily: "monospace" },
-  enter: { width: 44, height: 40, borderRadius: 8, backgroundColor: "#6366f1", alignItems: "center", justifyContent: "center" },
-  keys: { backgroundColor: "#16161c", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#2a2a33" },
-  keysDark: { backgroundColor: "#16161c" },
+  reconnect: { color: "#0891b2", fontWeight: "600", fontSize: 13 },
+  web: { flex: 1, backgroundColor: "#07080c" },
+  inputRow: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 10, paddingVertical: 6, backgroundColor: "#0d1018", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#1c2333" },
+  prompt: { color: "#22d3ee", fontSize: 16, fontWeight: "700", fontFamily: "monospace" },
+  input: { flex: 1, height: 40, paddingHorizontal: 10, borderRadius: 8, backgroundColor: "#07080c", color: "#e5e7eb", fontSize: 15, fontFamily: "monospace" },
+  enter: { width: 44, height: 40, borderRadius: 8, backgroundColor: "#0891b2", alignItems: "center", justifyContent: "center" },
+  keys: { backgroundColor: "#0d1018", borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#1c2333" },
+  keysDark: { backgroundColor: "#0d1018" },
   keysContent: { paddingHorizontal: 8, paddingVertical: 6, gap: 6, alignItems: "center" },
-  key: { minWidth: 42, height: 36, paddingHorizontal: 10, borderRadius: 8, backgroundColor: "#262631", alignItems: "center", justifyContent: "center" },
-  keyActive: { backgroundColor: "#6366f1" },
+  key: { minWidth: 42, height: 36, paddingHorizontal: 10, borderRadius: 8, backgroundColor: "#141926", alignItems: "center", justifyContent: "center" },
+  keyActive: { backgroundColor: "#0891b2" },
   keyText: { color: "#e5e7eb", fontSize: 14, fontWeight: "600" },
   keyTextActive: { color: "#ffffff" },
 })

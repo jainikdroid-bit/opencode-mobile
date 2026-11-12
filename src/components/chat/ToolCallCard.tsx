@@ -26,10 +26,10 @@ const TOOL_ICONS: Record<string, string> = {
 const mono = Platform.OS === "ios" ? "Menlo" : "monospace"
 
 function statusColor(status: string): string {
-  if (status === "completed") return "#22c55e"
-  if (status === "error") return "#ef4444"
-  if (status === "running") return "#f59e0b"
-  return "#888888"
+  if (status === "completed") return "#34f5a5"
+  if (status === "error") return "#ff4d6d"
+  if (status === "running") return "#ffb800"
+  return "#8a93a8"
 }
 
 // --- Tool-specific detail renderers ---
@@ -181,7 +181,7 @@ function WebfetchDetail({ input, isDark }: { input: unknown; isDark: boolean }) 
   return (
     <View style={s.detailSection}>
       {typeof url === "string" && (
-        <Text style={[s.detailFile, isDark && s.detailFileDark, { color: "#8b5cf6" }]} selectable numberOfLines={3}>
+        <Text style={[s.detailFile, isDark && s.detailFileDark, { color: "#22d3ee" }]} selectable numberOfLines={3}>
           {url}
         </Text>
       )}
@@ -220,7 +220,7 @@ function TodoDetail({ input, isDark }: { input: unknown; isDark: boolean }) {
             <Ionicons
               name={done ? "checkbox" : "square-outline"}
               size={16}
-              color={done ? "#22c55e" : isDark ? "#666666" : "#999999"}
+              color={done ? "#34f5a5" : isDark ? "#8a93a8" : "#8a93a8"}
             />
             <Text style={[s.todoText, isDark && s.todoTextDark, done && s.todoDone]} numberOfLines={2}>
               {String(item.content || item.title || "")}
@@ -290,7 +290,7 @@ function ToolDetail({ tool, isDark }: { tool: Part; isDark: boolean }) {
 function ErrorBanner({ message, isDark }: { message: string; isDark: boolean }) {
   return (
     <View style={[s.errorBanner, isDark && s.errorBannerDark]}>
-      <Ionicons name="alert-circle" size={14} color="#ef4444" />
+      <Ionicons name="alert-circle" size={14} color="#ff4d6d" />
       <Text style={s.errorText} numberOfLines={3} selectable>
         {message}
       </Text>
@@ -348,13 +348,13 @@ export function ToolCallCard({ tool, isDark }: Props) {
         </View>
         <View style={s.headerRight}>
           {status === "running" && <ActivityIndicator size="small" color={color} />}
-          {status === "completed" && <Ionicons name="checkmark-circle" size={16} color="#22c55e" />}
-          {status === "error" && <Ionicons name="close-circle" size={16} color="#ef4444" />}
+          {status === "completed" && <Ionicons name="checkmark-circle" size={16} color="#34f5a5" />}
+          {status === "error" && <Ionicons name="close-circle" size={16} color="#ff4d6d" />}
           {hasDetail && (
             <Ionicons
               name={expanded ? "chevron-up" : "chevron-down"}
               size={16}
-              color={isDark ? "#666666" : "#999999"}
+              color={isDark ? "#8a93a8" : "#8a93a8"}
             />
           )}
         </View>
@@ -383,7 +383,7 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f0f0f0",
   },
-  cardDark: { backgroundColor: "#2a2a2a", borderColor: "#3a3a3a" },
+  cardDark: { backgroundColor: "#1c2333", borderColor: "#262f45" },
   cardError: { borderColor: "#fecaca" },
   cardErrorDark: { borderColor: "#7f1d1d" },
 
@@ -394,10 +394,10 @@ const s = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 8, flex: 1 },
   headerRight: { flexDirection: "row", alignItems: "center", gap: 6 },
-  name: { fontSize: 13, fontWeight: "500", color: "#0a0a0a", flex: 1 },
+  name: { fontSize: 13, fontWeight: "500", color: "#07080c", flex: 1 },
   nameDark: { color: "#e5e5e5" },
-  elapsed: { fontSize: 11, color: "#999999" },
-  elapsedDark: { color: "#666666" },
+  elapsed: { fontSize: 11, color: "#8a93a8" },
+  elapsedDark: { color: "#8a93a8" },
 
   // Error
   errorBanner: {
@@ -406,7 +406,7 @@ const s = StyleSheet.create({
     gap: 6,
     marginTop: 8,
     padding: 8,
-    backgroundColor: "#fef2f2",
+    backgroundColor: "#2a0f16",
     borderRadius: 6,
   },
   errorBannerDark: { backgroundColor: "#1a0a0a" },
@@ -418,32 +418,32 @@ const s = StyleSheet.create({
   detailFile: {
     fontSize: 12,
     fontFamily: mono,
-    color: "#6d28d9",
-    backgroundColor: "#f5f3ff",
+    color: "#0891b2",
+    backgroundColor: "#141926",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
     overflow: "hidden",
   },
-  detailFileDark: { color: "#a78bfa", backgroundColor: "#1a1a2e" },
-  detailMeta: { fontSize: 12, color: "#666666", lineHeight: 18 },
-  detailMetaDark: { color: "#888888" },
+  detailFileDark: { color: "#22d3ee", backgroundColor: "#0c1a26" },
+  detailMeta: { fontSize: 12, color: "#8a93a8", lineHeight: 18 },
+  detailMetaDark: { color: "#8a93a8" },
 
   // Code block
   codeBlock: {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#141926",
     borderRadius: 6,
     padding: 10,
   },
-  codeBlockDark: { backgroundColor: "#1a1a1a" },
+  codeBlockDark: { backgroundColor: "#0d1018" },
   codePre: {
     fontSize: 12,
     fontFamily: mono,
-    color: "#0a0a0a",
+    color: "#07080c",
     lineHeight: 18,
   },
   codePteDark: { color: "#e5e5e5" },
-  codePrompt: { color: "#8b5cf6", fontWeight: "700" },
+  codePrompt: { color: "#22d3ee", fontWeight: "700" },
 
   // Todo
   todoRow: {
@@ -452,7 +452,7 @@ const s = StyleSheet.create({
     gap: 8,
     paddingVertical: 3,
   },
-  todoText: { fontSize: 13, color: "#0a0a0a", flex: 1, lineHeight: 20 },
+  todoText: { fontSize: 13, color: "#07080c", flex: 1, lineHeight: 20 },
   todoTextDark: { color: "#e5e5e5" },
-  todoDone: { textDecorationLine: "line-through", color: "#999999" },
+  todoDone: { textDecorationLine: "line-through", color: "#8a93a8" },
 })

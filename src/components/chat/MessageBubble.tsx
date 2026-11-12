@@ -82,7 +82,7 @@ export const MessageBubble = memo(
           <Ionicons
             name={isUser ? "person" : "sparkles"}
             size={14}
-            color={isUser ? (isDark ? "#ffffff" : "#0a0a0a") : "#8b5cf6"}
+            color={isUser ? (isDark ? "#ffffff" : "#07080c") : "#22d3ee"}
           />
           <Text style={[s.role, isUser && s.roleUser, isDark && s.textWhite]}>{isUser ? "You" : "Assistant"}</Text>
           {message.model && <Text style={[s.modelTag, isDark && s.modelTagDark]}>{message.model.modelID}</Text>}
@@ -223,14 +223,14 @@ export const MessageBubble = memo(
 
 const s = StyleSheet.create({
   bubble: { marginBottom: 16, padding: 12, borderRadius: 12, maxWidth: "100%" },
-  user: { backgroundColor: "#f5f5f5", marginLeft: 32 },
-  userDark: { backgroundColor: "#1a1a1a" },
-  assistant: { backgroundColor: "#f0f0ff" },
-  assistantDark: { backgroundColor: "#1a1a2e" },
+  user: { backgroundColor: "#141926", marginLeft: 32 },
+  userDark: { backgroundColor: "#0d1018" },
+  assistant: { backgroundColor: "#141926" },
+  assistantDark: { backgroundColor: "#0c1a26" },
 
   header: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: 8 },
-  role: { fontSize: 13, fontWeight: "600", color: "#666666" },
-  roleUser: { color: "#0a0a0a" },
+  role: { fontSize: 13, fontWeight: "600", color: "#8a93a8" },
+  roleUser: { color: "#07080c" },
   textWhite: { color: "#ffffff" },
 
   actions: {
@@ -247,7 +247,7 @@ const s = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#d4d4d4",
+    borderColor: "#1c2333",
     flexShrink: 0,
   },
   selectChipDark: { borderColor: "#404040" },
@@ -256,27 +256,27 @@ const s = StyleSheet.create({
 
   modelTag: {
     fontSize: 11,
-    color: "#999999",
+    color: "#8a93a8",
     backgroundColor: "#e5e5e5",
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
     overflow: "hidden",
   },
-  modelTagDark: { backgroundColor: "#2a2a2a", color: "#888888" },
+  modelTagDark: { backgroundColor: "#1c2333", color: "#8a93a8" },
 
-  messageText: { fontSize: 15, lineHeight: 22, color: "#0a0a0a" },
+  messageText: { fontSize: 15, lineHeight: 22, color: "#07080c" },
   markdownWrap: { marginHorizontal: -4 },
 
-  tokens: { fontSize: 11, color: "#999999", marginTop: 8 },
-  tokensDark: { color: "#666666" },
+  tokens: { fontSize: 11, color: "#8a93a8", marginTop: 8 },
+  tokensDark: { color: "#8a93a8" },
 
   // Run-level error block inside an assistant bubble
   errorBlock: {
     marginTop: 8,
     padding: 10,
     borderRadius: 8,
-    backgroundColor: "#fef2f2",
+    backgroundColor: "#2a0f16",
     borderWidth: 1,
     borderColor: "#fecaca",
   },
@@ -294,6 +294,6 @@ const s = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#e5e5e5",
   },
-  imageLabel: { fontSize: 10, color: "#666666", marginTop: 2, maxWidth: 200 },
-  imageLabelDark: { color: "#888888" },
+  imageLabel: { fontSize: 10, color: "#8a93a8", marginTop: 2, maxWidth: 200 },
+  imageLabelDark: { color: "#8a93a8" },
 })

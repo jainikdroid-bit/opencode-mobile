@@ -98,7 +98,7 @@ export function SessionInfo({
       {/* Top row: tokens + context % + cost — matches TUI header */}
       <View style={s.row}>
         <View style={s.costRow}>
-          <Ionicons name="stats-chart-outline" size={14} color={isDark ? "#888888" : "#666666"} />
+          <Ionicons name="stats-chart-outline" size={14} color={isDark ? "#8a93a8" : "#8a93a8"} />
           {hasTokens && (
             <Text style={[s.tokens, isDark && s.textDark]}>
               {stats.total.toLocaleString()}
@@ -111,7 +111,7 @@ export function SessionInfo({
           )}
         </View>
         <TouchableOpacity onPress={onClose} hitSlop={8}>
-          <Ionicons name="close" size={16} color={isDark ? "#666666" : "#999999"} />
+          <Ionicons name="close" size={16} color={isDark ? "#8a93a8" : "#8a93a8"} />
         </TouchableOpacity>
       </View>
 
@@ -131,19 +131,19 @@ export function SessionInfo({
       {/* Token breakdown pills */}
       {hasTokens && (
         <View style={s.breakdown}>
-          <TokenPill label={t("chat.sessionInfo.pills.in")} value={stats.input} color="#3b82f6" isDark={isDark} />
+          <TokenPill label={t("chat.sessionInfo.pills.in")} value={stats.input} color="#22d3ee" isDark={isDark} />
           <TokenPill label={t("chat.sessionInfo.pills.out")} value={stats.output} color="#10b981" isDark={isDark} />
           {stats.reasoning > 0 && (
-            <TokenPill label={t("chat.sessionInfo.pills.think")} value={stats.reasoning} color="#f59e0b" isDark={isDark} />
+            <TokenPill label={t("chat.sessionInfo.pills.think")} value={stats.reasoning} color="#ffb800" isDark={isDark} />
           )}
           {stats.cacheRead > 0 && (
-            <TokenPill label={t("chat.sessionInfo.pills.cacheRead")} value={stats.cacheRead} color="#8b5cf6" isDark={isDark} />
+            <TokenPill label={t("chat.sessionInfo.pills.cacheRead")} value={stats.cacheRead} color="#22d3ee" isDark={isDark} />
           )}
           {stats.cacheWrite > 0 && (
             <TokenPill
               label={t("chat.sessionInfo.pills.cacheWrite")}
               value={stats.cacheWrite}
-              color="#ec4899"
+              color="#ff3df0"
               isDark={isDark}
             />
           )}
@@ -182,9 +182,9 @@ export function SessionInfo({
         {hasMore && (
           <TouchableOpacity style={[s.action, isDark && s.actionDark]} onPress={onLoadAll} disabled={loadingAll}>
             {loadingAll ? (
-              <ActivityIndicator size="small" color={isDark ? "#888888" : "#666666"} />
+              <ActivityIndicator size="small" color={isDark ? "#8a93a8" : "#8a93a8"} />
             ) : (
-              <Ionicons name="download-outline" size={14} color={isDark ? "#888888" : "#666666"} />
+              <Ionicons name="download-outline" size={14} color={isDark ? "#8a93a8" : "#8a93a8"} />
             )}
             <Text style={[s.actionText, isDark && s.dimDark]}>
               {loadingAll ? t("chat.sessionInfo.loading") : t("chat.sessionInfo.loadAllMessages")}
@@ -193,7 +193,7 @@ export function SessionInfo({
         )}
         {messages.length > 0 && (
           <TouchableOpacity style={[s.action, isDark && s.actionDark]} onPress={onScrollToTop}>
-            <Ionicons name="arrow-up-outline" size={14} color={isDark ? "#888888" : "#666666"} />
+            <Ionicons name="arrow-up-outline" size={14} color={isDark ? "#8a93a8" : "#8a93a8"} />
             <Text style={[s.actionText, isDark && s.dimDark]}>{t("chat.sessionInfo.jumpToBeginning")}</Text>
           </TouchableOpacity>
         )}
@@ -205,7 +205,7 @@ export function SessionInfo({
 function MetaItem({ icon, label, value, isDark }: { icon: string; label: string; value: string; isDark: boolean }) {
   return (
     <View style={s.metaItem}>
-      <Ionicons name={icon as any} size={12} color={isDark ? "#555555" : "#999999"} />
+      <Ionicons name={icon as any} size={12} color={isDark ? "#555555" : "#8a93a8"} />
       <Text style={[s.metaLabel, isDark && s.dimDark]}>{label}</Text>
       <Text style={[s.metaValue, isDark && s.metaValueDark]}>{value}</Text>
     </View>
@@ -227,13 +227,13 @@ const s = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
-    backgroundColor: "#fafafa",
+    borderBottomColor: "#1c2333",
+    backgroundColor: "#141926",
     gap: 8,
   },
   containerDark: {
-    borderBottomColor: "#1a1a1a",
-    backgroundColor: "#111111",
+    borderBottomColor: "#0d1018",
+    backgroundColor: "#0a0d14",
   },
   row: {
     flexDirection: "row",
@@ -248,7 +248,7 @@ const s = StyleSheet.create({
   tokens: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#07080c",
     fontVariant: ["tabular-nums"],
   },
   percent: {
@@ -257,7 +257,7 @@ const s = StyleSheet.create({
   },
   cost: {
     fontSize: 13,
-    color: "#999999",
+    color: "#8a93a8",
     fontVariant: ["tabular-nums"],
   },
   bar: {
@@ -267,15 +267,15 @@ const s = StyleSheet.create({
     overflow: "hidden",
   },
   barDark: {
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#1c2333",
   },
   barFill: {
     height: "100%",
     borderRadius: 2,
   },
-  barOk: { backgroundColor: "#3b82f6" },
-  barMid: { backgroundColor: "#f59e0b" },
-  barWarn: { backgroundColor: "#ef4444" },
+  barOk: { backgroundColor: "#22d3ee" },
+  barMid: { backgroundColor: "#ffb800" },
+  barWarn: { backgroundColor: "#ff4d6d" },
   breakdown: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -298,12 +298,12 @@ const s = StyleSheet.create({
   },
   pillLabel: {
     fontSize: 11,
-    color: "#666666",
+    color: "#8a93a8",
   },
   pillValue: {
     fontSize: 11,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
     fontVariant: ["tabular-nums"],
   },
   meta: {
@@ -318,12 +318,12 @@ const s = StyleSheet.create({
   },
   metaLabel: {
     fontSize: 11,
-    color: "#999999",
+    color: "#8a93a8",
   },
   metaValue: {
     fontSize: 11,
     fontWeight: "600",
-    color: "#666666",
+    color: "#8a93a8",
   },
   metaValueDark: {
     color: "#aaaaaa",
@@ -338,20 +338,20 @@ const s = StyleSheet.create({
     gap: 5,
     backgroundColor: "#ffffff",
     borderWidth: 1,
-    borderColor: "#e5e5e5",
+    borderColor: "#1c2333",
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
   actionDark: {
-    backgroundColor: "#1a1a1a",
-    borderColor: "#2a2a2a",
+    backgroundColor: "#0d1018",
+    borderColor: "#1c2333",
   },
   actionText: {
     fontSize: 12,
-    color: "#666666",
+    color: "#8a93a8",
     fontWeight: "500",
   },
   textDark: { color: "#e5e5e5" },
-  dimDark: { color: "#666666" },
+  dimDark: { color: "#8a93a8" },
 })

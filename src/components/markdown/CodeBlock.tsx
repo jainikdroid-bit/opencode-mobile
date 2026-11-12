@@ -52,13 +52,13 @@ export function CodeBlock({ code, language }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 8,
     marginVertical: 8,
     overflow: "hidden",
   },
   containerDark: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#0d1018",
   },
   header: {
     flexDirection: "row",
@@ -66,27 +66,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: "#e8e8e8",
+    backgroundColor: "#141926",
   },
   headerDark: {
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#1c2333",
   },
   language: {
     fontSize: 11,
     fontWeight: "600",
-    color: "#666666",
+    color: "#8a93a8",
     textTransform: "uppercase",
   },
   languageDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   copyBtn: {
     fontSize: 11,
-    color: "#8b5cf6",
+    color: "#22d3ee",
     fontWeight: "600",
   },
   copyBtnDark: {
-    color: "#a78bfa",
+    color: "#22d3ee",
   },
   codeBody: {
     padding: 12,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace",
     fontSize: 13,
     lineHeight: 20,
-    color: "#1a1a1a",
+    color: "#0d1018",
   },
   codeDark: {
     color: "#e5e5e5",

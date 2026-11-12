@@ -59,12 +59,12 @@ class CustomRenderer extends Renderer {
 const mono = Platform.OS === "ios" ? "Menlo" : "monospace"
 
 const lightTheme = {
-  text: { color: "#0a0a0a", fontSize: 15, lineHeight: 22 },
+  text: { color: "#07080c", fontSize: 15, lineHeight: 22 },
   paragraph: { marginTop: 0, marginBottom: 8 },
-  h1: { fontSize: 22, fontWeight: "700" as const, color: "#0a0a0a", marginBottom: 8, marginTop: 12 },
-  h2: { fontSize: 19, fontWeight: "600" as const, color: "#0a0a0a", marginBottom: 6, marginTop: 10 },
-  h3: { fontSize: 16, fontWeight: "600" as const, color: "#0a0a0a", marginBottom: 4, marginTop: 8 },
-  link: { color: "#8b5cf6" },
+  h1: { fontSize: 22, fontWeight: "700" as const, color: "#07080c", marginBottom: 8, marginTop: 12 },
+  h2: { fontSize: 19, fontWeight: "600" as const, color: "#07080c", marginBottom: 6, marginTop: 10 },
+  h3: { fontSize: 16, fontWeight: "600" as const, color: "#07080c", marginBottom: 4, marginTop: 8 },
+  link: { color: "#22d3ee" },
   blockquote: {
     backgroundColor: "transparent",
     borderLeftWidth: 3,
@@ -74,8 +74,8 @@ const lightTheme = {
     marginVertical: 4,
   },
   code: {
-    backgroundColor: "#e8e5f0",
-    color: "#6d28d9",
+    backgroundColor: "#141926",
+    color: "#0891b2",
     fontFamily: mono,
     fontSize: 13,
     paddingHorizontal: 5,
@@ -83,8 +83,8 @@ const lightTheme = {
     borderRadius: 4,
   },
   codespan: {
-    backgroundColor: "#e8e5f0",
-    color: "#6d28d9",
+    backgroundColor: "#141926",
+    color: "#0891b2",
     fontFamily: mono,
     fontSize: 13,
     paddingHorizontal: 4,
@@ -106,22 +106,22 @@ const darkTheme = {
   h1: { ...lightTheme.h1, color: "#ffffff" },
   h2: { ...lightTheme.h2, color: "#ffffff" },
   h3: { ...lightTheme.h3, color: "#ffffff" },
-  link: { color: "#a78bfa" },
+  link: { color: "#22d3ee" },
   blockquote: {
     ...lightTheme.blockquote,
-    borderLeftColor: "#4a4a5a",
+    borderLeftColor: "#262f45",
   },
   code: {
     ...lightTheme.code,
-    backgroundColor: "#2a2040",
-    color: "#c4b5fd",
+    backgroundColor: "#0f2a36",
+    color: "#67e8f9",
   },
   codespan: {
     ...lightTheme.codespan,
-    backgroundColor: "#2a2040",
-    color: "#c4b5fd",
+    backgroundColor: "#0f2a36",
+    color: "#67e8f9",
   },
-  hr: { ...lightTheme.hr, backgroundColor: "#2a2a2a" },
+  hr: { ...lightTheme.hr, backgroundColor: "#1c2333" },
 }
 
 interface Props {

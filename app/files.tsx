@@ -119,7 +119,7 @@ export default function FilesScreen() {
         <>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={s.crumbs} contentContainerStyle={s.crumbsContent}>
             <TouchableOpacity onPress={() => void load("")} style={s.crumb} testID="crumb-root">
-              <Ionicons name="home-outline" size={16} color={path ? "#6366f1" : isDark ? "#fff" : "#111"} />
+              <Ionicons name="home-outline" size={16} color={path ? "#0891b2" : isDark ? "#fff" : "#111"} />
             </TouchableOpacity>
             {breadcrumbs(path).map((c, i, all) => (
               <View key={c.path} style={s.crumbWrap}>
@@ -143,7 +143,7 @@ export default function FilesScreen() {
 
           {error ? (
             <View style={s.center}>
-              <Ionicons name="alert-circle-outline" size={40} color="#ef4444" />
+              <Ionicons name="alert-circle-outline" size={40} color="#ff4d6d" />
               <Text style={[s.errorText, isDark && s.textDark]}>{error}</Text>
               <TouchableOpacity style={s.retry} onPress={() => void load(path)}>
                 <Text style={s.retryText}>{t("common.retry")}</Text>
@@ -158,8 +158,8 @@ export default function FilesScreen() {
               ListHeaderComponent={
                 path ? (
                   <TouchableOpacity style={[s.row, isDark && s.rowDark]} onPress={() => void load(parentPath(path))} testID="files-up">
-                    <Ionicons name="arrow-up" size={20} color="#6366f1" />
-                    <Text style={[s.rowName, { color: "#6366f1" }]}>{t("files.up")}</Text>
+                    <Ionicons name="arrow-up" size={20} color="#0891b2" />
+                    <Text style={[s.rowName, { color: "#0891b2" }]}>{t("files.up")}</Text>
                   </TouchableOpacity>
                 ) : null
               }
@@ -173,7 +173,7 @@ export default function FilesScreen() {
                   <Ionicons
                     name={item.type === "directory" ? "folder" : "document-text-outline"}
                     size={22}
-                    color={item.type === "directory" ? "#f59e0b" : isDark ? "#9ca3af" : "#6b7280"}
+                    color={item.type === "directory" ? "#ffb800" : isDark ? "#9ca3af" : "#6b7280"}
                   />
                   <Text style={[s.rowName, isDark && s.textDark]} numberOfLines={1}>
                     {item.name}
@@ -212,7 +212,7 @@ function FileViewer({
         </Text>
         {file.text !== undefined ? (
           <TouchableOpacity onPress={onCopy} style={s.copyBtn} testID="file-copy">
-            <Ionicons name={copied ? "checkmark" : "copy-outline"} size={16} color="#6366f1" />
+            <Ionicons name={copied ? "checkmark" : "copy-outline"} size={16} color="#0891b2" />
             <Text style={s.copyText}>{copied ? t("files.copied") : t("files.copy")}</Text>
           </TouchableOpacity>
         ) : null}
@@ -243,36 +243,36 @@ function FileViewer({
 
 const s = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#ffffff" },
-  containerDark: { backgroundColor: "#0a0a0a" },
-  crumbs: { flexGrow: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#e5e5e5" },
+  containerDark: { backgroundColor: "#07080c" },
+  crumbs: { flexGrow: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#1c2333" },
   crumbsContent: { paddingHorizontal: 12, alignItems: "center", paddingVertical: 8 },
   crumbWrap: { flexDirection: "row", alignItems: "center" },
   crumb: { paddingHorizontal: 6, paddingVertical: 4 },
   crumbText: { fontSize: 14, fontWeight: "600" },
-  crumbLink: { color: "#6366f1" },
-  textStrong: { color: "#111111" },
+  crumbLink: { color: "#0891b2" },
+  textStrong: { color: "#0a0d14" },
   textDark: { color: "#ffffff" },
-  search: { margin: 12, paddingHorizontal: 14, paddingVertical: 9, borderRadius: 10, backgroundColor: "#f4f4f5", fontSize: 15, color: "#111" },
-  searchDark: { backgroundColor: "#1a1a1a", color: "#fff" },
-  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingHorizontal: 16, paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#eeeeee" },
-  rowDark: { borderBottomColor: "#1f1f1f" },
-  rowName: { flex: 1, fontSize: 16, color: "#111111" },
+  search: { margin: 12, paddingHorizontal: 14, paddingVertical: 9, borderRadius: 10, backgroundColor: "#141926", fontSize: 15, color: "#111" },
+  searchDark: { backgroundColor: "#0d1018", color: "#fff" },
+  row: { flexDirection: "row", alignItems: "center", gap: 12, paddingHorizontal: 16, paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#1c2333" },
+  rowDark: { borderBottomColor: "#161c2a" },
+  rowName: { flex: 1, fontSize: 16, color: "#0a0d14" },
   ignored: { opacity: 0.45 },
-  subtle: { color: "#888888" },
-  subtleDark: { color: "#777777" },
+  subtle: { color: "#8a93a8" },
+  subtleDark: { color: "#8a93a8" },
   empty: { textAlign: "center", paddingVertical: 40 },
   center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, gap: 12 },
   errorText: { fontSize: 14, textAlign: "center", color: "#444" },
-  retry: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 10, backgroundColor: "#6366f1" },
+  retry: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 10, backgroundColor: "#0891b2" },
   retryText: { color: "#fff", fontWeight: "600" },
   spinner: { marginTop: 40 },
   opening: { position: "absolute", top: "50%", alignSelf: "center" },
   viewer: { flex: 1 },
-  viewerBar: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 14, paddingVertical: 8, backgroundColor: "#f4f4f5" },
-  viewerBarDark: { backgroundColor: "#141414" },
+  viewerBar: { flexDirection: "row", alignItems: "center", gap: 8, paddingHorizontal: 14, paddingVertical: 8, backgroundColor: "#141926" },
+  viewerBarDark: { backgroundColor: "#0d1018" },
   viewerPath: { flex: 1, fontSize: 12, color: "#555", fontFamily: "monospace" },
   copyBtn: { flexDirection: "row", alignItems: "center", gap: 4, paddingHorizontal: 8, paddingVertical: 4 },
-  copyText: { fontSize: 13, color: "#6366f1", fontWeight: "600" },
+  copyText: { fontSize: 13, color: "#0891b2", fontWeight: "600" },
   codeRow: { flexDirection: "row", paddingRight: 12 },
   lineNo: { textAlign: "right", paddingRight: 10, fontSize: 12, lineHeight: 18, color: "#9ca3af", fontFamily: "monospace" },
   code: { flex: 1, fontSize: 12, lineHeight: 18, color: "#111827", fontFamily: "monospace" },

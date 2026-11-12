@@ -46,7 +46,7 @@ function ConnectionItem({
       onLongPress={handleLongPress}
     >
       <View style={styles.connectionIcon}>
-        <Ionicons name={typeIcon} size={24} color={isActive ? "#22c55e" : isDark ? "#888888" : "#666666"} />
+        <Ionicons name={typeIcon} size={24} color={isActive ? "#34f5a5" : isDark ? "#8a93a8" : "#8a93a8"} />
       </View>
       <View style={styles.connectionContent}>
         <View style={styles.connectionHeader}>
@@ -81,7 +81,7 @@ function ConnectionItem({
         )}
       </View>
       <TouchableOpacity onPress={onEdit} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-        <Ionicons name="ellipsis-vertical" size={20} color={isDark ? "#666666" : "#999999"} />
+        <Ionicons name="ellipsis-vertical" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />
       </TouchableOpacity>
     </TouchableOpacity>
   )
@@ -146,7 +146,7 @@ export default function ConnectionsScreen() {
             </Text>
             <View style={styles.settingRow}>
               <View style={styles.settingLabel}>
-                <Ionicons name="layers-outline" size={18} color={isDark ? "#888888" : "#666666"} />
+                <Ionicons name="layers-outline" size={18} color={isDark ? "#8a93a8" : "#8a93a8"} />
                 <Text style={[styles.settingText, isDark && styles.textDark]}>
                   {t("connectionsList.preferences.pageSizeLabel")}
                 </Text>
@@ -186,7 +186,7 @@ export default function ConnectionsScreen() {
 
       {/* FAB to add connection */}
       <TouchableOpacity style={[styles.fab, isDark && styles.fabDark]} onPress={() => router.push("/connection/add")}>
-        <Ionicons name="add" size={28} color={isDark ? "#0a0a0a" : "#ffffff"} />
+        <Ionicons name="add" size={28} color={isDark ? "#07080c" : "#ffffff"} />
       </TouchableOpacity>
     </View>
   )
@@ -198,29 +198,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   containerDark: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   header: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
   },
   headerDark: {
-    borderBottomColor: "#1a1a1a",
+    borderBottomColor: "#0d1018",
   },
   headerText: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
   },
   connectionItem: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
   },
   connectionItemDark: {
-    borderBottomColor: "#1a1a1a",
+    borderBottomColor: "#0d1018",
   },
   connectionItemActive: {
     backgroundColor: "#f0fdf4",
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 12,
@@ -248,10 +248,10 @@ const styles = StyleSheet.create({
   connectionName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   connectionNameActive: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   connectionNameActiveDark: {
     color: "#ffffff",
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   activeBadge: {
-    backgroundColor: "#22c55e",
+    backgroundColor: "#34f5a5",
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 4,
@@ -278,19 +278,19 @@ const styles = StyleSheet.create({
   },
   connectionUrl: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 2,
   },
   connectionUrlActive: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   connectionMeta: {
     fontSize: 12,
-    color: "#999999",
+    color: "#8a93a8",
     marginTop: 4,
   },
   metaDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   emptyContainer: {
     flex: 1,
@@ -302,11 +302,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     marginTop: 16,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   emptySubtitle: {
     fontSize: 14,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 8,
     textAlign: "center",
   },
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
@@ -330,22 +330,22 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   fabDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   settingsSection: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: "#e5e5e5",
+    borderTopColor: "#1c2333",
     marginTop: 16,
     gap: 10,
   },
   settingsSectionDark: {
-    borderTopColor: "#1a1a1a",
+    borderTopColor: "#0d1018",
   },
   settingsTitle: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   settingRow: {
     flexDirection: "row",
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   },
   settingText: {
     fontSize: 14,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   pagePicker: {
     flexDirection: "row",
@@ -370,31 +370,31 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#e5e5e5",
-    backgroundColor: "#f5f5f5",
+    borderColor: "#1c2333",
+    backgroundColor: "#141926",
   },
   pageOptionDark: {
-    borderColor: "#2a2a2a",
-    backgroundColor: "#1a1a1a",
+    borderColor: "#1c2333",
+    backgroundColor: "#0d1018",
   },
   pageOptionActive: {
-    backgroundColor: "#0a0a0a",
-    borderColor: "#0a0a0a",
+    backgroundColor: "#07080c",
+    borderColor: "#07080c",
   },
   pageOptionActiveDark: {
-    backgroundColor: "#3b82f6",
-    borderColor: "#3b82f6",
+    backgroundColor: "#22d3ee",
+    borderColor: "#22d3ee",
   },
   pageOptionText: {
     fontSize: 13,
     fontWeight: "500",
-    color: "#666666",
+    color: "#8a93a8",
   },
   pageOptionTextActive: {
     color: "#ffffff",
   },
   settingHint: {
     fontSize: 12,
-    color: "#999999",
+    color: "#8a93a8",
   },
 })

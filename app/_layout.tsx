@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react"
 import { Stack, router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
-import { useColorScheme, View, ActivityIndicator, AppState } from "react-native"
+import { Appearance, useColorScheme, View, ActivityIndicator, AppState } from "react-native"
+import { cyber } from "../src/theme/cyber"
+import { Mascot } from "../src/components/Mascot"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
@@ -15,6 +17,9 @@ import { useSettings } from "../src/stores/settings"
 import { AuthGate } from "../src/components/AuthGate"
 import { ErrorBoundary } from "../src/components/ErrorBoundary"
 import * as notifications from "../src/lib/notifications"
+
+// The app is dark-only: a minimal blue-black look with neon accents.
+Appearance.setColorScheme("dark")
 
 const queryClient = new QueryClient()
 
@@ -120,10 +125,10 @@ function RootLayout() {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
+          backgroundColor: isDark ? "#07080c" : "#ffffff",
         }}
       >
-        <ActivityIndicator size="large" color={isDark ? "#ffffff" : "#0a0a0a"} />
+        <Mascot state="loading" size={120} />
       </View>
     )
   }
@@ -137,13 +142,11 @@ function RootLayout() {
             <AuthGate>
             <Stack
               screenOptions={{
-                headerStyle: {
-                  backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
-                },
-                headerTintColor: isDark ? "#ffffff" : "#0a0a0a",
-                contentStyle: {
-                  backgroundColor: isDark ? "#0a0a0a" : "#ffffff",
-                },
+                headerStyle: { backgroundColor: cyber.bg },
+                headerTintColor: cyber.cyan,
+                headerTitleStyle: { color: cyber.text, fontFamily: cyber.mono, fontSize: 15 },
+                headerShadowVisible: false,
+                contentStyle: { backgroundColor: cyber.bg },
               }}
             >
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

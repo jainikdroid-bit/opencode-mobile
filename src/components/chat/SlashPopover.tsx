@@ -35,7 +35,7 @@ export function SlashPopover({ query, commands, isDark, onSelect }: Props) {
             <Ionicons
               name={cmd.icon as any}
               size={18}
-              color={cmd.type === "custom" ? "#8b5cf6" : isDark ? "#888888" : "#666666"}
+              color={cmd.type === "custom" ? "#22d3ee" : isDark ? "#8a93a8" : "#8a93a8"}
             />
             <View style={s.textCol}>
               <Text style={[s.trigger, isDark && s.textWhite]}>/{cmd.trigger}</Text>
@@ -61,10 +61,10 @@ const s = StyleSheet.create({
   popover: {
     backgroundColor: "#ffffff",
     borderTopWidth: 1,
-    borderTopColor: "#e5e5e5",
+    borderTopColor: "#1c2333",
     maxHeight: 220,
   },
-  popoverDark: { backgroundColor: "#1a1a1a", borderTopColor: "#2a2a2a" },
+  popoverDark: { backgroundColor: "#0d1018", borderTopColor: "#1c2333" },
   scroll: { paddingVertical: 4 },
   item: {
     flexDirection: "row",
@@ -75,16 +75,16 @@ const s = StyleSheet.create({
   },
   itemDark: {},
   textCol: { flex: 1 },
-  trigger: { fontSize: 14, fontWeight: "600", color: "#0a0a0a" },
+  trigger: { fontSize: 14, fontWeight: "600", color: "#07080c" },
   textWhite: { color: "#ffffff" },
-  desc: { fontSize: 12, color: "#999999", marginTop: 1 },
-  metaDark: { color: "#666666" },
+  desc: { fontSize: 12, color: "#8a93a8", marginTop: 1 },
+  metaDark: { color: "#8a93a8" },
   badge: {
     backgroundColor: "#f3e8ff",
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
   },
-  badgeDark: { backgroundColor: "#2a1a3e" },
-  badgeText: { fontSize: 10, color: "#8b5cf6", fontWeight: "600" },
+  badgeDark: { backgroundColor: "#0f2230" },
+  badgeText: { fontSize: 10, color: "#22d3ee", fontWeight: "600" },
 })

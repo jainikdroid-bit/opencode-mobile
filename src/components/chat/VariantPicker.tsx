@@ -55,7 +55,7 @@ export function VariantPicker({ variants, selected, isDark, onSelect, sheetRef }
       enableDynamicSizing={false}
       enablePanDownToClose
       backgroundStyle={isDark ? s.sheetDark : s.sheet}
-      handleIndicatorStyle={{ backgroundColor: isDark ? "#666666" : "#cccccc" }}
+      handleIndicatorStyle={{ backgroundColor: isDark ? "#8a93a8" : "#cccccc" }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} opacity={0.5} />
       )}
@@ -78,7 +78,7 @@ export function VariantPicker({ variants, selected, isDark, onSelect, sheetRef }
                 <Text style={[s.rowName, isDark && s.textWhite]}>{item.label}</Text>
                 <Text style={[s.rowDesc, isDark && s.metaDark]}>{item.description}</Text>
               </View>
-              {active && <Ionicons name="checkmark-circle" size={20} color="#8b5cf6" />}
+              {active && <Ionicons name="checkmark-circle" size={20} color="#22d3ee" />}
             </TouchableOpacity>
           )
         }}
@@ -90,11 +90,11 @@ export function VariantPicker({ variants, selected, isDark, onSelect, sheetRef }
 
 const s = StyleSheet.create({
   sheet: { backgroundColor: "#ffffff" },
-  sheetDark: { backgroundColor: "#1a1a1a" },
+  sheetDark: { backgroundColor: "#0d1018" },
   header: { paddingHorizontal: 16, paddingBottom: 12 },
-  title: { fontSize: 18, fontWeight: "700", color: "#0a0a0a" },
+  title: { fontSize: 18, fontWeight: "700", color: "#07080c" },
   textWhite: { color: "#ffffff" },
-  metaDark: { color: "#666666" },
+  metaDark: { color: "#8a93a8" },
   content: { paddingBottom: 40 },
   row: {
     flexDirection: "row",
@@ -102,12 +102,12 @@ const s = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
   },
-  rowDark: { borderBottomColor: "#2a2a2a" },
-  rowSelected: { backgroundColor: "#f5f3ff" },
-  rowSelectedDark: { backgroundColor: "#1f1a2e" },
+  rowDark: { borderBottomColor: "#1c2333" },
+  rowSelected: { backgroundColor: "#141926" },
+  rowSelectedDark: { backgroundColor: "#0c1a26" },
   rowText: { flex: 1 },
-  rowName: { fontSize: 15, fontWeight: "600", color: "#0a0a0a" },
-  rowDesc: { fontSize: 12, color: "#999999", marginTop: 2 },
+  rowName: { fontSize: 15, fontWeight: "600", color: "#07080c" },
+  rowDesc: { fontSize: 12, color: "#8a93a8", marginTop: 2 },
 })

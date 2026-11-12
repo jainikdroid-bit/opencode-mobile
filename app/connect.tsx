@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
 import { useConnections } from "../src/stores/connections"
 import { buildPairing } from "../src/lib/pairing"
+import { Mascot } from "../src/components/Mascot"
 
 // Landing screen for OpenCode Connect pairing links
 // (opencode://connect?url=...&password=...&name=...), opened by scanning the QR
@@ -56,7 +57,7 @@ export default function ConnectScreen() {
   if (!pairing) {
     return (
       <View style={[styles.container, isDark && styles.containerDark]}>
-        <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
+        <Ionicons name="alert-circle-outline" size={48} color="#ff4d6d" />
         <Text style={[styles.title, isDark && styles.textDark]}>{t("connection.pair.invalidTitle")}</Text>
         <Text style={[styles.body, isDark && styles.hintDark]}>{t("connection.pair.invalidMessage")}</Text>
         <TouchableOpacity style={styles.secondary} onPress={close}>
@@ -68,7 +69,7 @@ export default function ConnectScreen() {
 
   return (
     <View style={[styles.container, isDark && styles.containerDark]} testID="connect-screen">
-      <Ionicons name="link-outline" size={48} color="#6366f1" />
+      <Mascot state="idle" size={96} />
       <Text style={[styles.title, isDark && styles.textDark]}>{t("connection.pair.confirmText")}</Text>
       <View style={[styles.card, isDark && styles.cardDark]}>
         <Text style={[styles.name, isDark && styles.textDark]}>{pairing.name}</Text>
@@ -91,17 +92,17 @@ export default function ConnectScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24, gap: 16, backgroundColor: "#ffffff" },
-  containerDark: { backgroundColor: "#0a0a0a" },
-  title: { fontSize: 20, fontWeight: "700", textAlign: "center", color: "#111111" },
+  containerDark: { backgroundColor: "#07080c" },
+  title: { fontSize: 20, fontWeight: "700", textAlign: "center", color: "#0a0d14" },
   textDark: { color: "#ffffff" },
-  body: { fontSize: 14, textAlign: "center", color: "#666666" },
-  hintDark: { color: "#999999" },
-  card: { width: "100%", padding: 16, borderRadius: 12, backgroundColor: "#f4f4f5", gap: 4 },
-  cardDark: { backgroundColor: "#1a1a1a" },
-  name: { fontSize: 17, fontWeight: "600", color: "#111111" },
-  url: { fontSize: 14, color: "#666666" },
-  primary: { width: "100%", height: 52, borderRadius: 12, backgroundColor: "#6366f1", alignItems: "center", justifyContent: "center" },
+  body: { fontSize: 14, textAlign: "center", color: "#8a93a8" },
+  hintDark: { color: "#8a93a8" },
+  card: { width: "100%", padding: 16, borderRadius: 12, backgroundColor: "#141926", gap: 4 },
+  cardDark: { backgroundColor: "#0d1018" },
+  name: { fontSize: 17, fontWeight: "600", color: "#0a0d14" },
+  url: { fontSize: 14, color: "#8a93a8" },
+  primary: { width: "100%", height: 52, borderRadius: 12, backgroundColor: "#0891b2", alignItems: "center", justifyContent: "center" },
   primaryText: { fontSize: 17, fontWeight: "600", color: "#ffffff" },
   secondary: { paddingVertical: 12, paddingHorizontal: 24 },
-  secondaryText: { fontSize: 16, color: "#111111" },
+  secondaryText: { fontSize: 16, color: "#0a0d14" },
 })

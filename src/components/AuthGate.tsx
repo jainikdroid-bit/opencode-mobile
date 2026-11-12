@@ -46,14 +46,14 @@ export function AuthGate({ children }: Props) {
   return (
     <View style={[styles.container, isDark && styles.containerDark]}>
       <View style={styles.content}>
-        <Ionicons name={iconName} size={64} color={isDark ? "#ffffff" : "#0a0a0a"} />
+        <Ionicons name={iconName} size={64} color={isDark ? "#ffffff" : "#07080c"} />
         <Text style={[styles.title, isDark && styles.textDark]}>{t("authGate.title")}</Text>
         <Text style={[styles.subtitle, isDark && styles.subtitleDark]}>{t("authGate.subtitle")}</Text>
 
         {error && <Text style={styles.error}>{error}</Text>}
 
         <TouchableOpacity style={[styles.button, isDark && styles.buttonDark]} onPress={authenticate}>
-          <Ionicons name={iconName} size={24} color={isDark ? "#0a0a0a" : "#ffffff"} />
+          <Ionicons name={iconName} size={24} color={isDark ? "#07080c" : "#ffffff"} />
           <Text style={[styles.buttonText, isDark && styles.buttonTextDark]}>{t("authGate.unlockButton")}</Text>
         </TouchableOpacity>
       </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerDark: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   content: {
     alignItems: "center",
@@ -79,29 +79,29 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
     marginTop: 24,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   textDark: {
     color: "#ffffff",
   },
   subtitle: {
     fontSize: 16,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 8,
     textAlign: "center",
   },
   subtitleDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   error: {
-    color: "#ef4444",
+    color: "#ff4d6d",
     marginTop: 16,
     fontSize: 14,
   },
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 12,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   buttonDark: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#22d3ee",
   },
   buttonText: {
     color: "#ffffff",
@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   buttonTextDark: {
-    color: "#0a0a0a",
+    color: "#07080c",
   },
 })

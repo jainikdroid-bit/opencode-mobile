@@ -44,7 +44,7 @@ function SettingRow({
   const content = (
     <View style={[styles.settingRow, isDark && styles.settingRowDark]}>
       <View style={[styles.settingIcon, isDark && styles.settingIconDark]}>
-        <Ionicons name={icon} size={22} color={isDark ? "#ffffff" : "#0a0a0a"} />
+        <Ionicons name={icon} size={22} color={isDark ? "#ffffff" : "#07080c"} />
       </View>
       <View style={styles.settingContent}>
         <Text style={[styles.settingLabel, isDark && styles.textDark]}>{label}</Text>
@@ -158,7 +158,7 @@ export default function SettingsScreen() {
               value={settings.requireBiometric}
               onValueChange={(value) => updateSettings({ requireBiometric: value })}
               disabled={!hasBiometrics}
-              trackColor={{ false: "#767577", true: "#22c55e" }}
+              trackColor={{ false: "#767577", true: "#34f5a5" }}
             />
           }
         />
@@ -172,7 +172,7 @@ export default function SettingsScreen() {
               value={settings.requireBiometricForMessages}
               onValueChange={(value) => updateSettings({ requireBiometricForMessages: value })}
               disabled={!hasBiometrics || !settings.requireBiometric}
-              trackColor={{ false: "#767577", true: "#22c55e" }}
+              trackColor={{ false: "#767577", true: "#34f5a5" }}
             />
           }
         />
@@ -183,7 +183,7 @@ export default function SettingsScreen() {
             description={t("settings.security.lockNow.description")}
             isDark={isDark}
             onPress={lock}
-            right={<Ionicons name="chevron-forward" size={20} color={isDark ? "#666666" : "#999999"} />}
+            right={<Ionicons name="chevron-forward" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
           />
         )}
       </SettingSection>
@@ -202,7 +202,7 @@ export default function SettingsScreen() {
                 <Switch
                   value={notifications[category]}
                   onValueChange={(value) => handleToggle(category, value)}
-                  trackColor={{ false: "#767577", true: "#22c55e" }}
+                  trackColor={{ false: "#767577", true: "#34f5a5" }}
                 />
               }
             />
@@ -210,7 +210,7 @@ export default function SettingsScreen() {
         })}
         {osGranted === false && (
           <View style={[styles.settingRow, isDark && styles.settingRowDark]}>
-            <Text style={[styles.settingDescription, { color: "#ef4444", paddingLeft: 48 }]}>
+            <Text style={[styles.settingDescription, { color: "#ff4d6d", paddingLeft: 48 }]}>
               {t("settings.notifications.disabledNotice")}
             </Text>
           </View>
@@ -224,7 +224,7 @@ export default function SettingsScreen() {
           description={t("settings.privacy.privacyPolicy.description")}
           isDark={isDark}
           onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
-          right={<Ionicons name="open-outline" size={20} color={isDark ? "#666666" : "#999999"} />}
+          right={<Ionicons name="open-outline" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
       </SettingSection>
 
@@ -235,7 +235,7 @@ export default function SettingsScreen() {
           description={localeLabels[locale]}
           isDark={isDark}
           onPress={handleLanguagePress}
-          right={<Ionicons name="chevron-forward" size={20} color={isDark ? "#666666" : "#999999"} />}
+          right={<Ionicons name="chevron-forward" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
         <SettingRow
           icon="information-circle"
@@ -262,7 +262,7 @@ export default function SettingsScreen() {
           description={t("settings.about.github.description")}
           isDark={isDark}
           onPress={() => Linking.openURL("https://github.com/anomalyco/opencode")}
-          right={<Ionicons name="open-outline" size={20} color={isDark ? "#666666" : "#999999"} />}
+          right={<Ionicons name="open-outline" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
         <SettingRow
           icon="document-text"
@@ -270,7 +270,7 @@ export default function SettingsScreen() {
           description={t("settings.about.docs.description")}
           isDark={isDark}
           onPress={() => Linking.openURL("https://opencode.ai/docs")}
-          right={<Ionicons name="open-outline" size={20} color={isDark ? "#666666" : "#999999"} />}
+          right={<Ionicons name="open-outline" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
       </SettingSection>
 
@@ -285,10 +285,10 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
   },
   containerDark: {
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
   },
   content: {
     paddingBottom: 32,
@@ -299,23 +299,23 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#666666",
+    color: "#8a93a8",
     marginLeft: 16,
     marginBottom: 8,
     textTransform: "uppercase",
   },
   sectionTitleDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   sectionContent: {
     backgroundColor: "#ffffff",
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: "#e5e5e5",
+    borderColor: "#1c2333",
   },
   sectionContentDark: {
-    backgroundColor: "#1a1a1a",
-    borderColor: "#2a2a2a",
+    backgroundColor: "#0d1018",
+    borderColor: "#1c2333",
   },
   settingRow: {
     flexDirection: "row",
@@ -323,40 +323,40 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
   },
   settingRowDark: {
-    borderBottomColor: "#2a2a2a",
+    borderBottomColor: "#1c2333",
   },
   settingIcon: {
     width: 36,
     height: 36,
     borderRadius: 8,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 12,
   },
   settingIconDark: {
-    backgroundColor: "#2a2a2a",
+    backgroundColor: "#1c2333",
   },
   settingContent: {
     flex: 1,
   },
   settingLabel: {
     fontSize: 16,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
   textDark: {
     color: "#ffffff",
   },
   settingDescription: {
     fontSize: 13,
-    color: "#666666",
+    color: "#8a93a8",
     marginTop: 2,
   },
   metaDark: {
-    color: "#888888",
+    color: "#8a93a8",
   },
   footer: {
     alignItems: "center",
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 13,
-    color: "#999999",
+    color: "#8a93a8",
     textAlign: "center",
   },
 })

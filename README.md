@@ -1,23 +1,27 @@
+<p align="center">
+  <img src="docs/brand/rig.svg" width="140" alt="RIG, the OpenCode Mobile mascot" />
+</p>
+
 <h1 align="center">OpenCode Mobile</h1>
 
 <p align="center">
   <b>Your coding agent, in your pocket.</b><br/>
-  Private, local-first and alive: you can see when the agent is thinking, using a tool or writing.
+  A dark, minimal, neon-edged client where you can see the agent think, work and write.
 </p>
 
 <p align="center">
-  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue" />
-  <img alt="Platform: Android" src="https://img.shields.io/badge/platform-Android-3ddc84?logo=android&logoColor=white" />
-  <img alt="Built with Expo" src="https://img.shields.io/badge/built%20with-Expo-000020?logo=expo" />
-  <img alt="Languages" src="https://img.shields.io/badge/UI-EN%20%7C%20RU%20%7C%20中文-8b5cf6" />
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-22d3ee?labelColor=07080c" />
+  <img alt="Platform: Android" src="https://img.shields.io/badge/platform-Android-34f5a5?labelColor=07080c" />
+  <img alt="Built with Expo" src="https://img.shields.io/badge/built%20with-Expo-ff3df0?labelColor=07080c" />
+  <img alt="UI languages" src="https://img.shields.io/badge/UI-EN%20%7C%20RU%20%7C%20%E4%B8%AD%E6%96%87-8a93a8?labelColor=07080c" />
 </p>
 
 <p align="center">
-  <img src="docs/screens/thinking.png" width="19%" alt="The agent is thinking: animated activity bar with a timer" />
+  <img src="docs/screens/thinking.png" width="19%" alt="RIG writing a reply: animated activity bar with a timer" />
   <img src="docs/screens/models.png" width="19%" alt="Model picker with All / Local / Cloud filter" />
   <img src="docs/screens/connect.png" width="19%" alt="One-scan pairing with your computer" />
-  <img src="docs/screens/connectors.png" width="19%" alt="MCP connectors with on/off switches" />
-  <img src="docs/screens/empty.png" width="19%" alt="Friendly start screen with one-tap prompts" />
+  <img src="docs/screens/terminal.png" width="19%" alt="A real shell on your computer" />
+  <img src="docs/screens/files.png" width="19%" alt="Project files on your computer" />
 </p>
 
 A native Android client for the [opencode](https://github.com/sst/opencode) agent. It talks only to the
@@ -50,6 +54,24 @@ battery, send notifications, take photos and more, always behind per-action appr
 
 Also: streaming chat, inline diffs, tool-call approval, image attachments, several servers, biometric lock,
 credentials in the Android Keystore, dark mode.
+
+**Terminal and files.** Open a real shell on the computer (xterm in a WebView, with Esc / Tab / Ctrl and
+arrow keys) or browse the project and read files, straight from the session header.
+
+## Design
+
+Dark only, blue-black with neon cyan and magenta accents, monospace in the chrome. The mascot, **RIG**, is a
+cyberpunk site technician: hard hat, glowing visor, antenna. It acts out what the agent is doing.
+
+| State | RIG does |
+|---|---|
+| thinking | visor eye scans, thought dots rise |
+| working | a gear spins beside the head |
+| writing | the visor shows typing bars |
+| loading | eye scans inside a spinning ring |
+| success / error | green smile / red cross |
+
+Tokens live in [`src/theme/cyber.ts`](src/theme/cyber.ts); the logo is [`docs/brand/rig.svg`](docs/brand/rig.svg).
 
 ## Quick start
 

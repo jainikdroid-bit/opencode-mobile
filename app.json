@@ -2,7 +2,7 @@
   "expo": {
     "name": "OpenCode",
     "slug": "opencode-mobile",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "orientation": "portrait",
     "scheme": "opencode",
     "userInterfaceStyle": "automatic",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0F172A"
+      "backgroundColor": "#07080c"
     },
     "ios": {
       "supportsTablet": true,
@@ -35,11 +35,11 @@
     },
     "android": {
       "package": "cc.agentlabs.opencode",
-      "versionCode": 46,
+      "versionCode": 47,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0F172A"
+        "backgroundColor": "#07080c"
       }
     },
     "web": {

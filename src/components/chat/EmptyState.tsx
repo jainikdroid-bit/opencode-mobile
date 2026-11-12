@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
+import { Mascot } from "../Mascot"
 
 interface Props {
   isDark: boolean
@@ -32,9 +33,7 @@ export function EmptyState({ isDark, onPick }: Props) {
   return (
     <Animated.View style={[s.wrap, { opacity: appear }]} pointerEvents="box-none">
       <Animated.View style={{ transform: [{ translateY: float.interpolate({ inputRange: [0, 1], outputRange: [0, -8] }) }] }}>
-        <View style={[s.iconBubble, isDark && s.iconBubbleDark]}>
-          <Ionicons name="sparkles" size={34} color="#8b5cf6" />
-        </View>
+        <Mascot state="idle" size={132} />
       </Animated.View>
       <Text style={[s.title, isDark && s.titleDark]}>{t("session.empty.title")}</Text>
       <Text style={[s.hint, isDark && s.hintDark]}>{t("session.empty.hint")}</Text>
@@ -60,15 +59,15 @@ export function EmptyState({ isDark, onPick }: Props) {
 
 const s = StyleSheet.create({
   wrap: { ...StyleSheet.absoluteFillObject, justifyContent: "center", alignItems: "center", paddingHorizontal: 24 },
-  iconBubble: { width: 72, height: 72, borderRadius: 36, backgroundColor: "#f3effe", alignItems: "center", justifyContent: "center" },
-  iconBubbleDark: { backgroundColor: "#241b3d" },
-  title: { fontSize: 20, fontWeight: "700", color: "#1f1f1f", marginTop: 16 },
+  iconBubble: { width: 72, height: 72, borderRadius: 36, backgroundColor: "#141926", alignItems: "center", justifyContent: "center" },
+  iconBubbleDark: { backgroundColor: "#0f2a36" },
+  title: { fontSize: 20, fontWeight: "700", color: "#161c2a", marginTop: 16 },
   titleDark: { color: "#ffffff" },
-  hint: { fontSize: 14, color: "#888888", marginTop: 4 },
-  hintDark: { color: "#777777" },
+  hint: { fontSize: 14, color: "#8a93a8", marginTop: 4 },
+  hintDark: { color: "#8a93a8" },
   chips: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 22 },
-  chip: { paddingHorizontal: 14, paddingVertical: 9, borderRadius: 18, borderWidth: 1, borderColor: "#e0d8fb", backgroundColor: "#faf8ff" },
-  chipDark: { borderColor: "#3b2f66", backgroundColor: "#1c1730" },
+  chip: { paddingHorizontal: 14, paddingVertical: 9, borderRadius: 18, borderWidth: 1, borderColor: "#1c2333", backgroundColor: "#141926" },
+  chipDark: { borderColor: "#164e63", backgroundColor: "#0c1a26" },
   chipText: { fontSize: 14, color: "#5b3fb5" },
-  chipTextDark: { color: "#c4b5fd" },
+  chipTextDark: { color: "#67e8f9" },
 })

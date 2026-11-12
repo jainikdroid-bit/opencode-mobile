@@ -8,6 +8,7 @@ import React from "react"
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { buildCrashReport, shareReport } from "../lib/diagnostics"
 import { log } from "../lib/logbuffer"
+import { Mascot } from "./Mascot"
 // Class component — can't use the useTranslation() hook, so resolve strings
 // via the shared i18next instance directly (already initialized by the time
 // this can render, since app/_layout.tsx imports it before mounting).
@@ -56,6 +57,9 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return (
       <View style={styles.root}>
         <ScrollView contentContainerStyle={styles.content}>
+          <View style={{ alignItems: "center", marginBottom: 12 }}>
+            <Mascot state="error" size={104} />
+          </View>
           <Text style={styles.title}>{i18n.t("errorBoundary.title")}</Text>
           <Text style={styles.subtitle}>{i18n.t("errorBoundary.subtitle")}</Text>
 
@@ -99,18 +103,18 @@ export class ErrorBoundary extends React.Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: "#0a0a0a" },
+  root: { flex: 1, backgroundColor: "#07080c" },
   content: { padding: 24, paddingTop: 80 },
   title: { color: "#ffffff", fontSize: 24, fontWeight: "700", marginBottom: 8 },
   subtitle: { color: "#a0a0a0", fontSize: 15, lineHeight: 21, marginBottom: 24 },
-  card: { backgroundColor: "#1a1a1a", borderRadius: 12, padding: 16, marginBottom: 12 },
+  card: { backgroundColor: "#0d1018", borderRadius: 12, padding: 16, marginBottom: 12 },
   cardLabel: { color: "#888", fontSize: 12, fontWeight: "600", textTransform: "uppercase", marginBottom: 6 },
   cardBody: { color: "#fff", fontSize: 15 },
   code: { color: "#cdd3da", fontSize: 12, fontFamily: "Courier" },
   actions: { marginTop: 16, flexDirection: "row", gap: 12 },
   button: { flex: 1, paddingVertical: 14, borderRadius: 10, alignItems: "center" },
-  buttonPrimary: { backgroundColor: "#3b82f6" },
-  buttonSecondary: { backgroundColor: "#2a2a2a" },
+  buttonPrimary: { backgroundColor: "#22d3ee" },
+  buttonSecondary: { backgroundColor: "#1c2333" },
   buttonPrimaryText: { color: "#fff", fontSize: 16, fontWeight: "600" },
   buttonSecondaryText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 })

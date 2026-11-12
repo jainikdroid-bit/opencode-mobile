@@ -42,7 +42,7 @@ function ThinkingBulb({ active }: { active: boolean }) {
           ]}
         />
       ) : null}
-      <Ionicons name={active ? "bulb" : "bulb-outline"} size={15} color="#f59e0b" />
+      <Ionicons name={active ? "bulb" : "bulb-outline"} size={15} color="#ffb800" />
     </View>
   )
 }
@@ -93,7 +93,7 @@ export function ReasoningBlock({ text, isDark, streaming = false, durationMs = 0
       <View style={s.header}>
         <ThinkingBulb active={streaming} />
         <Text style={[s.label, isDark && s.labelDark]}>{label}</Text>
-        <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={14} color={isDark ? "#666666" : "#999999"} />
+        <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={14} color={isDark ? "#8a93a8" : "#8a93a8"} />
       </View>
       {showPreview ? (
         <Text style={[s.preview, isDark && s.textDark]} numberOfLines={4}>
@@ -105,7 +105,7 @@ export function ReasoningBlock({ text, isDark, streaming = false, durationMs = 0
           {text}
         </Text>
       ) : null}
-      {streaming ? <SweepBar color="#f59e0b" /> : null}
+      {streaming ? <SweepBar color="#ffb800" /> : null}
     </TouchableOpacity>
   )
 }
@@ -125,9 +125,9 @@ const s = StyleSheet.create({
   blockLiveDark: { borderColor: "#7a5b00" },
   header: { flexDirection: "row", alignItems: "center", gap: 8 },
   bulbWrap: { width: 24, height: 24, alignItems: "center", justifyContent: "center" },
-  bulbHalo: { position: "absolute", width: 24, height: 24, borderRadius: 12, backgroundColor: "#f59e0b" },
+  bulbHalo: { position: "absolute", width: 24, height: 24, borderRadius: 12, backgroundColor: "#ffb800" },
   label: { fontSize: 13, fontWeight: "600", color: "#92400e", flex: 1 },
-  labelDark: { color: "#f59e0b" },
+  labelDark: { color: "#ffb800" },
   preview: { fontSize: 12, lineHeight: 18, color: "#a16207", marginTop: 8, fontStyle: "italic" },
   text: { fontSize: 13, lineHeight: 20, color: "#78350f", marginTop: 8 },
   textDark: { color: "#d4a574" },

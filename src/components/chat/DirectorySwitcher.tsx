@@ -63,7 +63,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
       keyboardBlurBehavior="restore"
       android_keyboardInputMode="adjustResize"
       backgroundStyle={isDark ? s.sheetDark : s.sheet}
-      handleIndicatorStyle={{ backgroundColor: isDark ? "#666666" : "#cccccc" }}
+      handleIndicatorStyle={{ backgroundColor: isDark ? "#8a93a8" : "#cccccc" }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} opacity={0.5} />
       )}
@@ -75,7 +75,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
         <Text style={[s.title, isDark && s.white]}>{t("chat.directorySwitcher.title")}</Text>
         {shortCurrent && (
           <View style={s.current}>
-            <Ionicons name="folder" size={14} color="#8b5cf6" />
+            <Ionicons name="folder" size={14} color="#22d3ee" />
             <Text style={s.currentText} numberOfLines={1}>
               {shortCurrent}
             </Text>
@@ -88,7 +88,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
         <BottomSheetTextInput
           style={[s.input, isDark && s.inputDark]}
           placeholder={serverHome ? `${serverHome}/...` : "/path/to/project"}
-          placeholderTextColor={isDark ? "#666666" : "#999999"}
+          placeholderTextColor={isDark ? "#8a93a8" : "#8a93a8"}
           value={custom}
           onChangeText={(text) => {
             if (serverHome && text === "~") setCustom(serverHome)
@@ -102,7 +102,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
         />
         {custom.trim() && (
           <TouchableOpacity style={[s.goBtn, isDark && s.goBtnDark]} onPress={handleCustomSubmit}>
-            <Ionicons name="arrow-forward" size={18} color={isDark ? "#0a0a0a" : "#ffffff"} />
+            <Ionicons name="arrow-forward" size={18} color={isDark ? "#07080c" : "#ffffff"} />
           </TouchableOpacity>
         )}
       </View>
@@ -128,7 +128,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
                 onBrowse()
               }}
             >
-              <Ionicons name="folder-open-outline" size={14} color={isDark ? "#8b5cf6" : "#6d28d9"} />
+              <Ionicons name="folder-open-outline" size={14} color={isDark ? "#22d3ee" : "#0891b2"} />
               <Text style={[s.chipText, isDark && s.chipTextDark]}>{t("chat.directorySwitcher.browseLabel")}</Text>
             </TouchableOpacity>
           )}
@@ -148,7 +148,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
               <Ionicons
                 name={item.dir ? "folder-outline" : "server-outline"}
                 size={20}
-                color={item.active ? "#8b5cf6" : isDark ? "#888888" : "#666666"}
+                color={item.active ? "#22d3ee" : isDark ? "#8a93a8" : "#8a93a8"}
               />
             </View>
             <View style={s.rowContent}>
@@ -164,7 +164,7 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
                 <Text style={[s.rowPath, isDark && s.dimDark]}>{t("chat.directorySwitcher.usesServerDir")}</Text>
               )}
             </View>
-            {item.active && <Ionicons name="checkmark-circle" size={20} color="#8b5cf6" />}
+            {item.active && <Ionicons name="checkmark-circle" size={20} color="#22d3ee" />}
           </TouchableOpacity>
         )}
         contentContainerStyle={s.list}
@@ -180,9 +180,9 @@ export function DirectorySwitcher({ sheetRef, current, recents, serverHome, isDa
 
 const s = StyleSheet.create({
   sheet: { backgroundColor: "#ffffff" },
-  sheetDark: { backgroundColor: "#1a1a1a" },
+  sheetDark: { backgroundColor: "#0d1018" },
   header: { paddingHorizontal: 16, paddingBottom: 8, gap: 6 },
-  title: { fontSize: 18, fontWeight: "700", color: "#0a0a0a" },
+  title: { fontSize: 18, fontWeight: "700", color: "#07080c" },
   white: { color: "#ffffff" },
   current: {
     flexDirection: "row",
@@ -191,7 +191,7 @@ const s = StyleSheet.create({
   },
   currentText: {
     fontSize: 13,
-    color: "#8b5cf6",
+    color: "#22d3ee",
     fontWeight: "500",
   },
   inputWrap: {
@@ -210,11 +210,11 @@ const s = StyleSheet.create({
   chip: {
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: "#e8e5f0",
+    backgroundColor: "#141926",
     borderRadius: 16,
   },
   chipDark: {
-    backgroundColor: "#2a2040",
+    backgroundColor: "#0f2a36",
   },
   chipBrowse: {
     flexDirection: "row",
@@ -224,56 +224,56 @@ const s = StyleSheet.create({
   chipText: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#6d28d9",
+    color: "#0891b2",
   },
   chipTextDark: {
-    color: "#c4b5fd",
+    color: "#67e8f9",
   },
   input: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#141926",
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 10,
     fontSize: 15,
-    color: "#0a0a0a",
+    color: "#07080c",
   },
-  inputDark: { backgroundColor: "#2a2a2a", color: "#ffffff" },
+  inputDark: { backgroundColor: "#1c2333", color: "#ffffff" },
   goBtn: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#07080c",
     justifyContent: "center",
     alignItems: "center",
   },
-  goBtnDark: { backgroundColor: "#ffffff" },
+  goBtnDark: { backgroundColor: "#22d3ee" },
   list: { paddingBottom: 40 },
   section: {
     fontSize: 12,
     fontWeight: "700",
-    color: "#999999",
+    color: "#8a93a8",
     textTransform: "uppercase",
     letterSpacing: 0.5,
     paddingHorizontal: 16,
     paddingTop: 4,
     paddingBottom: 8,
   },
-  dimDark: { color: "#666666" },
+  dimDark: { color: "#8a93a8" },
   row: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#e5e5e5",
+    borderBottomColor: "#1c2333",
     gap: 12,
   },
-  rowDark: { borderBottomColor: "#2a2a2a" },
-  rowActive: { backgroundColor: "#f5f3ff" },
+  rowDark: { borderBottomColor: "#1c2333" },
+  rowActive: { backgroundColor: "#141926" },
   rowIcon: { width: 28, alignItems: "center" },
   rowContent: { flex: 1 },
-  rowLabel: { fontSize: 15, fontWeight: "500", color: "#0a0a0a" },
-  rowLabelActive: { color: "#8b5cf6" },
-  rowPath: { fontSize: 12, color: "#999999", marginTop: 1 },
+  rowLabel: { fontSize: 15, fontWeight: "500", color: "#07080c" },
+  rowLabelActive: { color: "#22d3ee" },
+  rowPath: { fontSize: 12, color: "#8a93a8", marginTop: 1 },
 })
