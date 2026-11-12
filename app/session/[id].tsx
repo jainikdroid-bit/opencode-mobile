@@ -40,6 +40,7 @@ import { useConnections } from "../../src/stores/connections"
 import { useAuth } from "../../src/stores/auth"
 import { useCatalog } from "../../src/stores/catalog"
 import { useSpeech } from "../../src/lib/speech"
+import { EmptyState } from "../../src/components/chat/EmptyState"
 import { messagePartsToSelectableText } from "../../src/lib/message-text"
 
 // --- Builtin slash commands ---
@@ -740,11 +741,7 @@ export default function SessionScreen() {
             {/* Empty state rendered OUTSIDE the inverted list to avoid the
                 inverted transform mirroring its text/icon (see #ui-mirror). */}
             {messageData.length === 0 && (
-              <View style={s.emptyOverlay} pointerEvents="none">
-                <Ionicons name="chatbubble-outline" size={48} color={isDark ? "#444444" : "#cccccc"} />
-                <Text style={[s.emptyText, isDark && s.metaDark]}>{t("session.empty.title")}</Text>
-                <Text style={[s.emptyHint, isDark && s.metaDark]}>{t("session.empty.hint")}</Text>
-              </View>
+              <EmptyState isDark={isDark} onPick={(text) => setInput(text)} />
             )}
             {showScrollButton && (
               <TouchableOpacity style={[s.scrollBtn, isDark && s.scrollBtnDark]} onPress={() => scrollToBottom(true)}>

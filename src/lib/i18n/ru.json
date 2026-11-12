@@ -109,7 +109,13 @@
     },
     "empty": {
       "title": "Начните разговор",
-      "hint": "Введите / для команд"
+      "hint": "Введите / для команд",
+      "suggestions": {
+        "explain": "Объясни этот проект",
+        "bugs": "Найди и исправь ошибки",
+        "tests": "Напиши тесты",
+        "changes": "Кратко опиши последние изменения"
+      }
     },
     "loadingOlder": "Загрузка старых сообщений...",
     "input": {
@@ -403,7 +409,10 @@
     },
     "statusIndicator": {
       "retrying": "Повторная попытка ({{attempt}})...",
-      "working": "Работаю..."
+      "working": "Работаю...",
+      "thinking": "Агент размышляет",
+      "tool": "Использует {{tool}}",
+      "writing": "Пишет ответ"
     },
     "slashPopover": {
       "customBadge": "cmd"
@@ -446,7 +455,9 @@
       "thisFolderFallback": "эту папку"
     },
     "reasoningBlock": {
-      "label": "Размышления"
+      "label": "Размышления",
+      "live": "Агент размышляет…",
+      "done": "Размышлял {{time}}"
     },
     "toolCallCard": {
       "fallbackTitle": "Инструмент",

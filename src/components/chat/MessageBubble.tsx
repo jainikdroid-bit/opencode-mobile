@@ -8,6 +8,7 @@ import type { Message, Part } from "../../lib/sdk"
 import { hasSelectableContent } from "../../lib/message-text"
 import * as Speech from "expo-speech"
 import { speakableText } from "../../lib/speakable"
+import { reasoningSummary } from "../../lib/agent-phase"
 import { deviceLocaleTags } from "../../lib/i18n/config"
 import { resolveSpeechLang } from "../../lib/speech-lang"
 import { useSettings } from "../../stores/settings"
@@ -64,6 +65,7 @@ export const MessageBubble = memo(
     const fileParts = parts.filter((p) => p.type === "file" && isImageMime(p.mime))
     const text = textParts.map((p) => p.text).join("\n") || ""
     const reasoning = reasoningParts.map((p) => p.text).join("\n") || ""
+    const thinking = reasoningSummary(parts)
 
     return (
       <View
@@ -154,7 +156,9 @@ export const MessageBubble = memo(
         )}
 
         {/* Reasoning (collapsible) */}
-        {reasoning.length > 0 && <ReasoningBlock text={reasoning} isDark={isDark} />}
+        {(reasoning.length > 0 || thinking.streaming) && (
+          <ReasoningBlock text={reasoning} isDark={isDark} streaming={thinking.streaming} durationMs={thinking.durationMs} />
+        )}
 
         {/* Message text */}
         {text.length > 0 &&

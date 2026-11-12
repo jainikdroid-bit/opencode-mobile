@@ -109,7 +109,13 @@
     },
     "empty": {
       "title": "开始一段对话",
-      "hint": "输入 / 使用命令"
+      "hint": "输入 / 使用命令",
+      "suggestions": {
+        "explain": "解释这个项目",
+        "bugs": "查找并修复错误",
+        "tests": "编写测试",
+        "changes": "总结最近的更改"
+      }
     },
     "loadingOlder": "正在加载更早的消息...",
     "input": {
@@ -403,7 +409,10 @@
     },
     "statusIndicator": {
       "retrying": "正在重试（第 {{attempt}} 次）...",
-      "working": "处理中..."
+      "working": "处理中...",
+      "thinking": "智能体正在思考",
+      "tool": "正在使用 {{tool}}",
+      "writing": "正在撰写回答"
     },
     "slashPopover": {
       "customBadge": "命令"
@@ -446,7 +455,9 @@
       "thisFolderFallback": "此文件夹"
     },
     "reasoningBlock": {
-      "label": "思考中"
+      "label": "思考中",
+      "live": "智能体正在思考…",
+      "done": "思考了 {{time}}"
     },
     "toolCallCard": {
       "fallbackTitle": "工具",

@@ -109,7 +109,13 @@
     },
     "empty": {
       "title": "Start a conversation",
-      "hint": "Type / for commands"
+      "hint": "Type / for commands",
+      "suggestions": {
+        "explain": "Explain this project",
+        "bugs": "Find and fix bugs",
+        "tests": "Write tests",
+        "changes": "Summarize recent changes"
+      }
     },
     "loadingOlder": "Loading older messages...",
     "input": {
@@ -403,7 +409,10 @@
     },
     "statusIndicator": {
       "retrying": "Retrying (attempt {{attempt}})...",
-      "working": "Working..."
+      "working": "Working...",
+      "thinking": "Agent is thinking",
+      "tool": "Using {{tool}}",
+      "writing": "Writing the answer"
     },
     "slashPopover": {
       "customBadge": "cmd"
@@ -446,7 +455,9 @@
       "thisFolderFallback": "this folder"
     },
     "reasoningBlock": {
-      "label": "Thinking"
+      "label": "Thinking",
+      "live": "Agent is thinking…",
+      "done": "Thought for {{time}}"
     },
     "toolCallCard": {
       "fallbackTitle": "Tool",
