@@ -90,7 +90,7 @@ needs approval, with no cloud service involved.
 
 ## Build
 
-Requirements: Node 20+, JDK 17, Android SDK.
+Requirements: Node 22+, JDK 17, Android SDK.
 
 ```bash
 npm ci
