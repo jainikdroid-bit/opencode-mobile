@@ -103,8 +103,9 @@ you provide your own signing config, so uninstall other builds of the app before
 
 ## Privacy
 
-The app talks only to the servers you add. Crash reports and anonymous usage events are **off unless you allow
-them** on first launch (Settings → Privacy). Credentials live in the Android Keystore.
+No analytics, no crash reporting, no accounts. The app talks only to the servers you add. The one other
+request is an optional once-a-day check of this project's GitHub releases to tell you about updates.
+Credentials live in the Android Keystore.
 
 ## License
 

@@ -1,0 +1,5 @@
+v0.5.1 — No telemetry
+
+• Removed crash reporting, analytics and the waitlist code: the app sends nothing to third parties.
+• Update checks now look at this project's releases.
+• Smaller APK; repository cleaned of unrelated tooling.

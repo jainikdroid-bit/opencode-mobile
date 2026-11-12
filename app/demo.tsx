@@ -6,13 +6,8 @@ import { useTranslation } from "react-i18next"
 import { MessageBubble, PermissionPrompt } from "../src/components/chat"
 import { buildDemoScript, buildDemoCompletionMessage, buildDemoDenialMessage } from "../src/lib/demo-script"
 import { SETUP_GUIDE_URL } from "../src/lib/links"
-import { track, AnalyticsEvent } from "../src/lib/analytics"
-import {
-  demoStepAdvancedProps,
-  demoCompletedOutcome,
-  demoExitedToConnectProps,
-  type DemoPermissionReply,
-} from "../src/lib/demo-analytics"
+
+type DemoPermissionReply = "once" | "always" | "reject"
 
 // Fully offline, scripted walkthrough for installers with no self-hosted
 // opencode server. ISOLATION: every message/part below is hardcoded local
@@ -31,23 +26,13 @@ export default function DemoScreen() {
   const script = useMemo(() => buildDemoScript(), [])
   const [reply, setReply] = useState<DemoPermissionReply | null>(null)
 
-  // Fires once per screen mount — this is a fully offline, consent-gated
-  // event (track() is a no-op without telemetry consent, same as every
-  // other analytics call site).
-  useEffect(() => {
-    track(AnalyticsEvent.DemoStarted)
-  }, [])
-
   const handleReply = useCallback((r: DemoPermissionReply) => {
     setReply(r)
-    track(AnalyticsEvent.DemoStepAdvanced, demoStepAdvancedProps(r))
-    track(AnalyticsEvent.DemoCompleted, { outcome: demoCompletedOutcome(r) })
   }, [])
 
   const handleConnectPress = useCallback(() => {
-    track(AnalyticsEvent.DemoExitedToConnect, demoExitedToConnectProps(reply !== null))
     router.push("/connection/add")
-  }, [reply, router])
+  }, [router])
 
   const completion = useMemo(() => {
     if (!reply) return null
@@ -84,13 +69,6 @@ export default function DemoScreen() {
               testID="demo-connect-button"
             >
               <Text style={s.connectButtonText}>{t("demo.connectButton")}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={s.hostedCtaLink}
-              onPress={handleConnectPress}
-              testID="demo-hosted-cta"
-            >
-              <Text style={s.hostedCtaLinkText}>{t("demo.hostedCtaLink")}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={s.setupGuideLink}
@@ -147,8 +125,6 @@ const s = StyleSheet.create({
     alignItems: "center",
   },
   connectButtonText: { color: "#ffffff", fontWeight: "600", fontSize: 15 },
-  hostedCtaLink: { marginTop: 14 },
-  hostedCtaLinkText: { fontSize: 14, fontWeight: "600", color: "#8b5cf6", textAlign: "center" },
   setupGuideLink: { marginTop: 14 },
   setupGuideLinkText: { fontSize: 14, fontWeight: "600", color: "#6366f1" },
 })

@@ -11,7 +11,6 @@ import {
   useColorScheme,
   ActivityIndicator,
   Alert,
-  Linking,
 } from "react-native"
 import { router } from "expo-router"
 import * as Clipboard from "expo-clipboard"
@@ -20,18 +19,10 @@ import { useTranslation } from "react-i18next"
 import { useConnections } from "../../src/stores/connections"
 import type { ConnectionType } from "../../src/lib/types"
 import { probeConnection, shareReport } from "../../src/lib/diagnostics"
-import { captureDiagnostic } from "../../src/lib/sentry"
 import { parseUrl } from "../../src/lib/diagnostics-classify"
 import { buildAuth } from "../../src/lib/auth"
-import { AnalyticsEvent, track } from "../../src/lib/analytics"
-import { submitWaitlistSignup, buildWaitlistMailtoUrl, needsManualEscapeHatch, type QueuedSignup } from "../../src/lib/waitlist"
-import { flushPendingSignups, queuePendingSignup, readPendingSignups, dropPendingSignup } from "../../src/lib/waitlist-queue-storage"
 import { parsePairingLink } from "../../src/lib/pairing"
-import appJson from "../../app.json"
 
-// Same read as sentry.ts: app.json is the single source of the user-visible
-// version (package.json/gradle are kept in parity by `npm run check:versions`).
-const APP_VERSION = (appJson as { expo?: { version?: string } }).expo?.version ?? "unknown"
 
 export default function AddConnectionScreen() {
   const colorScheme = useColorScheme()
@@ -50,36 +41,6 @@ export default function AddConnectionScreen() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isConnecting, setIsConnecting] = useState(false)
-  const [waitlistEmail, setWaitlistEmail] = useState("")
-  // "queued" = the POST failed but the signup is persisted on-device and will
-  // be retried on the next foreground/connectivity (AGE-87). It is NOT "sent".
-  const [waitlistState, setWaitlistState] = useState<"idle" | "submitting" | "joined" | "queued">("idle")
-  const [pendingSignup, setPendingSignup] = useState<QueuedSignup | null>(null)
-
-  // Retry anything left over from a previous session as soon as this screen
-  // opens (the root layout also flushes on every foreground), then reflect the
-  // real state back to the user instead of pretending nothing is pending.
-  useEffect(() => {
-    let cancelled = false
-    void (async () => {
-      const outcome = await flushPendingSignups().catch(() => null)
-      if (cancelled) return
-      const pending = outcome ? outcome.pending : await readPendingSignups().catch(() => [])
-      if (cancelled) return
-      if (outcome && outcome.synced.length > 0 && pending.length === 0) {
-        setWaitlistState("joined")
-        return
-      }
-      if (pending.length > 0) {
-        setPendingSignup(pending[pending.length - 1])
-        setWaitlistState((current) => (current === "idle" ? "queued" : current))
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
   const buildUrl = () => {
     if (mode === "advanced") return url.trim()
     const raw = ip.trim()
@@ -110,7 +71,6 @@ export default function AddConnectionScreen() {
       return
     }
 
-    track(AnalyticsEvent.ConnectionFormSubmitted, { mode: "quick" })
     setIsConnecting(true)
 
     // Test connection first. Quick Connect has no username field, so the
@@ -154,9 +114,8 @@ export default function AddConnectionScreen() {
         )
       }
     } else {
-      // Failed: run active diagnostics, capture to Sentry, offer a shareable report.
+      // Failed: run active diagnostics and offer a shareable report.
       const report = await probeConnection(serverUrl, buildAuth(undefined, password))
-      captureDiagnostic(report)
       setIsConnecting(false)
       Alert.alert(
         t("connection.shared.alerts.connectionFailedTitle"),
@@ -201,14 +160,12 @@ export default function AddConnectionScreen() {
       return
     }
 
-    track(AnalyticsEvent.ConnectionFormSubmitted, { mode: "advanced" })
     setIsConnecting(true)
 
     // Pre-flight, mirroring Quick Connect: previously Advanced mode saved
     // directly with no health check, so bad credentials (401/403) or an
     // unreachable server silently became the active connection with zero
-    // feedback (issue #76). testConnection() also fires the
-    // connection_attempted/succeeded/failed analytics events.
+    // feedback (issue #76).
     const result = await testConnection(
       {
         id: "",
@@ -249,10 +206,9 @@ export default function AddConnectionScreen() {
     }
 
     // Failed: same "Connection Failed" alert as Quick Connect — run active
-    // diagnostics, capture to Sentry, and offer a shareable report instead of
+    // diagnostics and offer a shareable report instead of
     // silently persisting an unreachable/unauthorized connection.
     const report = await probeConnection(url.trim(), buildAuth(username, password))
-    captureDiagnostic(report)
     setIsConnecting(false)
     Alert.alert(
       t("connection.shared.alerts.connectionFailedTitle"),
@@ -266,74 +222,6 @@ export default function AddConnectionScreen() {
         { text: t("common.shareReport"), onPress: () => shareReport(report) },
       ],
     )
-  }
-
-  const handleJoinWaitlist = async () => {
-    if (waitlistState === "submitting") return
-    const attemptedEmail = waitlistEmail
-    setWaitlistState("submitting")
-    const result = await submitWaitlistSignup(attemptedEmail)
-    if (result.ok) {
-      // Clear any earlier queued attempt for the same address so the flush
-      // doesn't re-post it.
-      void dropPendingSignup(result.email)
-      setPendingSignup(null)
-      setWaitlistState("joined")
-      return
-    }
-
-    if (!result.retryable) {
-      // The server rejected this address; queueing it would retry forever.
-      setWaitlistState(pendingSignup ? "queued" : "idle")
-      Alert.alert(t("connection.add.waitlist.alertTitle"), result.error)
-      return
-    }
-
-    // Offline / timeout / 5xx: persist and retry later instead of dumping the
-    // user into a mail composer they may never send (AGE-87).
-    const entry = await queuePendingSignup(result.email, result.error)
-    if (entry) {
-      setPendingSignup(entry)
-      setWaitlistState("queued")
-      return
-    }
-
-    // Storage refused the write — we cannot promise to finish this later, so
-    // offer the manual email path explicitly rather than claiming success.
-    setWaitlistState("idle")
-    Alert.alert(t("connection.add.waitlist.alertTitle"), t("connection.add.waitlist.queueFailedMessage"), [
-      { text: t("common.cancel"), style: "cancel" },
-      { text: t("connection.add.waitlist.emailUsButton"), onPress: () => void openWaitlistMailto(result.email) },
-    ])
-  }
-
-  // Last-resort, user-initiated only. Never opened automatically.
-  const openWaitlistMailto = async (email: string) => {
-    try {
-      await Linking.openURL(buildWaitlistMailtoUrl(email, APP_VERSION))
-    } catch {
-      Alert.alert(t("connection.add.waitlist.alertTitle"), t("connection.add.waitlist.noMailAppMessage"))
-    }
-  }
-
-  // Explicit "Retry" from the queued state — same code path the foreground
-  // flush uses, so there is only one retry implementation.
-  const handleRetryQueued = async () => {
-    setWaitlistState("submitting")
-    const outcome = await flushPendingSignups().catch(() => null)
-    if (outcome && outcome.pending.length === 0 && outcome.synced.length > 0) {
-      setPendingSignup(null)
-      setWaitlistState("joined")
-      return
-    }
-    if (outcome && outcome.pending.length === 0) {
-      // Nothing left pending and nothing synced: the address was rejected.
-      setPendingSignup(null)
-      setWaitlistState("idle")
-      return
-    }
-    if (outcome) setPendingSignup(outcome.pending[outcome.pending.length - 1])
-    setWaitlistState("queued")
   }
 
   // Quick connect mode - simplified
@@ -476,9 +364,9 @@ export default function AddConnectionScreen() {
           <Text style={[styles.connectCardDesc, isDark && styles.hintDark]}>
             {t("connection.add.quick.connectCardDesc")}
           </Text>
-          <TouchableOpacity style={styles.waitlistButton} onPress={handlePastePairingLink} testID="pair-paste-button">
+          <TouchableOpacity style={styles.pairButton} onPress={handlePastePairingLink} testID="pair-paste-button">
             <Ionicons name="clipboard-outline" size={16} color="#ffffff" />
-            <Text style={styles.waitlistButtonText}>{t("connection.pair.pasteButton")}</Text>
+            <Text style={styles.pairButtonText}>{t("connection.pair.pasteButton")}</Text>
           </TouchableOpacity>
         </View>
 
@@ -887,7 +775,7 @@ const styles = StyleSheet.create({
     color: "#666666",
     lineHeight: 20,
   },
-  waitlistButton: {
+  pairButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -897,30 +785,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#6366f1",
     marginTop: 12,
   },
-  waitlistButtonText: {
+  pairButtonText: {
     fontSize: 15,
     fontWeight: "600",
     color: "#ffffff",
-  },
-  waitlistSuccess: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    marginTop: 12,
-  },
-  waitlistSuccessText: {
-    flex: 1,
-    fontSize: 13,
-    color: "#0a0a0a",
-    lineHeight: 20,
-  },
-  waitlistEscapeHatch: {
-    marginTop: 8,
-    paddingVertical: 4,
-  },
-  waitlistEscapeHatchText: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#6366f1",
   },
 })

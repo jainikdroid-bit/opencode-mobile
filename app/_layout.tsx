@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { Stack, router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useColorScheme, View, ActivityIndicator, AppState } from "react-native"
@@ -14,12 +14,7 @@ import { useCatalog } from "../src/stores/catalog"
 import { useSettings } from "../src/stores/settings"
 import { AuthGate } from "../src/components/AuthGate"
 import { ErrorBoundary } from "../src/components/ErrorBoundary"
-import { TelemetryConsentModal } from "../src/components/TelemetryConsentModal"
 import * as notifications from "../src/lib/notifications"
-import { addBreadcrumb, wrap } from "../src/lib/sentry"
-import { loadTelemetryConsent, setTelemetryConsent } from "../src/lib/telemetry"
-import { initAnalytics, trackAppOpened } from "../src/lib/analytics"
-import { flushPendingSignups } from "../src/lib/waitlist-queue-storage"
 
 const queryClient = new QueryClient()
 
@@ -32,9 +27,6 @@ function RootLayout() {
   const { loadConnections, isLoading: connectionsLoading, client } = useConnections()
   const sseStarted = useRef(false)
   const notifPermissionRequested = useRef(false)
-
-  // Telemetry consent state: null = loading, 'unknown' = show modal, else decided
-  const [consentState, setConsentState] = useState<"loading" | "unknown" | "decided">("loading")
 
   useEffect(() => {
     initAuth()
@@ -51,29 +43,6 @@ function RootLayout() {
       if (data.sessionId) router.push(`/session/${data.sessionId}`)
       else router.push("/")
     })
-
-    // Load telemetry consent — initialise Sentry only if previously granted
-    loadTelemetryConsent()
-      .then((state) => {
-        if (state === "granted") {
-          import("../src/lib/sentry").then(({ initSentry }) => {
-            initSentry()
-            addBreadcrumb({ category: "app.lifecycle", message: "app started" })
-          })
-          initAnalytics()
-          trackAppOpened()
-          setConsentState("decided")
-        } else if (state === "denied") {
-          addBreadcrumb({ category: "app.lifecycle", message: "app started (telemetry off)" })
-          setConsentState("decided")
-        } else {
-          setConsentState("unknown")
-        }
-      })
-      .catch(() => {
-        // SecureStore unavailable — show modal so user can decide
-        setConsentState("unknown")
-      })
 
     return unsubNotifications
   }, [])
@@ -92,30 +61,6 @@ function RootLayout() {
       if (next === "background" && useAuth.getState().settings.requireBiometric) {
         useAuth.getState().lock()
       }
-    })
-    return () => sub.remove()
-  }, [])
-
-  // Retry any waitlist signup that couldn't reach the server when the user
-  // tapped Join (AGE-87). Runs at cold start and on every foreground, which is
-  // the cheapest reliable proxy for "connectivity may have come back" — it is a
-  // no-op (single storage read, no network) when the queue is empty, and it
-  // replaces the old silent mailto: fallback that lost 20 of 21 signups.
-  useEffect(() => {
-    const flush = () => {
-      void flushPendingSignups()
-        .then((outcome) => {
-          if (outcome.synced.length > 0) {
-            addBreadcrumb({ category: "waitlist", message: `retried ${outcome.synced.length} queued signup(s)` })
-          }
-        })
-        .catch(() => {
-          // Best effort: the entry stays queued for the next foreground.
-        })
-    }
-    flush()
-    const sub = AppState.addEventListener("change", (next) => {
-      if (next === "active") flush()
     })
     return () => sub.remove()
   }, [])
@@ -166,7 +111,7 @@ function RootLayout() {
     }
   }, [client])
 
-  const isLoading = authLoading || connectionsLoading || consentState === "loading"
+  const isLoading = authLoading || connectionsLoading
 
   if (isLoading) {
     return (
@@ -236,21 +181,9 @@ function RootLayout() {
           </QueryClientProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-      {/* Telemetry consent modal — shown once on first launch */}
-      <TelemetryConsentModal
-        visible={consentState === "unknown"}
-        onAllow={async () => {
-          await setTelemetryConsent(true)
-          setConsentState("decided")
-        }}
-        onDecline={async () => {
-          await setTelemetryConsent(false)
-          setConsentState("decided")
-        }}
-      />
       </I18nextProvider>
     </ErrorBoundary>
   )
 }
 
-export default wrap(RootLayout)
+export default RootLayout

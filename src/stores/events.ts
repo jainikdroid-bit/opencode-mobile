@@ -4,9 +4,6 @@ import { useSessions, abortedSessions } from "./sessions"
 import { send as notify } from "../lib/notifications"
 import { sanitizeBody } from "../lib/notify-format"
 import { statusFromPart } from "../lib/status-labels"
-import { addBreadcrumb } from "../lib/sentry"
-import { AnalyticsEvent, track } from "../lib/analytics"
-import { recordSuccessfulSession } from "../lib/store-review"
 import { isAuthError } from "../lib/api-error"
 import { isSessionActuallyIdle } from "../lib/session-status-reconcile"
 import { AppState } from "react-native"
@@ -197,7 +194,6 @@ export const useEvents = create<EventsState>((set, get) => ({
     const currentController = controller
     set({ connected: true, authError: false })
     console.log("[SSE] Connecting to event stream...")
-    addBreadcrumb({ category: "sse", message: "connecting" })
 
     // Run in background
     ;(async () => {
@@ -237,12 +233,6 @@ export const useEvents = create<EventsState>((set, get) => ({
         const baseDelay = RECONNECT_DELAYS_MS[Math.min(reconnectAttempts - 1, RECONNECT_DELAYS_MS.length - 1)]
         const jitteredDelay = Math.min(15_000, Math.round(baseDelay * (0.75 + Math.random() * 0.5)))
         console.warn(`[SSE] Connection lost, reconnecting in ${jitteredDelay}ms:`, reason)
-        addBreadcrumb({
-          category: "sse",
-          level: "warning",
-          message: "reconnect scheduled",
-          data: { attempt: reconnectAttempts, delayMs: jitteredDelay, reason: String(reason).slice(0, 200) },
-        })
         reconnectTimer = setTimeout(() => {
           reconnectTimer = null
           get().connect()
@@ -304,7 +294,6 @@ export const useEvents = create<EventsState>((set, get) => ({
                 // A user-cancelled run still ends busy -> idle; don't count it
                 // as a received response or a review-worthy success.
                 const aborted = abortedSessions.has(sessionID)
-                if (!aborted) track(AnalyticsEvent.ResponseReceived)
                 // Only notify "Task completed" for a genuine completion — a
                 // user-cancelled run didn't complete, and an errored run
                 // already fired its own "Session error" notification (session.error
@@ -324,7 +313,6 @@ export const useEvents = create<EventsState>((set, get) => ({
                 // store review prompt, but only if this run never errored
                 // (session.error doesn't touch sessionStatus, so an errored
                 // session still lands here via busy -> idle) and wasn't aborted.
-                if (!aborted && !erroredSessions.has(sessionID)) void recordSuccessfulSession()
               }
               break
             }
@@ -489,13 +477,6 @@ export const useEvents = create<EventsState>((set, get) => ({
           // state instead; the sessions screen offers a link to fix
           // credentials, which reconnects via connect() once saved.
           console.warn("[SSE] Authentication failed — stopping reconnect loop:", err)
-          addBreadcrumb({
-            category: "sse",
-            level: "error",
-            message: "auth error - stopped retrying",
-            data: { status: err.status },
-          })
-          track(AnalyticsEvent.ConnectionFailed, { source: "sse", error_class: "unauthorized" })
           set({ connected: false, authError: true })
         } else {
           scheduleReconnect(err)
@@ -539,7 +520,6 @@ export const useEvents = create<EventsState>((set, get) => ({
 
   disconnect: () => {
     console.log("[SSE] Disconnecting")
-    addBreadcrumb({ category: "sse", message: "disconnected" })
     if (reconnectTimer) {
       clearTimeout(reconnectTimer)
       reconnectTimer = null

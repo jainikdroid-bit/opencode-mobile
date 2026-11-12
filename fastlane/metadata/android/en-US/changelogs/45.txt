@@ -1,8 +1,0 @@
-v0.5.0 — Alive agent, one-scan pairing
-
-• Animated agent activity: thinking, using a tool, writing — with a timer — and a live reasoning block.
-• One-scan pairing with your computer (opencode-connect), no relay.
-• Model picker: All / Local / Cloud filter.
-• Settings: switch MCP connectors on or off.
-• Read replies aloud; voice input follows your language.
-• Friendlier empty chat; sending jumps to the newest message.

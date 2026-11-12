@@ -22,7 +22,7 @@
  * PRIVACY
  * -------
  * One unauthenticated GET per 24h to api.github.com, no query params, no ids,
- * no analytics. GitHub sees an IP that already downloaded the APK from GitHub.
+ * nothing else. GitHub sees an IP that already downloaded the APK from GitHub.
  * The only thing stored on device is a timestamp and two version strings.
  */
 
@@ -38,11 +38,11 @@ import {
 
 export type { AvailableUpdate }
 
-/** Same source Sentry uses for `release`, so the two always agree. */
+/** The running app version, read from app.json (kept in sync with Gradle by check-version-parity). */
 export const CURRENT_VERSION = (appJson as { expo?: { version?: string } }).expo?.version ?? "unknown"
 
-const RELEASES_API = "https://api.github.com/repos/dzianisv/opencode-mobile/releases/latest"
-const RELEASES_PAGE = "https://github.com/dzianisv/opencode-mobile/releases/latest"
+const RELEASES_API = "https://api.github.com/repos/jainikdroid-bit/opencode-mobile/releases/latest"
+const RELEASES_PAGE = "https://github.com/jainikdroid-bit/opencode-mobile/releases/latest"
 const TIMEOUT_MS = 8000
 
 const storage: UpdateStorage = {

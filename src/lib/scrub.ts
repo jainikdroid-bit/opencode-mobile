@@ -1,4 +1,4 @@
-// Pure URL/string scrubbing utilities — no React Native or Sentry deps.
+// Pure URL/string scrubbing utilities — no React Native deps.
 // Extracted here so they can be unit-tested with plain `node --test`.
 
 // Strip basic-auth credentials and any `?token=` style query secrets so URLs

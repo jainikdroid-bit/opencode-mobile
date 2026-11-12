@@ -604,7 +604,7 @@ export default function SessionScreen() {
   // Header options are set via effect, not inline <Stack.Screen>: this screen
   // re-renders on every streamed message, and inline options pushed a native
   // header-config update each render — the trigger for the react-native-screens
-  // "child already has a parent" crash (Sentry OPENCODE-MOBILE-6/-7).
+  // "child already has a parent" crash.
   useEffect(() => {
     navigation.setOptions({
       title: currentSession?.title || t("session.titleFallback"),

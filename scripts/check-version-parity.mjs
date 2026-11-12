@@ -25,12 +25,12 @@ if (code !== expectedCode) {
 
 // A versionCode left at the previous release's value is the silent half of this
 // failure: version metadata is internally consistent, Play still accepts the
-// upload (CI overrides the code with run_number+100), but the F-Droid repo and
-// every direct-APK install key upgrades off versionCode — so a 0.4.15 APK
+// upload (CI overrides the code with run_number+100), but every direct-APK install keys
+// upgrades off versionCode — so a 0.4.15 APK
 // carrying 0.4.14's code is never offered to the cohort it was cut for.
 // The changelog file is named after the versionCode and its first line names
 // the version, so requiring the two to agree pins the code to this release.
-const changelogPath = `distribution/changelogs/${expectedCode}.txt`;
+const changelogPath = `changelogs/${expectedCode}.txt`;
 let changelog = null;
 try {
   changelog = await readFile(changelogPath, "utf8");
@@ -45,13 +45,6 @@ if (changelog !== null) {
       `${changelogPath} describes "${firstLine}", not v${expectedName} — versionCode ${expectedCode} belongs to an earlier release, so bump it`,
     );
   }
-}
-
-const fastlanePath = `fastlane/metadata/android/en-US/changelogs/${expectedCode}.txt`;
-try {
-  await readFile(fastlanePath, "utf8");
-} catch {
-  errors.push(`${fastlanePath} is missing — F-Droid reads its release notes from here`);
 }
 
 if (errors.length) {

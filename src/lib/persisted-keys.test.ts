@@ -20,8 +20,7 @@ import path from "node:path"
  * to this list and say what it holds, which is the moment to ask whether the
  * value is user/config data or model output.
  *
- * Rule: keys listed here must hold user-entered config, consent flags or
- * counters. Never message text, session titles, tool results or any other
+ * Rule: keys listed here must hold user-entered config or simple flags. Never message text, session titles, tool results or any other
  * model-derived content.
  */
 const ALLOWED_PERSISTED_KEYS = new Map<string, string>([
@@ -30,11 +29,6 @@ const ALLOWED_PERSISTED_KEYS = new Map<string, string>([
   ["`${PASSWORDS_PREFIX}${id}`", "user-entered server password, per connection"],
   ["RECENT_DIRS_KEY", "directories the user picked, for the recents list"],
   ["AUTH_SETTINGS_KEY", "biometric/app-lock preference"],
-  ["COUNT_KEY", "store-review: launch counter"],
-  ["ASKED_KEY", "store-review: already-prompted flag"],
-  ["FIRST_OPEN_KEY", "analytics: first-open flag"],
-  ["CONSENT_KEY", "telemetry consent decision"],
-  ["CHATWOOT_SOURCE_KEY", "support contact id issued by Chatwoot"],
 ])
 
 const SRC = path.join(import.meta.dirname, "..")
