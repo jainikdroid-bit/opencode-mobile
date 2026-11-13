@@ -165,7 +165,8 @@ npm run typecheck && npm test      # unit tests
 cd android && ./gradlew assembleRelease
 ```
 
-The APK lands in `android/app/build/outputs/apk/release/`. A release build is signed with the debug key unless
+The APKs land in `android/app/build/outputs/apk/release/`: one per CPU architecture (`arm64-v8a` fits almost
+every modern phone, `armeabi-v7a` old 32-bit ones, `x86_64` emulators) and a larger universal one. A release build is signed with the debug key unless
 you provide your own signing config, so uninstall other builds of the app before installing it.
 
 ## Privacy

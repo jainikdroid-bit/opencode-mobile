@@ -138,6 +138,16 @@ android {
             crunchPngs enablePngCrunchInRelease.toBoolean()
         }
     }
+    // One APK per CPU architecture plus a universal one that runs everywhere.
+    // The per-architecture files are much smaller: native libraries are the bulk of the APK.
+    splits {
+        abi {
+            enable true
+            reset()
+            include "arm64-v8a", "armeabi-v7a", "x86_64"
+            universalApk true
+        }
+    }
     packagingOptions {
         jniLibs {
             def enableLegacyPackaging = findProperty('expo.useLegacyPackaging') ?: 'false'
