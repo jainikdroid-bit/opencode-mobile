@@ -2,12 +2,13 @@
 'use strict'
 // OpenCode launcher: a tiny always-on helper so the phone can start the opencode server on this computer.
 //
-// It does exactly four things, nothing else (no shell access, no file access, no arbitrary commands):
+// It does exactly four things, nothing else (no shell access, no file access, no arbitrary commands), plus one bridge:
 //   GET  /status    is the opencode server running and healthy?
 //   POST /start     start `opencode serve` (127.0.0.1 only) if it is not running, wait until healthy
 //   POST /stop      stop the server
 //   POST /restart   stop, then start
 //   GET/POST /pair  pairing by a short code, only while the installer has one active (see below)
+//   /acp/...        other coding agents through the Agent Client Protocol (see acp-bridge.js)
 //   GET  /hello     proof of identity for a phone at home (a hash of a phone nonce and the password; no secrets)
 // It listens on 127.0.0.1 only and is published to your private Tailscale network like the server itself.
 // With "lanForward" on (Tailscale mode), it also mirrors the server, itself and the phone bridge onto this
@@ -26,7 +27,7 @@ const path = require('node:path')
 const crypto = require('node:crypto')
 const { spawn, execFileSync } = require('node:child_process')
 
-const VERSION = 3
+const VERSION = 4 // 4: /acp/ (other agents through the Agent Client Protocol)
 const LAN_RESCAN_MS = 30_000
 const PRIVATE_V4 = /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/
 const MAX_FAILS = 6 // wrong passwords per minute per address before answering 429
@@ -184,8 +185,10 @@ function createLauncher(deps) {
     }
 
     const route = (req.url || '/').split('?')[0]
+    // Other coding agents (ACP): the bridge answers its own routes, once the password has been checked above.
+    if (route.startsWith('/acp/') && deps.acp) { await deps.acp.handle(req, res, route); return }
     try {
-      if (route === '/status' && req.method === 'GET') return send(res, 200, { ok: true, launcher: VERSION, server: await status(), ...addresses(deps.readState() || {}) })
+      if (route === '/status' && req.method === 'GET') return send(res, 200, { ok: true, launcher: VERSION, acp: !!deps.acp, server: await status(), ...addresses(deps.readState() || {}) })
       const name = route.slice(1)
       if (actions[name]) {
         if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'use POST' })
@@ -374,6 +377,8 @@ function main() {
   const deps = realDeps(dir)
   const state = deps.readState()
   const port = Number(process.env.OPENCODE_LAUNCHER_PORT) || Number(state.launcherPort) || (Number(state.port) || 4096) - 1
+  try { deps.acp = require('./acp-bridge.js').createAcpBridge() } catch { /* an older install without the file: no other agents */ }
+  if (deps.acp) process.on('exit', () => deps.acp.stopAll())
   const launcher = createLauncher(deps)
   const server = http.createServer((req, res) => { launcher.handle(req, res) })
   server.on('error', (error) => {

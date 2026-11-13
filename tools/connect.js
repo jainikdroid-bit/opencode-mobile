@@ -82,6 +82,20 @@ function lanIp(interfaces = os.networkInterfaces()) {
   return launcherLib.lanAddresses(interfaces)[0] || null
 }
 
+/** The launcher's own version number (GET /status), 0 when it does not answer. */
+function launcherVersion(host, port, password) {
+  return new Promise((resolve) => {
+    const headers = { Authorization: 'Basic ' + Buffer.from('opencode:' + password).toString('base64') }
+    const req = http.get({ host, port, path: '/status', timeout: 3000, headers }, (res) => {
+      let body = ''
+      res.on('data', (c) => { body += c })
+      res.on('end', () => { try { resolve(Number(JSON.parse(body).launcher) || 1) } catch { resolve(1) } })
+    })
+    req.on('error', () => resolve(0))
+    req.on('timeout', () => { req.destroy(); resolve(0) })
+  })
+}
+
 /** Can a TCP connection be opened to host:port within the timeout? */
 function tcpOpen(host, port, timeoutMs = 1500) {
   return new Promise((resolve) => {
@@ -340,7 +354,7 @@ function run(opts, io) {
     const launcherJs = path.join(dir, 'launcher.js')
     const bundled = path.join(__dirname, 'launcher.js')
     if (path.resolve(bundled) !== path.resolve(launcherJs) && fs.existsSync(bundled)) fs.copyFileSync(bundled, launcherJs)
-    for (const extra of [...(phoneTools ? ['phone-bridge.js', 'phone-mcp.js'] : []), ...(mode === 'tunnel' ? ['gateway.js', 'tunnel.js'] : [])]) {
+    for (const extra of ['acp-bridge.js', ...(phoneTools ? ['phone-bridge.js', 'phone-mcp.js'] : []), ...(mode === 'tunnel' ? ['gateway.js', 'tunnel.js'] : [])]) {
       const src = path.join(__dirname, extra)
       const dest = path.join(dir, extra)
       if (path.resolve(src) !== path.resolve(dest) && fs.existsSync(src)) fs.copyFileSync(src, dest)
@@ -368,6 +382,14 @@ function run(opts, io) {
         for (let i = 0; i < 12 && !(await pairOffered(bindHost, launcherPort)); i++) await sleep(250)
       }
       if (pairCode && !(await pairOffered(bindHost, launcherPort))) { pairCode = ''; launcherLib.writePairFile(dir, null) }
+      // A launcher from before other agents (ACP) were added does not know them: restart it once with the new files.
+      const running = listening(launcherPort) ? await launcherVersion(bindHost, launcherPort, password) : 0
+      if (running && running < launcherLib.VERSION) {
+        stopPort(launcherPort)
+        for (let i = 0; i < 20 && listening(launcherPort); i++) await sleep(250)
+        await startLauncher()
+        for (let i = 0; i < 12 && !listening(launcherPort); i++) await sleep(250)
+      }
       // A launcher from before the home-network mirror does not listen there: restart it once.
       const lanNow = lanOn ? lanIp() : null
       if (lanNow && listening(launcherPort) && !(await tcpOpen(lanNow, launcherPort))) {

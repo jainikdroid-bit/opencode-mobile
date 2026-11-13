@@ -618,6 +618,15 @@ export default function SessionsScreen() {
         <Ionicons name="swap-horizontal-outline" size={16} color={isDark ? "#8a93a8" : "#8a93a8"} />
       </TouchableOpacity>
 
+      {/* Other coding agents on the computer (Claude Code, Codex, Gemini CLI, ...) through the launcher */}
+      {canStartFromPhone(activeConnection) ? (
+        <TouchableOpacity style={styles.agentsRow} onPress={() => router.push("/agents")} activeOpacity={0.7} testID="open-agents">
+          <Ionicons name="sparkles-outline" size={16} color="#22d3ee" />
+          <Text style={styles.agentsText} numberOfLines={1}>{t("acp.entry")}</Text>
+          <Ionicons name="chevron-forward" size={16} color="#8a93a8" />
+        </TouchableOpacity>
+      ) : null}
+
       {error && (
         <View style={styles.errorBar}>
           <Text style={styles.errorText}>{error}</Text>
@@ -1016,6 +1025,20 @@ const styles = StyleSheet.create({
   },
   connectionBarDark: {
     borderBottomColor: "#0d1018",
+  },
+  agentsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1c2333",
+  },
+  agentsText: {
+    flex: 1,
+    fontSize: 13,
+    color: "#22d3ee",
   },
   connectionInfo: {
     flexDirection: "row",

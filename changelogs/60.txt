@@ -1,0 +1,3 @@
+- Other coding agents from the phone: Claude Code, Codex, Gemini CLI, Goose, Qwen Code, GitHub Copilot and OpenCode, through the Agent Client Protocol. Sessions tab → "Other agents": pick one that is installed on the computer, chat, see its tool calls, plan and file changes, and answer its permission requests.
+- A running agent keeps working when you close the screen; reopen it from the same list.
+- Needs the setup command to run on the computer once more (it updates the helper).

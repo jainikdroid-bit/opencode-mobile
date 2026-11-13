@@ -190,6 +190,8 @@ function RootLayout() {
               <Stack.Screen name="guide" options={{ title: t("guide.title"), presentation: "modal" }} />
               <Stack.Screen name="scan" options={{ title: t("scan.title"), presentation: "modal" }} />
               <Stack.Screen name="pair-code" options={{ title: t("pairCode.title"), presentation: "modal" }} />
+              <Stack.Screen name="agents" options={{ title: t("acp.title") }} />
+              <Stack.Screen name="agent-chat" options={{ title: "" }} />
               <Stack.Screen name="files" options={{ title: t("files.title"), presentation: "card" }} />
               <Stack.Screen name="terminal" options={{ title: t("terminal.title"), presentation: "card" }} />
               <Stack.Screen
