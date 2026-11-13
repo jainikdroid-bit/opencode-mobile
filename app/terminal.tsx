@@ -99,7 +99,7 @@ export default function TerminalScreen() {
       try {
         const id = existing ?? (await createPty(conn, { title: "Phone" })).id
         ptyId.current = id
-        const target = ptySocket(conn, id)
+        const target = await ptySocket(conn, id)
         // React Native's WebSocket takes a third "options" argument with request headers
         // (not in the DOM typings), which is how the Basic-auth header reaches the server.
         const WS = WebSocket as unknown as new (url: string, protocols?: string[] | null, options?: { headers: Record<string, string> }) => WebSocket

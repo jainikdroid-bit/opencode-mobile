@@ -92,9 +92,13 @@ export async function removePty(conn: ServerConn, id: string): Promise<void> {
   await call<unknown>(conn, `/pty/${encodeURIComponent(id)}`, { method: "DELETE" })
 }
 
-/** WebSocket URL and headers for a PTY. React Native's WebSocket accepts a headers option. */
-export function ptySocket(conn: ServerConn, id: string): { url: string; headers: Record<string, string> } {
+/**
+ * WebSocket URL and headers for a PTY. React Native's WebSocket accepts a headers option.
+ * The base goes through routeUrl like every other request: with built-in Tailscale a tailnet address
+ * is only reachable through the node's local forward, and a direct socket would never connect.
+ */
+export async function ptySocket(conn: ServerConn, id: string): Promise<{ url: string; headers: Record<string, string> }> {
   const headers = buildRequestHeaders({ directory: conn.directory, auth: conn.auth })
   delete headers["Content-Type"]
-  return { url: ptySocketUrl(conn.baseUrl, id), headers }
+  return { url: ptySocketUrl(await routeUrl(conn.baseUrl.replace(/\/+$/, "")), id), headers }
 }
