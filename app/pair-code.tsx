@@ -75,7 +75,7 @@ export default function PairCodeScreen() {
     if (outcome.kind === "ok") {
       router.replace({
         pathname: "/connect",
-        params: { url: outcome.url, password: outcome.password, name: outcome.name, launcher: String(outcome.launcherPort), topic: "" },
+        params: { url: outcome.url, password: outcome.password, name: outcome.name, launcher: String(outcome.launcherPort), topic: "", lan: outcome.lanHost ?? "" },
       })
       return
     }

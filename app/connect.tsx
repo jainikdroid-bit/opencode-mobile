@@ -8,6 +8,7 @@ import { buildPairing } from "../src/lib/pairing"
 import { Mascot } from "../src/components/Mascot"
 import { useTailnet } from "../src/stores/tailnet"
 import { tailnetTarget } from "../src/lib/tailnet-host"
+import { setLanRoutes } from "../src/lib/tailnet"
 
 const TAILNET_SIGN_IN_WAIT_MS = 5 * 60_000
 
@@ -21,18 +22,36 @@ const TAILNET_SIGN_IN_WAIT_MS = 5 * 60_000
 export default function ConnectScreen() {
   const isDark = useColorScheme() === "dark"
   const { t } = useTranslation()
-  const params = useLocalSearchParams<{ url?: string; password?: string; name?: string; launcher?: string; topic?: string }>()
+  const params = useLocalSearchParams<{ url?: string; password?: string; name?: string; launcher?: string; topic?: string; lan?: string }>()
   const { addConnection, testConnection, setActiveConnection } = useConnections()
   const [busy, setBusy] = useState(false)
   const [waitingTailnet, setWaitingTailnet] = useState(false)
 
-  const pairing = buildPairing(params.url, params.password, params.name, params.launcher, params.topic)
+  const pairing = buildPairing(params.url, params.password, params.name, params.launcher, params.topic, params.lan)
 
   const close = () => (router.canGoBack() ? router.back() : router.replace("/"))
 
   const handleConnect = async () => {
     if (!pairing || busy) return
     setBusy(true)
+    // At home the computer answers on its home-network address: test there first (no Tailscale or VPN needed).
+    // Kept in its own slot until the end of this attempt; once saved, the connection carries it.
+    const remote = /^http:\/\/([^/:?#\s]+)(?::(\d+))?/i.exec(pairing.url)
+    if (pairing.lanHost && pairing.password && remote) {
+      setLanRoutes(
+        [{ remoteHost: remote[1], lanHost: pairing.lanHost, launcherPort: pairing.launcherPort ?? Number(remote[2] || 80) - 1, password: pairing.password }],
+        "pairing",
+      )
+    }
+    try {
+      await connectPaired()
+    } finally {
+      setLanRoutes([], "pairing")
+    }
+  }
+
+  const connectPaired = async () => {
+    if (!pairing) return
     const result = await testConnection(
       { id: "", name: pairing.name, type: "local", url: pairing.url },
       "onboarding",
@@ -53,14 +72,23 @@ export default function ConnectScreen() {
       return
     }
     try {
-      await addConnection(
-        { name: pairing.name, type: "local", url: pairing.url, api: result.api, serverVersion: result.serverVersion, launcherPort: pairing.launcherPort, tunnelTopic: pairing.tunnelTopic },
-        pairing.password,
-      )
-      // Pairing means "use this computer now": switch to the connection just added
-      // (addConnection only activates the very first one).
-      const added = useConnections.getState().connections.at(-1)
-      if (added) await setActiveConnection(added.id)
+      const details = {
+        name: pairing.name,
+        type: "local" as const,
+        url: pairing.url,
+        api: result.api,
+        serverVersion: result.serverVersion,
+        launcherPort: pairing.launcherPort,
+        tunnelTopic: pairing.tunnelTopic,
+        lanHost: pairing.lanHost,
+      }
+      // The same computer paired again (a newer link, say with its home-network address): update it, no twin.
+      const existing = useConnections.getState().connections.find((c) => c.url.replace(/\/+$/, "") === pairing.url)
+      if (existing) await useConnections.getState().updateConnection(existing.id, details, pairing.password)
+      else await addConnection(details, pairing.password)
+      // Pairing means "use this computer now": switch to it (addConnection only activates the very first one).
+      const target = existing ?? useConnections.getState().connections.at(-1)
+      if (target) await setActiveConnection(target.id)
       router.replace("/")
     } catch {
       setBusy(false)

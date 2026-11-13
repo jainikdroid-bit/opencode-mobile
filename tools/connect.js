@@ -3,7 +3,7 @@
 // OpenCode Connect core (Windows, macOS, Linux). The .ps1 / .sh files only make sure Node.js exists and call this.
 //
 //   node connect.js [--mode tailscale|lan|local] [--port N] [--name X] [--host-name H] [--no-install] [--json]
-//                   [--no-guide] [--no-open] [--no-qr] [--rotate] [--no-autostart] [--dry-run]
+//                   [--no-guide] [--no-open] [--no-qr] [--rotate] [--no-autostart] [--no-lan] [--dry-run]
 //                   [--doctor] [--stop] [--uninstall]
 // Flags also work in PowerShell style (-Json, -NoGuide, -Mode lan). Exit codes: 0 ok, 1 failed, 2 a human must act.
 
@@ -11,6 +11,7 @@ const fs = require('node:fs')
 const os = require('node:os')
 const path = require('node:path')
 const http = require('node:http')
+const net = require('node:net')
 const https = require('node:https')
 const crypto = require('node:crypto')
 const { spawn, spawnSync } = require('node:child_process')
@@ -21,7 +22,7 @@ const BASE_URL = 'https://raw.githubusercontent.com/jainikdroid-bit/opencode-mob
 const APP_URL = 'https://github.com/jainikdroid-bit/opencode-mobile/releases/latest'
 const WIN = process.platform === 'win32'
 const VALUE_FLAGS = new Set(['mode', 'port', 'name', 'hostname'])
-const BOOL_FLAGS = new Set(['freemodel', 'phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'nocode', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
+const BOOL_FLAGS = new Set(['freemodel', 'phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'nocode', 'nolan', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
 
 /** Accepts `-Json`, `--json`, `--no-guide`, `-NoGuide`, `-Mode lan`, `--mode=lan`; case and dashes ignored. */
 function parseArgs(argv) {
@@ -48,10 +49,10 @@ function newPassword() {
   return Array.from(crypto.randomBytes(24), (b) => alphabet[b % alphabet.length]).join('')
 }
 
-/** opencode://connect link; the launcher port is optional. */
-function buildLink({ url, password, name, launcherPort, topic }) {
+/** opencode://connect link; the launcher port, tunnel topic and home-network address (lan) are optional. */
+function buildLink({ url, password, name, launcherPort, topic, lan }) {
   const e = encodeURIComponent
-  return `opencode://connect?url=${e(url)}&password=${e(password)}&name=${e(name)}${launcherPort ? `&launcher=${launcherPort}` : ''}${topic ? `&topic=${e(topic)}` : ''}`
+  return `opencode://connect?url=${e(url)}&password=${e(password)}&name=${e(name)}${launcherPort ? `&launcher=${launcherPort}` : ''}${topic ? `&topic=${e(topic)}` : ''}${lan ? `&lan=${e(lan)}` : ''}`
 }
 
 const PAIR_CODE_MS = 10 * 60_000
@@ -76,12 +77,18 @@ function pairOffered(host, port) {
   })
 }
 
-/** First private IPv4 address of a non-internal interface. */
+/** Best private IPv4 address of a real network link (192.168 first; VPN /32 links skipped). */
 function lanIp(interfaces = os.networkInterfaces()) {
-  for (const list of Object.values(interfaces)) {
-    for (const a of list || []) if (a.family === 'IPv4' && !a.internal && /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(a.address)) return a.address
-  }
-  return null
+  return launcherLib.lanAddresses(interfaces)[0] || null
+}
+
+/** Can a TCP connection be opened to host:port within the timeout? */
+function tcpOpen(host, port, timeoutMs = 1500) {
+  return new Promise((resolve) => {
+    const socket = net.connect({ host, port, timeout: timeoutMs }, () => { socket.destroy(); resolve(true) })
+    socket.on('error', () => resolve(false))
+    socket.on('timeout', () => { socket.destroy(); resolve(false) })
+  })
 }
 
 const sh = (cmd, args, opts = {}) => spawnSync(cmd, args, { encoding: 'utf8', windowsHide: true, shell: false, ...opts })
@@ -145,7 +152,10 @@ function run(opts, io) {
     req.on('timeout', () => { req.destroy(); resolve(false) })
   })
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
-  const listening = (p) => launcherLib.listenerPids(p).length > 0
+  // In LAN mode the server binds the LAN address; otherwise only loopback listeners are ours (not Tailscale's, not the LAN mirrors).
+  const ownHost = mode === 'lan' ? lanIp() : null
+  const listening = (p) => launcherLib.listenerPids(p, ownHost).length > 0
+  const stopPort = (p) => launcherLib.stopPort(p, ownHost)
 
   return (async () => {
     fs.mkdirSync(dir, { recursive: true })
@@ -155,7 +165,7 @@ function run(opts, io) {
     // ----- uninstall -----
     if (opts.uninstall) {
       const bridgeP = Number(state.bridgePort) || port - 2
-      for (const p of [port, launcherPortOf()]) launcherLib.stopPort(p)
+      for (const p of [port, launcherPortOf()]) stopPort(p)
       note('server and launcher', 'did', 'stopped')
       if (ts && mode === 'tailscale') { for (const p of [port, launcherPortOf(), bridgeP]) sh(ts, ['serve', `--tcp=${p}`, 'off']); note('tailscale forwards', 'did', 'removed') }
       if (unregisterOpencodeMcp()) note('phone tools', 'did', 'removed the MCP entry from the opencode config')
@@ -169,7 +179,7 @@ function run(opts, io) {
 
     // ----- stop -----
     if (opts.stop) {
-      if (listening(port)) { launcherLib.stopPort(port); note('server', 'did', `stopped (port ${port}); the launcher stays so the phone can start it again`) } else note('server', 'skip', 'was not running')
+      if (listening(port)) { stopPort(port); note('server', 'did', `stopped (port ${port}); the launcher stays so the phone can start it again`) } else note('server', 'skip', 'was not running')
       if (ts && mode === 'tailscale') { sh(ts, ['serve', `--tcp=${port}`, 'off']); note('tailscale forward', 'did', `removed tcp/${port}`) }
       result.ok = true; result.stage = 'stopped'
       return finish(0)
@@ -308,6 +318,9 @@ function run(opts, io) {
     const launcherPort = port - 1
     const bridgePort = port - 2
     const phoneToolsWasOn = !!state.phoneTools
+    // Tailscale mode also mirrors the ports onto the home network: at home the phone connects directly, without Tailscale or a VPN.
+    const lanOn = mode === 'tailscale' && !opts.nolan
+    const lanWasOn = !!state.lanForward
     const tunnelWasOn = state.mode === 'tunnel' && !!state.tunnelUrl
     const phoneTools = !!(opts.phonetools || state.phoneTools)
     const autostartOn = !opts.noautostart && mode !== 'local'
@@ -315,7 +328,7 @@ function run(opts, io) {
     const tunnelOn = mode === 'tunnel'
     const tunnelTopic = tunnelOn ? state.tunnelTopic || `ocx-${crypto.randomBytes(12).toString('hex')}` : undefined
     state = {
-      port, mode, name, launcherPort, launcherHost: bindHost, autostart: autostartOn, phoneTools, ...(phoneTools ? { bridgePort } : {}),
+      port, mode, name, launcherPort, launcherHost: bindHost, linkHost, autostart: autostartOn, phoneTools, ...(phoneTools ? { bridgePort } : {}), ...(lanOn ? { lanForward: true } : {}),
       ...(tunnelOn ? { gatewayPort: port - 3, bridgePort, tunnelTopic, cloudflared, ...(launcherAlive && state.tunnelUrl ? { tunnelUrl: state.tunnelUrl } : {}) } : {}),
     }
     fs.writeFileSync(stateFile, JSON.stringify(state, null, 2))
@@ -332,8 +345,9 @@ function run(opts, io) {
       const dest = path.join(dir, extra)
       if (path.resolve(src) !== path.resolve(dest) && fs.existsSync(src)) fs.copyFileSync(src, dest)
     }
-    if (phoneTools && !phoneToolsWasOn) launcherLib.stopPort(launcherPort) // restart so the launcher starts the bridge
-    if (mode === 'tunnel' && !tunnelWasOn && listening(launcherPort)) launcherLib.stopPort(launcherPort) // restart into tunnel mode
+    if (phoneTools && !phoneToolsWasOn) stopPort(launcherPort) // restart so the launcher starts the bridge
+    if (mode === 'tunnel' && !tunnelWasOn && listening(launcherPort)) stopPort(launcherPort) // restart into tunnel mode
+    if (lanOn !== lanWasOn && listening(launcherPort)) stopPort(launcherPort) // restart so the launcher (stops) mirroring onto the home network
     if (!fs.existsSync(launcherJs)) { try { fs.writeFileSync(launcherJs, await download(`${BASE_URL}/launcher.js`)) } catch { /* reported below */ } }
     if (!fs.existsSync(launcherJs)) note('launcher', 'skip', 'could not fetch launcher.js (starting the server from the phone will not work)')
     else {
@@ -348,12 +362,20 @@ function run(opts, io) {
       }
       if (!listening(launcherPort)) await startLauncher()
       if (pairCode && listening(launcherPort) && !(await pairOffered(bindHost, launcherPort))) {
-        launcherLib.stopPort(launcherPort) // a launcher from an older version: restart it with the new file
+        stopPort(launcherPort) // a launcher from an older version: restart it with the new file
         for (let i = 0; i < 20 && listening(launcherPort); i++) await sleep(250)
         await startLauncher()
         for (let i = 0; i < 12 && !(await pairOffered(bindHost, launcherPort)); i++) await sleep(250)
       }
       if (pairCode && !(await pairOffered(bindHost, launcherPort))) { pairCode = ''; launcherLib.writePairFile(dir, null) }
+      // A launcher from before the home-network mirror does not listen there: restart it once.
+      const lanNow = lanOn ? lanIp() : null
+      if (lanNow && listening(launcherPort) && !(await tcpOpen(lanNow, launcherPort))) {
+        stopPort(launcherPort)
+        for (let i = 0; i < 20 && listening(launcherPort); i++) await sleep(250)
+        await startLauncher()
+        for (let i = 0; i < 12 && !(await tcpOpen(lanNow, launcherPort)); i++) await sleep(250)
+      }
       if (listening(launcherPort)) {
         note('launcher', 'ok', `phone can start the server (port ${launcherPort})`)
         if (mode === 'tailscale') sh(tsExe, ['serve', '--bg', '--tcp', String(launcherPort), `tcp://127.0.0.1:${launcherPort}`])
@@ -371,6 +393,11 @@ function run(opts, io) {
     // ----- 5. publish -----
     if (mode === 'tailscale') { sh(tsExe, ['serve', '--bg', '--tcp', String(port), `tcp://127.0.0.1:${port}`]); note('tailscale forward', 'ok', `tcp/${port} inside your tailnet only`) }
     else if (mode === 'lan') say('LAN mode: every device on this network can reach the server (password protected). If your firewall asks, allow it.')
+    const lanHost = lanOn ? lanIp() : null
+    if (lanHost && (await tcpOpen(lanHost, port))) {
+      note('home network', 'ok', `at home the phone connects directly to ${lanHost} (no Tailscale or VPN needed; turn off: --no-lan)`)
+      say('If Windows asks whether Node.js may use the network, allow private networks.')
+    } else if (lanOn) note('home network', 'skip', lanHost ? `${lanHost} does not answer yet (the launcher mirrors it within 30 s)` : 'no home-network address on this computer')
 
     // ----- 6. pairing link and QR -----
     guide('Pair your phone', 'Shows two QR codes: one to get the app, one to connect.', 'about 3 taps on the phone (see below)')
@@ -388,8 +415,8 @@ function run(opts, io) {
       note('tunnel', 'ok', serverUrl)
       say('Tunnel mode: the address is public but needs the long password, and repeated wrong guesses are blocked. Do not share the pairing link.')
     }
-    const link = buildLink({ url: serverUrl, password, name, launcherPort, topic: mode === 'tunnel' ? state.tunnelTopic : undefined })
-    Object.assign(result, { serverUrl, pairingLink: link, launcherPort, ok: true, stage: 'ready', message: 'Install the app on the phone, then scan the pairing QR or open the pairing link on the phone.' })
+    const link = buildLink({ url: serverUrl, password, name, launcherPort, topic: mode === 'tunnel' ? state.tunnelTopic : undefined, lan: lanHost })
+    Object.assign(result, { serverUrl, pairingLink: link, launcherPort, ...(lanHost ? { lanHost } : {}), ok: true, stage: 'ready', message: 'Install the app on the phone, then scan the pairing QR or open the pairing link on the phone.' })
 
     const pair = pairCode ? { code: `${pairCode.slice(0, 3)} ${pairCode.slice(3)}`, address: pairAddress(linkHost, launcherPort) } : null
     if (pair) Object.assign(result, { pairCode, pairAddress: pair.address })

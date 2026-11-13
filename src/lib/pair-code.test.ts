@@ -12,7 +12,7 @@ test("code keeps six digits whatever is typed around them", () => {
 })
 
 test("computer address accepts a host, a host with port, or a pasted URL", () => {
-  assert.deepEqual(parsePairAddress(" 100.92.64.1 "), { host: "100.92.64.1", port: 4095 })
+  assert.deepEqual(parsePairAddress(" 100.64.0.7 "), { host: "100.64.0.7", port: 4095 })
   assert.deepEqual(parsePairAddress("192.168.1.20:5999"), { host: "192.168.1.20", port: 5999 })
   assert.deepEqual(parsePairAddress("http://My-PC.tail1234.ts.net:4095/pair"), { host: "my-pc.tail1234.ts.net", port: 4095 })
   assert.equal(parsePairAddress(""), null)
@@ -22,7 +22,7 @@ test("computer address accepts a host, a host with port, or a pasted URL", () =>
 })
 
 test("home network search covers the phone's own /24 and nothing else", () => {
-  const hosts = lanCandidates(["127.0.0.1/8", "26.26.26.1/30", "100.92.64.5/32", "192.168.1.34/24", "fe80::1/64"])
+  const hosts = lanCandidates(["127.0.0.1/8", "26.26.26.1/30", "100.64.0.7/32", "192.168.1.34/24", "fe80::1/64"])
   assert.equal(hosts.length, 253)
   assert.ok(hosts.includes("192.168.1.1") && hosts.includes("192.168.1.254"))
   assert.ok(!hosts.includes("192.168.1.34"))
@@ -39,9 +39,9 @@ test("a waiting code is recognised only from the exact answer", () => {
 })
 
 test("the right code becomes a pairing for the same host", () => {
-  const target = { host: "100.92.64.1", port: 4095 }
+  const target = { host: "100.64.0.7", port: 4095 }
   const out = interpretPairReply(target, 200, { ok: true, name: "My PC", password: "secret-value", port: 4096, launcherPort: 4095 })
-  assert.deepEqual(out, { kind: "ok", url: "http://100.92.64.1:4096", password: "secret-value", name: "My PC", launcherPort: 4095 })
+  assert.deepEqual(out, { kind: "ok", url: "http://100.64.0.7:4096", password: "secret-value", name: "My PC", launcherPort: 4095 })
 })
 
 test("wrong, missing and broken answers are told apart", () => {
@@ -53,4 +53,14 @@ test("wrong, missing and broken answers are told apart", () => {
   assert.equal(interpretPairReply(target, 500, { ok: false }).kind, "failed")
   assert.equal(interpretPairReply(target, 200, { ok: true, port: 4096 }).kind, "failed")
   assert.equal(interpretPairReply(target, 200, { ok: true, password: "x", port: 0 }).kind, "failed")
+})
+
+test("code exchange keeps the saved address and learns the home-network one", () => {
+  const reply = { ok: true, port: 4096, password: "pw", name: "PC", launcherPort: 4095 }
+  const viaLan = interpretPairReply({ host: "192.168.1.20", port: 4095 }, 200, { ...reply, host: "100.64.0.7", lan: "192.168.1.20" })
+  assert.deepEqual(viaLan, { kind: "ok", url: "http://100.64.0.7:4096", password: "pw", name: "PC", launcherPort: 4095, lanHost: "192.168.1.20" })
+  const viaTailnet = interpretPairReply({ host: "100.64.0.7", port: 4095 }, 200, { ...reply, host: "100.64.0.7", lan: "192.168.1.20" })
+  assert.equal(viaTailnet.kind === "ok" && viaTailnet.lanHost, "192.168.1.20")
+  const older = interpretPairReply({ host: "100.64.0.7", port: 4095 }, 200, reply)
+  assert.deepEqual(older, { kind: "ok", url: "http://100.64.0.7:4096", password: "pw", name: "PC", launcherPort: 4095 })
 })

@@ -2,6 +2,12 @@
 // six digits; the launcher there (tools/launcher.js, route /pair) trades the right code for the connection
 // details. Pure helpers only (no React Native imports: runs under `node --test`).
 
+// Same rule as isPrivateV4 in lan-route.ts (copied: plain `node --test` cannot import without the .ts extension, tsc cannot with it).
+const isPrivateV4 = (host: string): boolean => {
+  const m = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host)
+  return !!m && m.slice(1).every((part) => Number(part) <= 255) && /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)
+}
+
 export const DEFAULT_LAUNCHER_PORT = 4095
 export const CODE_LENGTH = 6
 const SUBNET_HOSTS = 254
@@ -65,7 +71,7 @@ export function offerName(status: number, body: unknown): string | null {
 }
 
 export type PairOutcome =
-  | { kind: "ok"; url: string; password: string; name: string; launcherPort: number }
+  | { kind: "ok"; url: string; password: string; name: string; launcherPort: number; lanHost?: string }
   /** wrong code; `left` more tries before the computer throws the code away (0 = it just did) */
   | { kind: "wrong"; left: number }
   /** no code is waiting on that computer (never made, expired, used, or burned) */
@@ -85,5 +91,17 @@ export function interpretPairReply(target: PairTarget, status: number, body: unk
     return { kind: "failed", detail: "unexpected answer" }
   }
   const launcherPort = Number.isInteger(reply.launcherPort) ? (reply.launcherPort as number) : target.port
-  return { kind: "ok", url: `http://${target.host}:${port}`, password: reply.password, name: typeof reply.name === "string" ? reply.name : "", launcherPort }
+  // The computer names the address to save (its Tailscale one) and its home-network one. Typed or found on the
+  // home network and no other address given: that home address is all there is.
+  const host = typeof reply.host === "string" && /^[A-Za-z0-9.-]{1,253}$/.test(reply.host) ? reply.host : target.host
+  const lanCandidate = typeof reply.lan === "string" ? reply.lan : target.host
+  const lanHost = isPrivateV4(lanCandidate) && lanCandidate !== host ? lanCandidate : undefined
+  return {
+    kind: "ok",
+    url: `http://${host}:${port}`,
+    password: reply.password,
+    name: typeof reply.name === "string" ? reply.name : "",
+    launcherPort,
+    ...(lanHost ? { lanHost } : {}),
+  }
 }

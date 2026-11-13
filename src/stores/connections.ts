@@ -6,6 +6,7 @@ import { createClient, probeServer, type Client, type Project } from "../lib/sdk
 import type { ServerApi } from "../lib/api-detect"
 import { buildAuth } from "../lib/auth"
 import { stripTrailingSlash } from "../lib/path-utils"
+import { setLanRoutes } from "../lib/tailnet"
 
 // Where a connection test was started from (onboarding form, edit screen Test button, SSE).
 export type ConnectionTestSource = "onboarding" | "edit_test" | "sse"
@@ -412,3 +413,12 @@ export const useConnections = create<ConnectionsState>((set, get) => ({
     await SecureStore.setItemAsync(RECENT_DIRS_KEY, JSON.stringify(updated))
   },
 }))
+// Home network first: tell the router where the active computer is on its home network (see lan-route.ts).
+useConnections.subscribe((state) => {
+  const active = state.activeConnection
+  const password = state.clientBase?.auth?.password
+  const match = active?.lanHost && password ? /^http:\/\/([^/:?#\s]+)(?::(\d+))?/i.exec(active.url) : null
+  if (!active || !match || !password) return setLanRoutes([])
+  const serverPort = Number(match[2] || 80)
+  setLanRoutes([{ remoteHost: match[1], lanHost: active.lanHost!, launcherPort: active.launcherPort ?? serverPort - 1, password }])
+})

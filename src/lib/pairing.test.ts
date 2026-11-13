@@ -4,9 +4,9 @@ import { parsePairingLink, buildPairing } from "./pairing.ts"
 
 test("parses a full pairing link", () => {
   const info = parsePairingLink(
-    "opencode://connect?url=http%3A%2F%2F100.92.64.0%3A4096&password=s3cr%2Bet%21&name=Home%20PC",
+    "opencode://connect?url=http%3A%2F%2F100.64.0.7%3A4096&password=s3cr%2Bet%21&name=Home%20PC",
   )
-  assert.deepEqual(info, { url: "http://100.92.64.0:4096", password: "s3cr+et!", name: "Home PC" })
+  assert.deepEqual(info, { url: "http://100.64.0.7:4096", password: "s3cr+et!", name: "Home PC" })
 })
 
 test("name defaults to host and password is optional", () => {
@@ -40,4 +40,12 @@ test("an optional launcher port travels in the link and is validated", () => {
   assert.equal(parsePairingLink("opencode://connect?url=http%3A%2F%2Fa%3A4096&launcher=70000")?.launcherPort, undefined)
   assert.equal(parsePairingLink("opencode://connect?url=http%3A%2F%2Fa%3A4096")?.launcherPort, undefined)
   assert.equal(buildPairing("http://a:4096", "p", "n", 4095)?.launcherPort, 4095)
+})
+
+test("home-network address: kept when private, dropped otherwise", () => {
+  const base = "opencode://connect?url=http%3A%2F%2F100.64.0.7%3A4096&password=pw&name=PC&launcher=4095"
+  assert.equal(parsePairingLink(`${base}&lan=192.168.1.20`)?.lanHost, "192.168.1.20")
+  assert.equal(parsePairingLink(`${base}&lan=8.8.8.8`)?.lanHost, undefined)
+  assert.equal(parsePairingLink(`${base}&lan=evil.example`)?.lanHost, undefined)
+  assert.equal(parsePairingLink(base)?.lanHost, undefined)
 })

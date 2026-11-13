@@ -17,6 +17,8 @@ export interface ServerConnection {
   launcherPort?: number
   // Tunnel mode: private ntfy.sh topic on which the computer announces its changing public address
   tunnelTopic?: string
+  // The same computer on its home network (private IPv4): used instead of `url` while the phone is there
+  lanHost?: string
   // When last successfully connected
   lastConnected?: number
   // Is this the active connection?

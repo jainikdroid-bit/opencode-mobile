@@ -1,0 +1,3 @@
+- At home, no Tailscale or VPN needed: a computer paired over Tailscale also answers on its home-network address, and the app uses it whenever the phone is on that network (it checks first that it is really your computer).
+- Pairing again with a newer link updates the computer instead of adding a second copy.
+- Installer: --no-lan turns the home-network address off. Needs the installer run again on the computer.

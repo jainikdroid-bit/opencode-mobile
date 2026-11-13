@@ -48,6 +48,10 @@ Open the app, tap **Scan QR to pair**, point the camera at the **second** QR cod
 **Cannot scan?** Tap **Pair with a code** instead. The setup command shows 6 digits next to the QR code: the app finds
 the computer by itself, you type the digits. The code works once, for 10 minutes; run the command again for a new one.
 
+**At home, no Tailscale or VPN needed.** The computer also answers on its home-network address, and the app goes there
+directly whenever the phone is on the same Wi-Fi (it first checks that it is really your computer). Away from home it uses
+Tailscale as before. If Windows asks whether Node.js may use the network, allow private networks. Turn it off: `--no-lan`.
+
 The app shows a short setup guide the first time; tap **Skip guide** to dismiss it for good.
 
 ## After setup

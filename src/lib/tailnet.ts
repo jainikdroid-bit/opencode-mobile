@@ -2,7 +2,46 @@
 // computer on a 100.x / *.ts.net address without the Tailscale app and without the Android VPN slot.
 // Requests to such addresses are sent to a local forward 127.0.0.1:<port> that the node carries over.
 import { NativeModules, Platform } from "react-native"
+import * as Crypto from "expo-crypto"
 import { tailnetTarget } from "./tailnet-host"
+import { createLanRouter, type LanRoute } from "./lan-route"
+
+// Home network first (see lan-route.ts): when the paired computer answers on its home-network address,
+// requests go there directly and neither the built-in node nor a VPN is needed.
+const lanRouter = createLanRouter({
+  async fetchJson(url, timeoutMs) {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), timeoutMs)
+    try {
+      const response = await fetch(url, { signal: controller.signal })
+      const text = await response.text()
+      let body: unknown = null
+      try {
+        body = text ? JSON.parse(text) : null
+      } catch {
+        /* not the launcher */
+      }
+      return { status: response.status, body }
+    } catch {
+      return null
+    } finally {
+      clearTimeout(timer)
+    }
+  },
+  sha256Hex: (text) => Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, text),
+  nonce: () => Crypto.randomUUID().replace(/-/g, ""),
+  now: () => Date.now(),
+})
+
+// Two independent sources: the active connection, and a computer being paired right now (tested before it is
+// saved). Each replaces only its own routes, so a connection-list update cannot wipe the one being paired.
+const lanRouteSlots: Record<"active" | "pairing", LanRoute[]> = { active: [], pairing: [] }
+
+/** Home-network addresses from one source (empty list: none from it). */
+export function setLanRoutes(routes: LanRoute[], slot: "active" | "pairing" = "active"): void {
+  lanRouteSlots[slot] = routes
+  lanRouter.setRoutes([...lanRouteSlots.pairing, ...lanRouteSlots.active])
+}
 
 export interface TailnetStatus {
   ready: boolean
@@ -119,6 +158,7 @@ export async function localAddresses(): Promise<string[]> {
 
 /** Tell the node the phone changed network (Wi-Fi <-> mobile), so it re-reads the interfaces. */
 export function tailnetNetworkChanged(): void {
+  lanRouter.networkChanged()
   if (native && enabled && started) void native.refreshNetwork().catch(() => undefined)
 }
 
@@ -141,6 +181,8 @@ async function waitReady(): Promise<boolean> {
  * so the Tailscale app (if the user runs that instead) keeps working.
  */
 export async function routeUrl(url: string): Promise<string> {
+  const home = await lanRouter.rewrite(url).catch(() => null)
+  if (home) return home
   if (!enabled || !native) return url
   const route = tailnetTarget(url)
   if (!route) return url
