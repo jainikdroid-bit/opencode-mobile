@@ -21,7 +21,7 @@ const BASE_URL = 'https://raw.githubusercontent.com/jainikdroid-bit/opencode-mob
 const APP_URL = 'https://github.com/jainikdroid-bit/opencode-mobile/releases/latest'
 const WIN = process.platform === 'win32'
 const VALUE_FLAGS = new Set(['mode', 'port', 'name', 'hostname'])
-const BOOL_FLAGS = new Set(['freemodel', 'phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
+const BOOL_FLAGS = new Set(['freemodel', 'phonetools', 'noinstall', 'json', 'noguide', 'noopen', 'noqr', 'nocode', 'rotate', 'noautostart', 'uninstall', 'status', 'doctor', 'stop', 'dryrun'])
 
 /** Accepts `-Json`, `--json`, `--no-guide`, `-NoGuide`, `-Mode lan`, `--mode=lan`; case and dashes ignored. */
 function parseArgs(argv) {
@@ -52,6 +52,28 @@ function newPassword() {
 function buildLink({ url, password, name, launcherPort, topic }) {
   const e = encodeURIComponent
   return `opencode://connect?url=${e(url)}&password=${e(password)}&name=${e(name)}${launcherPort ? `&launcher=${launcherPort}` : ''}${topic ? `&topic=${e(topic)}` : ''}`
+}
+
+const PAIR_CODE_MS = 10 * 60_000
+const DEFAULT_LAUNCHER_PORT = 4095
+
+/** Six random digits: the short code for pairing without a camera. */
+function newPairCode() {
+  return String(crypto.randomInt(0, 1_000_000)).padStart(6, '0')
+}
+
+/** What the person types into the app next to the code: the host, plus the port only when it is not the usual one. */
+function pairAddress(host, launcherPort) {
+  return Number(launcherPort) === DEFAULT_LAUNCHER_PORT ? host : `${host}:${launcherPort}`
+}
+
+/** Does the launcher on this port offer the pairing code? (An older launcher answers 401 and must be restarted.) */
+function pairOffered(host, port) {
+  return new Promise((resolve) => {
+    const req = http.get({ host, port, path: '/pair', timeout: 3000 }, (res) => { res.resume(); resolve(res.statusCode === 200) })
+    req.on('error', () => resolve(false))
+    req.on('timeout', () => { req.destroy(); resolve(false) })
+  })
 }
 
 /** First private IPv4 address of a non-internal interface. */
@@ -301,6 +323,7 @@ function run(opts, io) {
     if (opts.freemodel) note('free model', 'did', registerFreeModel())
 
     // ----- 4b. launcher: lets the phone start the server later -----
+    let pairCode = ''
     const launcherJs = path.join(dir, 'launcher.js')
     const bundled = path.join(__dirname, 'launcher.js')
     if (path.resolve(bundled) !== path.resolve(launcherJs) && fs.existsSync(bundled)) fs.copyFileSync(bundled, launcherJs)
@@ -314,10 +337,23 @@ function run(opts, io) {
     if (!fs.existsSync(launcherJs)) { try { fs.writeFileSync(launcherJs, await download(`${BASE_URL}/launcher.js`)) } catch { /* reported below */ } }
     if (!fs.existsSync(launcherJs)) note('launcher', 'skip', 'could not fetch launcher.js (starting the server from the phone will not work)')
     else {
-      if (!listening(launcherPort)) {
+      const startLauncher = async () => {
         spawn(process.execPath, [launcherJs], { env: { ...process.env, OPENCODE_CONNECT_DIR: dir }, detached: true, stdio: 'ignore', windowsHide: true }).unref()
         for (let i = 0; i < 20 && !listening(launcherPort); i++) await sleep(250)
       }
+      // Pairing code: for when the QR cannot be scanned. Not in tunnel mode (the address there is long and random anyway).
+      if (mode !== 'tunnel' && !opts.nocode) {
+        pairCode = newPairCode()
+        launcherLib.writePairFile(dir, { code: pairCode, expires: Date.now() + PAIR_CODE_MS, fails: 0 })
+      }
+      if (!listening(launcherPort)) await startLauncher()
+      if (pairCode && listening(launcherPort) && !(await pairOffered(bindHost, launcherPort))) {
+        launcherLib.stopPort(launcherPort) // a launcher from an older version: restart it with the new file
+        for (let i = 0; i < 20 && listening(launcherPort); i++) await sleep(250)
+        await startLauncher()
+        for (let i = 0; i < 12 && !(await pairOffered(bindHost, launcherPort)); i++) await sleep(250)
+      }
+      if (pairCode && !(await pairOffered(bindHost, launcherPort))) { pairCode = ''; launcherLib.writePairFile(dir, null) }
       if (listening(launcherPort)) {
         note('launcher', 'ok', `phone can start the server (port ${launcherPort})`)
         if (mode === 'tailscale') sh(tsExe, ['serve', '--bg', '--tcp', String(launcherPort), `tcp://127.0.0.1:${launcherPort}`])
@@ -355,7 +391,10 @@ function run(opts, io) {
     const link = buildLink({ url: serverUrl, password, name, launcherPort, topic: mode === 'tunnel' ? state.tunnelTopic : undefined })
     Object.assign(result, { serverUrl, pairingLink: link, launcherPort, ok: true, stage: 'ready', message: 'Install the app on the phone, then scan the pairing QR or open the pairing link on the phone.' })
 
-    if (!opts.noqr) await showQr({ dir, link, opts, io, say })
+    const pair = pairCode ? { code: `${pairCode.slice(0, 3)} ${pairCode.slice(3)}`, address: pairAddress(linkHost, launcherPort) } : null
+    if (pair) Object.assign(result, { pairCode, pairAddress: pair.address })
+    if (!opts.noqr) await showQr({ dir, link, opts, io, say, pair })
+    if (pair && !opts.json) io.out(`\nCannot scan? In the app tap "Pair with a code" and type:\n  Code:     ${pair.code}   (works once, for 10 minutes; run this again for a new one)\n  Computer: ${pair.address}   (only if the app does not find this computer by itself)`)
     if (!opts.json) io.out(`\nPairing link (also works with "Paste pairing link" in the app):\n${link}\n\nStop later:  --stop     Check:  --doctor     Remove:  --uninstall`)
     return finish(0)
   })()
@@ -489,19 +528,20 @@ function download(url, hops = 0) {
   })
 }
 
-async function showQr({ dir, link, opts, io, say }) {
+async function showQr({ dir, link, opts, io, say, pair }) {
   if (!fs.existsSync(path.join(dir, 'node_modules', 'qrcode'))) sh(npmCmd(), ['install', '--prefix', dir, 'qrcode', 'qrcode-terminal', '--no-audit', '--no-fund', '--silent'], { shell: WIN })
   let QR, term
   try { const req = require('node:module').createRequire(path.join(dir, 'x.js')); QR = req('qrcode'); term = req('qrcode-terminal') } catch { return say('(QR codes unavailable: could not install the QR helper. Use the link below.)') }
   if (!opts.json) { io.out('\nPoint the phone at this code (app: Scan QR to pair):'); term.generate(link, { small: true }, (q) => io.out(q)) }
   if (opts.noopen) return
-  const [pair, app] = await Promise.all([QR.toDataURL(link, { margin: 2, width: 440 }), QR.toDataURL(APP_URL, { margin: 2, width: 260 })])
+  const [pairQr, app] = await Promise.all([QR.toDataURL(link, { margin: 2, width: 440 }), QR.toDataURL(APP_URL, { margin: 2, width: 260 })])
   const html = '<!doctype html><meta charset="utf-8"><title>OpenCode: pair your phone</title>' +
     '<body style="margin:0;background:#07080c;color:#e8ecf4;font-family:Consolas,monospace;text-align:center;padding:32px">' +
     '<h2 style="color:#22d3ee;letter-spacing:2px">OPENCODE CONNECT</h2>' +
     `<p>1. Install the app on the phone (skip if you already have it)</p><img src="${app}" width="200" style="background:#fff;border-radius:8px"><br>` +
     '<p>2. Install Tailscale on the phone (Google Play) and sign in with the same account. Skip in LAN mode.</p>' +
-    `<p>3. Open the OpenCode app, tap Scan QR to pair, point it at this code, tap Connect</p><img src="${pair}" width="360" style="background:#fff;border-radius:8px">` +
+    `<p>3. Open the OpenCode app, tap Scan QR to pair, point it at this code, tap Connect</p><img src="${pairQr}" width="360" style="background:#fff;border-radius:8px">` +
+    (pair ? `<p>Cannot scan? In the app tap Pair with a code and type</p><p style="font-size:34px;letter-spacing:6px;color:#22d3ee;margin:8px">${pair.code}</p><p style="color:#8a93a8">computer address, if the app asks: ${pair.address}<br>the code works once, for 10 minutes</p>` : '') +
     '<p style="color:#8a93a8;font-size:12px">This page holds your pairing password and deletes itself in 5 minutes.</p></body>'
   const page = path.join(os.tmpdir(), 'opencode-pair.html')
   fs.writeFileSync(page, html, { mode: 0o600 })
@@ -511,7 +551,7 @@ async function showQr({ dir, link, opts, io, say }) {
   spawn(process.execPath, ['-e', `setTimeout(()=>{try{require('fs').rmSync(${JSON.stringify(page)},{force:true})}catch(e){}},300000)`], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
 }
 
-module.exports = { registerFreeModel, unregisterFreeModel, currentTunnelUrl, registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
+module.exports = { newPairCode, pairAddress, registerFreeModel, unregisterFreeModel, currentTunnelUrl, registerOpencodeMcp, unregisterOpencodeMcp, parseArgs, defaultDir, newPassword, buildLink, lanIp, run }
 
 if (require.main === module) {
   const io = { out: (t) => process.stdout.write(t + '\n'), err: (t) => process.stderr.write(t + '\n') }

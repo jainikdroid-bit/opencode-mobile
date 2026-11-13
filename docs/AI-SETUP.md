@@ -54,6 +54,8 @@ Exit codes: `0` ready, `1` failed (`message` says why), `2` a human step is need
 | `install-Node.js` / `install-Tailscale` | winget is missing: ask the person to install it from nodejs.org / tailscale.com, then run again. |
 
 On success the JSON has `ok: true`, `serverUrl` and `pairingLink` (`opencode://connect?url=...&password=...&name=...`).
+Outside tunnel mode it also has `pairCode` (6 digits, valid once, for 10 minutes) and `pairAddress`: if the QR code
+cannot be scanned, the person taps **Pair with a code** in the app and types the digits (and the address, if asked).
 
 ## Step 2: get the app onto the phone
 

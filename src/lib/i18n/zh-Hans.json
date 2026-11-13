@@ -635,5 +635,23 @@
     "waitTitle": "正在等待 Tailscale",
     "waitBody": "请使用与电脑相同的 Tailscale 账号登录，然后回到这里。",
     "notConnected": "内置 Tailscale 未能连接。请登录后重试。"
+  },
+  "pairCode": {
+    "title": "用配对码连接",
+    "button": "用配对码连接",
+    "intro": "不需要摄像头。在电脑上再次运行安装命令：二维码旁边会显示 6 位数字。配对码只能用一次，10 分钟内有效。",
+    "computers": "你的电脑",
+    "searching": "正在查找你的电脑…",
+    "searchAgain": "重新查找",
+    "none": "没有找到电脑。请在下面输入它的地址：电脑会在配对码旁边显示地址。",
+    "searchTailnet": "通过内置 Tailscale 查找",
+    "addressLabel": "电脑地址（仅在没有找到时填写）",
+    "codeLabel": "电脑上显示的配对码",
+    "needTarget": "请选择一台电脑或输入它的地址。",
+    "needCode": "请输入电脑上显示的 6 位数字。",
+    "wrong": "配对码错误。剩余尝试次数：{{left}}。",
+    "burned": "错误次数过多。请在电脑上再次运行安装命令以获取新的配对码。",
+    "inactive": "这台电脑上没有可用的配对码。请在电脑上再次运行安装命令：它会显示新的配对码。",
+    "unreachable": "无法连接到 {{address}} 的电脑。请确认手机和电脑在同一网络中。"
   }
 }

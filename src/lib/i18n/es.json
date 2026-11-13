@@ -635,5 +635,23 @@
     "waitTitle": "Esperando a Tailscale",
     "waitBody": "Inicia sesión con la misma cuenta de Tailscale que en tu ordenador y vuelve aquí.",
     "notConnected": "El Tailscale integrado no se conectó. Inicia sesión e inténtalo de nuevo."
+  },
+  "pairCode": {
+    "title": "Vincular con código",
+    "button": "Vincular con código",
+    "intro": "No hace falta cámara. Ejecuta de nuevo el comando de instalación en el ordenador: junto al código QR muestra 6 dígitos. El código sirve una vez, durante 10 minutos.",
+    "computers": "Tu ordenador",
+    "searching": "Buscando tu ordenador…",
+    "searchAgain": "Buscar de nuevo",
+    "none": "No se encontró ningún ordenador. Escribe su dirección abajo: el ordenador la muestra junto al código.",
+    "searchTailnet": "Buscar con Tailscale integrado",
+    "addressLabel": "Dirección del ordenador (solo si no se encontró)",
+    "codeLabel": "Código del ordenador",
+    "needTarget": "Elige un ordenador o escribe su dirección.",
+    "needCode": "Escribe los 6 dígitos que muestra el ordenador.",
+    "wrong": "Código incorrecto. Intentos restantes: {{left}}.",
+    "burned": "Demasiados códigos incorrectos. Ejecuta de nuevo el comando de instalación en el ordenador para obtener uno nuevo.",
+    "inactive": "No hay ningún código activo en este ordenador. Ejecuta allí de nuevo el comando de instalación: mostrará un código nuevo.",
+    "unreachable": "No se pudo conectar con el ordenador en {{address}}. Comprueba que el móvil y el ordenador están en la misma red."
   }
 }

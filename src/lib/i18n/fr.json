@@ -635,5 +635,23 @@
     "waitTitle": "En attente de Tailscale",
     "waitBody": "Connectez-vous avec le même compte Tailscale que sur votre ordinateur, puis revenez ici.",
     "notConnected": "Le Tailscale intégré ne s’est pas connecté. Connectez-vous et réessayez."
+  },
+  "pairCode": {
+    "title": "Associer avec un code",
+    "button": "Associer avec un code",
+    "intro": "Pas besoin de caméra. Relancez la commande d'installation sur l'ordinateur : à côté du code QR, elle affiche 6 chiffres. Le code sert une fois, pendant 10 minutes.",
+    "computers": "Votre ordinateur",
+    "searching": "Recherche de votre ordinateur…",
+    "searchAgain": "Rechercher à nouveau",
+    "none": "Aucun ordinateur trouvé. Saisissez son adresse ci-dessous : l'ordinateur l'affiche à côté du code.",
+    "searchTailnet": "Chercher via Tailscale intégré",
+    "addressLabel": "Adresse de l'ordinateur (seulement s'il n'a pas été trouvé)",
+    "codeLabel": "Code de l'ordinateur",
+    "needTarget": "Choisissez un ordinateur ou saisissez son adresse.",
+    "needCode": "Saisissez les 6 chiffres affichés par l'ordinateur.",
+    "wrong": "Code incorrect. Essais restants : {{left}}.",
+    "burned": "Trop de codes incorrects. Relancez la commande d'installation sur l'ordinateur pour en obtenir un nouveau.",
+    "inactive": "Aucun code n'est en attente sur cet ordinateur. Relancez-y la commande d'installation : elle affichera un nouveau code.",
+    "unreachable": "Impossible de joindre l'ordinateur à l'adresse {{address}}. Vérifiez que le téléphone et l'ordinateur sont sur le même réseau."
   }
 }

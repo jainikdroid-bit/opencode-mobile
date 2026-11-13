@@ -20,6 +20,8 @@ interface TailnetNative {
   logout(): Promise<void>
   stop(): Promise<void>
   logTail(lines: number): Promise<string>
+  peers(): Promise<string>
+  localAddresses(): Promise<string[]>
 }
 
 const native: TailnetNative | undefined =
@@ -90,6 +92,29 @@ export async function tailnetLogout(): Promise<void> {
 export async function tailnetLog(lines = 40): Promise<string> {
   if (!native) return ""
   return native.logTail(lines).catch(() => "")
+}
+
+export interface TailnetPeer {
+  name: string
+  ip: string
+}
+
+/** Online devices of the tailnet; empty unless the built-in node is on and connected. */
+export async function tailnetPeers(): Promise<TailnetPeer[]> {
+  if (!native || !enabled || !started) return []
+  try {
+    const list: unknown = JSON.parse(await native.peers())
+    if (!Array.isArray(list)) return []
+    return list.filter((p): p is TailnetPeer => !!p && typeof p.ip === "string" && typeof p.name === "string")
+  } catch {
+    return []
+  }
+}
+
+/** IPv4 addresses of this phone as "ip/prefix" (Android only; empty elsewhere). */
+export async function localAddresses(): Promise<string[]> {
+  if (!native) return []
+  return native.localAddresses().catch(() => [])
 }
 
 /** Tell the node the phone changed network (Wi-Fi <-> mobile), so it re-reads the interfaces. */

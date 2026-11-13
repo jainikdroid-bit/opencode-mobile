@@ -51,6 +51,9 @@ export default function ScanScreen() {
         <TouchableOpacity style={s.primary} onPress={() => void requestPermission()} testID="scan-allow">
           <Text style={s.primaryText}>{t("scan.allow")}</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.replace("/pair-code")} style={s.link} testID="scan-code-fallback">
+          <Text style={s.linkText}>{t("pairCode.button")}</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => void pasteLink()} style={s.link}>
           <Text style={s.linkText}>{t("connection.pair.pasteButton")}</Text>
         </TouchableOpacity>
@@ -75,6 +78,10 @@ export default function ScanScreen() {
           <View style={[s.corner, s.br]} />
         </View>
         <Text style={[s.hint, message ? s.warn : null]}>{message ?? t("scan.sub")}</Text>
+        <TouchableOpacity onPress={() => router.replace("/pair-code")} style={s.pill} testID="scan-code">
+          <Ionicons name="keypad-outline" size={16} color={cyber.cyan} />
+          <Text style={s.pillText}>{t("pairCode.button")}</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => void pasteLink()} style={s.pill} testID="scan-paste">
           <Ionicons name="clipboard-outline" size={16} color={cyber.cyan} />
           <Text style={s.pillText}>{t("connection.pair.pasteButton")}</Text>
@@ -96,7 +103,7 @@ const s = StyleSheet.create({
   primaryText: { color: cyber.bg, fontSize: 16, fontWeight: "700" },
   link: { padding: 10 },
   linkText: { color: cyber.cyan, fontSize: 14 },
-  overlay: { flex: 1, alignItems: "center", justifyContent: "center", gap: 22, backgroundColor: "rgba(7,8,12,0.35)" },
+  overlay: { flex: 1, alignItems: "center", justifyContent: "center", gap: 16, backgroundColor: "rgba(7,8,12,0.35)" },
   hint: { color: cyber.text, fontFamily: cyber.mono, fontSize: 13, textAlign: "center", paddingHorizontal: 24 },
   warn: { color: cyber.amber },
   frame: { width: FRAME, height: FRAME },

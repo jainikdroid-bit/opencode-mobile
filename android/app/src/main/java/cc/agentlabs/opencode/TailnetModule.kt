@@ -79,6 +79,30 @@ class TailnetModule(private val ctx: ReactApplicationContext) : ReactContextBase
     tsnetbridge.Tsnetbridge.logTail(lines.toLong()).orEmpty()
   }
 
+  /** Online devices of the tailnet as JSON [{"name","ip"}]: used to find the computer when pairing with a code. */
+  @ReactMethod fun peers(promise: Promise) = run(promise) {
+    tsnetbridge.Tsnetbridge.peers().orEmpty()
+  }
+
+  /** IPv4 addresses of this phone as "ip/prefix", Wi-Fi first. Needs no Tailscale library. */
+  @ReactMethod fun localAddresses(promise: Promise) {
+    pool.execute {
+      val out = Arguments.createArray()
+      runCatching {
+        java.net.NetworkInterface.getNetworkInterfaces()?.toList().orEmpty()
+          .filter { runCatching { it.isUp && !it.isLoopback }.getOrDefault(false) }
+          .sortedBy { !it.name.startsWith("wlan") }
+          .forEach { n ->
+            n.interfaceAddresses.forEach { ia ->
+              val address = ia.address
+              if (address is java.net.Inet4Address) out.pushString("${address.hostAddress}/${ia.networkPrefixLength}")
+            }
+          }
+      }
+      promise.resolve(out)
+    }
+  }
+
   private fun interfacesJson(): String = runCatching {
     val arr = JSONArray()
     java.net.NetworkInterface.getNetworkInterfaces()?.toList().orEmpty().forEach { n ->

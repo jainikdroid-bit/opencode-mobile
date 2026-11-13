@@ -368,6 +368,10 @@ export default function AddConnectionScreen() {
             <Ionicons name="qr-code-outline" size={16} color="#ffffff" />
             <Text style={styles.pairButtonText}>{t("scan.button")}</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={[styles.pairButton, { marginBottom: 8 }]} onPress={() => router.push("/pair-code")} testID="pair-code-button">
+            <Ionicons name="keypad-outline" size={16} color="#ffffff" />
+            <Text style={styles.pairButtonText}>{t("pairCode.button")}</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.pairButton} onPress={handlePastePairingLink} testID="pair-paste-button">
             <Ionicons name="clipboard-outline" size={16} color="#ffffff" />
             <Text style={styles.pairButtonText}>{t("connection.pair.pasteButton")}</Text>

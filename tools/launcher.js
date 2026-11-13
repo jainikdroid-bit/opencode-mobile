@@ -7,6 +7,7 @@
 //   POST /start     start `opencode serve` (127.0.0.1 only) if it is not running, wait until healthy
 //   POST /stop      stop the server
 //   POST /restart   stop, then start
+//   GET/POST /pair  pairing by a short code, only while the installer has one active (see below)
 // It listens on 127.0.0.1 only and is published to your private Tailscale network like the server itself.
 // Every request needs the same password as the server (HTTP Basic, user "opencode"); the password is read from
 // the file the installer keeps, so rotating it takes effect immediately. No dependencies: plain Node.js.
@@ -21,8 +22,12 @@ const path = require('node:path')
 const crypto = require('node:crypto')
 const { spawn, execFileSync } = require('node:child_process')
 
-const VERSION = 1
+const VERSION = 2
 const MAX_FAILS = 6 // wrong passwords per minute per address before answering 429
+// Pairing code: 6 digits shown by the installer, for when the QR code cannot be scanned. It is the only thing
+// served without the password, so it is one-time, short-lived and dies after a few wrong guesses.
+const PAIR_MAX_FAILS = 5
+const PAIR_BODY_LIMIT = 1024
 
 function defaultDir() {
   if (process.env.OPENCODE_CONNECT_DIR) return process.env.OPENCODE_CONNECT_DIR
@@ -83,6 +88,50 @@ function createLauncher(deps) {
     return status()
   }
 
+  /** The code the installer left, if it is still usable. */
+  function activePair() {
+    const pair = deps.readPair ? deps.readPair() : null
+    if (!pair || !/^\d{6}$/.test(String(pair.code)) || !(Number(pair.expires) > Date.now())) return null
+    return pair
+  }
+
+  function readBody(req) {
+    return new Promise((resolve) => {
+      let text = ''
+      req.on('data', (chunk) => {
+        text += chunk
+        if (text.length > PAIR_BODY_LIMIT) { text = ''; req.destroy() }
+      })
+      req.on('end', () => { try { resolve(JSON.parse(text)) } catch { resolve({}) } })
+      req.on('error', () => resolve({}))
+      req.on('close', () => resolve({}))
+    })
+  }
+
+  /** GET: "a code is waiting here" (no secrets). POST {code}: trade the right code for the connection details. */
+  async function pair(req, res) {
+    const name = String((deps.readState() || {}).name || '')
+    if (req.method === 'GET') {
+      if (!activePair()) return send(res, 404, { ok: false, error: 'no pairing code is active' })
+      return send(res, 200, { ok: true, pairing: true, name })
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'use POST' })
+    const body = await readBody(req)
+    // Read the code only now, so check and update happen in one step even with parallel requests.
+    const current = activePair()
+    if (!current) return send(res, 404, { ok: false, error: 'no pairing code is active' })
+    const given = String(body && body.code !== undefined ? body.code : '').replace(/\D/g, '')
+    if (!passwordMatches(given, String(current.code))) {
+      const failed = (Number(current.fails) || 0) + 1
+      const left = Math.max(0, PAIR_MAX_FAILS - failed)
+      deps.writePair(left === 0 ? null : { ...current, fails: failed })
+      return send(res, 403, { ok: false, error: 'wrong code', left })
+    }
+    deps.writePair(null)
+    const state = deps.readState() || {}
+    return send(res, 200, { ok: true, name, password: deps.readPassword(), port: portOf(), launcherPort: Number(state.launcherPort) || portOf() - 1 })
+  }
+
   const actions = { start, stop, restart: async () => { await stop(); return start() } }
 
   function send(res, code, body, headers = {}) {
@@ -92,6 +141,9 @@ function createLauncher(deps) {
   }
 
   async function handle(req, res) {
+    if ((req.url || '/').split('?')[0] === '/pair') {
+      try { return await pair(req, res) } catch (error) { return send(res, 500, { ok: false, error: String(error && error.message ? error.message : error) }) }
+    }
     const address = req.socket.remoteAddress || '?'
     const now = Date.now()
     const record = fails.get(address)
@@ -132,6 +184,8 @@ function realDeps(dir) {
   return {
     readPassword: () => read('password'),
     readState: () => { try { return JSON.parse(read('state.json')) } catch { return {} } },
+    readPair: () => { try { return JSON.parse(read(PAIR_FILE)) } catch { return null } },
+    writePair: (pair) => writePairFile(dir, pair),
     health(port, password) {
       return new Promise((resolve) => {
         const req = http.get({ host: '127.0.0.1', port, path: '/global/health', timeout: 3000, headers: { Authorization: 'Basic ' + Buffer.from('opencode:' + password).toString('base64') } }, (res) => {
@@ -152,6 +206,17 @@ function realDeps(dir) {
     async stopServer(port) { stopPort(port) },
     sleep: (ms) => new Promise((r) => setTimeout(r, ms)),
   }
+}
+
+const PAIR_FILE = 'pair.json'
+
+/** Saves the pairing code (or removes it when given null). Only the owner may read the file. */
+function writePairFile(dir, pair) {
+  const file = path.join(dir, PAIR_FILE)
+  try {
+    if (!pair) return fs.rmSync(file, { force: true })
+    fs.writeFileSync(file, JSON.stringify(pair), { mode: 0o600 })
+  } catch { /* a code that cannot be saved simply does not work */ }
 }
 
 /** Kill whatever listens on a local TCP port. */
@@ -227,5 +292,5 @@ function main() {
   })
 }
 
-module.exports = { createLauncher, passwordMatches, parseBasic, listenerPids, stopPort, realDeps, bindHostOf }
+module.exports = { VERSION, writePairFile, createLauncher, passwordMatches, parseBasic, listenerPids, stopPort, realDeps, bindHostOf }
 if (require.main === module) main()

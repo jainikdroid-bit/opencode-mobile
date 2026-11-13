@@ -635,5 +635,23 @@
     "waitTitle": "Waiting for Tailscale",
     "waitBody": "Sign in with the same Tailscale account as on your computer, then come back here.",
     "notConnected": "Built-in Tailscale did not connect. Sign in and try again."
+  },
+  "pairCode": {
+    "title": "Pair with a code",
+    "button": "Pair with a code",
+    "intro": "No camera needed. Run the setup command on your computer again: next to the QR code it shows 6 digits. The code works once, for 10 minutes.",
+    "computers": "Your computer",
+    "searching": "Looking for your computer…",
+    "searchAgain": "Search again",
+    "none": "No computer found. Type its address below: the computer shows it next to the code.",
+    "searchTailnet": "Look through built-in Tailscale",
+    "addressLabel": "Computer address (only if it was not found)",
+    "codeLabel": "Code from the computer",
+    "needTarget": "Choose a computer or type its address.",
+    "needCode": "Type the 6 digits shown on the computer.",
+    "wrong": "Wrong code. Tries left: {{left}}.",
+    "burned": "Too many wrong codes. Run the setup command on the computer again to get a new one.",
+    "inactive": "No code is waiting on this computer. Run the setup command there again: it shows a new code.",
+    "unreachable": "Could not reach the computer at {{address}}. Check that the phone and the computer are on the same network."
   }
 }

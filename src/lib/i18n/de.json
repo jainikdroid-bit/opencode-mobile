@@ -635,5 +635,23 @@
     "waitTitle": "Warten auf Tailscale",
     "waitBody": "Melde dich mit demselben Tailscale-Konto wie auf deinem Computer an und kehre dann hierher zurück.",
     "notConnected": "Das integrierte Tailscale hat keine Verbindung hergestellt. Melde dich an und versuche es erneut."
+  },
+  "pairCode": {
+    "title": "Mit Code koppeln",
+    "button": "Mit Code koppeln",
+    "intro": "Keine Kamera nötig. Führe den Einrichtungsbefehl auf dem Computer erneut aus: Neben dem QR-Code zeigt er 6 Ziffern. Der Code gilt einmal, 10 Minuten lang.",
+    "computers": "Dein Computer",
+    "searching": "Suche deinen Computer…",
+    "searchAgain": "Erneut suchen",
+    "none": "Kein Computer gefunden. Gib unten seine Adresse ein: Der Computer zeigt sie neben dem Code.",
+    "searchTailnet": "Über integriertes Tailscale suchen",
+    "addressLabel": "Adresse des Computers (nur wenn er nicht gefunden wurde)",
+    "codeLabel": "Code vom Computer",
+    "needTarget": "Wähle einen Computer oder gib seine Adresse ein.",
+    "needCode": "Gib die 6 Ziffern ein, die der Computer anzeigt.",
+    "wrong": "Falscher Code. Verbleibende Versuche: {{left}}.",
+    "burned": "Zu viele falsche Codes. Führe den Einrichtungsbefehl auf dem Computer erneut aus, um einen neuen zu erhalten.",
+    "inactive": "Auf diesem Computer wartet kein Code. Führe dort den Einrichtungsbefehl erneut aus: Er zeigt einen neuen Code.",
+    "unreachable": "Der Computer unter {{address}} ist nicht erreichbar. Prüfe, ob Handy und Computer im selben Netzwerk sind."
   }
 }

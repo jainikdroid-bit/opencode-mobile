@@ -1,0 +1,5 @@
+v0.13.0 — pair with a code
+
+• Cannot scan the QR code? The setup command on the computer now also shows 6 digits. In the app tap "Pair with a code": it finds the computer on your home network or through the built-in Tailscale, you type the code, done.
+• The code works once, for 10 minutes, and is thrown away after 5 wrong guesses.
+• APKs are now built per CPU architecture (much smaller) plus one universal file.

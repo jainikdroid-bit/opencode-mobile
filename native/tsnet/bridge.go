@@ -24,6 +24,7 @@ type state struct {
 	ready   bool
 	ip      string
 	lastErr string
+	peers   string
 	fwds    []net.Listener
 }
 
@@ -95,6 +96,7 @@ func watch(s *tsnet.Server) {
 			g.lastErr = err.Error()
 		} else {
 			g.authURL = st.AuthURL
+			g.peers = peersJSON(st)
 			g.ready = st.BackendState == ipn.Running.String()
 			if len(st.TailscaleIPs) > 0 {
 				g.ip = st.TailscaleIPs[0].String()

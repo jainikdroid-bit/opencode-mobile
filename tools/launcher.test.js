@@ -27,7 +27,7 @@ async function withServer(deps, fn) {
   const server = http.createServer((req, res) => { launcher.handle(req, res) })
   await new Promise((r) => server.listen(0, '127.0.0.1', r))
   const port = server.address().port
-  const call = (method, route, auth) =>
+  const call = (method, route, auth, body) =>
     new Promise((resolve, reject) => {
       const req = http.request({ host: '127.0.0.1', port, path: route, method, headers: auth ? { Authorization: auth } : {} }, (res) => {
         let body = ''
@@ -35,7 +35,7 @@ async function withServer(deps, fn) {
         res.on('end', () => resolve({ status: res.statusCode, json: body ? JSON.parse(body) : null }))
       })
       req.on('error', reject)
-      req.end()
+      req.end(body === undefined ? undefined : JSON.stringify(body))
     })
   try { await fn(call) } finally { server.close() }
 }
@@ -129,5 +129,63 @@ test('a server that never becomes healthy is reported as an error', async () => 
     const res = await call('POST', '/start', basic('opencode', PASSWORD))
     assert.equal(res.status, 500)
     assert.equal(res.json.ok, false)
+  })
+})
+
+function pairDeps(pair) {
+  const box = { pair }
+  const { deps } = fakeDeps({
+    readState: () => ({ port: 4096, launcherPort: 4095, name: 'My PC' }),
+    readPair: () => box.pair,
+    writePair: (next) => { box.pair = next },
+  })
+  return { deps, box }
+}
+const liveCode = () => ({ code: '482913', expires: Date.now() + 60_000, fails: 0 })
+
+test('pairing is off unless the installer left a code', async () => {
+  const { deps } = fakeDeps()
+  await withServer(deps, async (call) => {
+    assert.equal((await call('GET', '/pair')).status, 404)
+    assert.equal((await call('POST', '/pair', undefined, { code: '000000' })).status, 404)
+  })
+  const expired = pairDeps({ code: '482913', expires: Date.now() - 1, fails: 0 })
+  await withServer(expired.deps, async (call) => {
+    assert.equal((await call('POST', '/pair', undefined, { code: '482913' })).status, 404)
+  })
+})
+
+test('the right code gives the connection details exactly once', async () => {
+  const { deps, box } = pairDeps(liveCode())
+  await withServer(deps, async (call) => {
+    const seen = await call('GET', '/pair')
+    assert.deepEqual(seen.json, { ok: true, pairing: true, name: 'My PC' })
+    const ok = await call('POST', '/pair', undefined, { code: '482 913' })
+    assert.equal(ok.status, 200)
+    assert.deepEqual(ok.json, { ok: true, name: 'My PC', password: PASSWORD, port: 4096, launcherPort: 4095 })
+    assert.equal(box.pair, null)
+    assert.equal((await call('POST', '/pair', undefined, { code: '482913' })).status, 404)
+  })
+})
+
+test('wrong codes never reveal the password and burn the code after five tries', async () => {
+  const { deps, box } = pairDeps(liveCode())
+  await withServer(deps, async (call) => {
+    for (let left = 4; left >= 0; left--) {
+      const bad = await call('POST', '/pair', undefined, { code: '111111' })
+      assert.equal(bad.status, 403)
+      assert.equal(bad.json.left, left)
+      assert.equal(bad.json.password, undefined)
+    }
+    assert.equal(box.pair, null)
+    assert.equal((await call('POST', '/pair', undefined, { code: '482913' })).status, 404)
+  })
+})
+
+test('pairing route does not open the other routes', async () => {
+  const { deps } = pairDeps(liveCode())
+  await withServer(deps, async (call) => {
+    assert.equal((await call('GET', '/status')).status, 401)
+    assert.equal((await call('PUT', '/pair')).status, 405)
   })
 })

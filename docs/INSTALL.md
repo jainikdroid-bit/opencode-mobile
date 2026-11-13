@@ -45,6 +45,9 @@ It is safe to run the command again at any time: it repairs instead of duplicati
 
 Open the app, tap **Scan QR to pair**, point the camera at the **second** QR code and tap **Connect**. Done.
 
+**Cannot scan?** Tap **Pair with a code** instead. The setup command shows 6 digits next to the QR code: the app finds
+the computer by itself, you type the digits. The code works once, for 10 minutes; run the command again for a new one.
+
 The app shows a short setup guide the first time; tap **Skip guide** to dismiss it for good.
 
 ## After setup

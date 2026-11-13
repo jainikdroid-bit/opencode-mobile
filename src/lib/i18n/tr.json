@@ -635,5 +635,23 @@
     "waitTitle": "Tailscale bekleniyor",
     "waitBody": "Bilgisayarınızdaki Tailscale hesabıyla oturum açın, sonra buraya dönün.",
     "notConnected": "Yerleşik Tailscale bağlanamadı. Oturum açıp yeniden deneyin."
+  },
+  "pairCode": {
+    "title": "Kodla eşleştir",
+    "button": "Kodla eşleştir",
+    "intro": "Kamera gerekmez. Bilgisayarda kurulum komutunu yeniden çalıştırın: QR kodunun yanında 6 rakam gösterir. Kod bir kez, 10 dakika boyunca geçerlidir.",
+    "computers": "Bilgisayarınız",
+    "searching": "Bilgisayarınız aranıyor…",
+    "searchAgain": "Yeniden ara",
+    "none": "Bilgisayar bulunamadı. Adresini aşağıya yazın: bilgisayar onu kodun yanında gösterir.",
+    "searchTailnet": "Yerleşik Tailscale ile ara",
+    "addressLabel": "Bilgisayar adresi (yalnızca bulunamadıysa)",
+    "codeLabel": "Bilgisayardaki kod",
+    "needTarget": "Bir bilgisayar seçin veya adresini yazın.",
+    "needCode": "Bilgisayarda gösterilen 6 rakamı yazın.",
+    "wrong": "Yanlış kod. Kalan deneme: {{left}}.",
+    "burned": "Çok fazla yanlış kod girildi. Yeni bir kod için bilgisayarda kurulum komutunu yeniden çalıştırın.",
+    "inactive": "Bu bilgisayarda bekleyen bir kod yok. Orada kurulum komutunu yeniden çalıştırın: yeni bir kod gösterir.",
+    "unreachable": "{{address}} adresindeki bilgisayara ulaşılamadı. Telefon ile bilgisayarın aynı ağda olduğunu kontrol edin."
   }
 }

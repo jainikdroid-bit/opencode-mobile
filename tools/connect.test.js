@@ -1,7 +1,7 @@
 'use strict'
 const test = require('node:test')
 const assert = require('node:assert/strict')
-const { parseArgs, buildLink, lanIp, newPassword } = require('./connect.js')
+const { parseArgs, buildLink, lanIp, newPassword, newPairCode, pairAddress } = require('./connect.js')
 const autostart = require('./autostart.js')
 const { bindHostOf } = require('./launcher.js')
 
@@ -118,4 +118,10 @@ test('the free cloud model is merged in, keeps the user default, and is removed 
     if (previous === undefined) delete process.env.XDG_CONFIG_HOME; else process.env.XDG_CONFIG_HOME = previous
     fs.rmSync(dir, { recursive: true, force: true })
   }
+})
+
+test('pairing code is six digits and the address hides the usual port', () => {
+  for (let i = 0; i < 50; i++) assert.match(newPairCode(), /^\d{6}$/)
+  assert.equal(pairAddress('100.1.2.3', 4095), '100.1.2.3')
+  assert.equal(pairAddress('192.168.1.20', 5999), '192.168.1.20:5999')
 })
