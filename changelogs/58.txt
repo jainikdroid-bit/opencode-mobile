@@ -1,1 +1,2 @@
+v0.13.1 — terminal over built-in Tailscale
 - Terminal: works over built-in Tailscale (the terminal connection skipped it and could not reach the computer away from home).
