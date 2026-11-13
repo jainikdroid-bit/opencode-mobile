@@ -264,7 +264,7 @@ export default function SettingsScreen() {
           label={t("settings.about.github.label")}
           description={t("settings.about.github.description")}
           isDark={isDark}
-          onPress={() => Linking.openURL("https://github.com/anomalyco/opencode")}
+          onPress={() => Linking.openURL("https://github.com/jainikdroid-bit/opencode-mobile")}
           right={<Ionicons name="open-outline" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
         <SettingRow
