@@ -6,6 +6,10 @@ import { useTranslation } from "react-i18next"
 import { useConnections } from "../src/stores/connections"
 import { buildPairing } from "../src/lib/pairing"
 import { Mascot } from "../src/components/Mascot"
+import { useTailnet } from "../src/stores/tailnet"
+import { tailnetTarget } from "../src/lib/tailnet-host"
+
+const TAILNET_SIGN_IN_WAIT_MS = 5 * 60_000
 
 // Landing screen for OpenCode Connect pairing links
 // (opencode://connect?url=...&password=...&name=...), opened by scanning the QR
@@ -20,6 +24,7 @@ export default function ConnectScreen() {
   const params = useLocalSearchParams<{ url?: string; password?: string; name?: string; launcher?: string; topic?: string }>()
   const { addConnection, testConnection, setActiveConnection } = useConnections()
   const [busy, setBusy] = useState(false)
+  const [waitingTailnet, setWaitingTailnet] = useState(false)
 
   const pairing = buildPairing(params.url, params.password, params.name, params.launcher, params.topic)
 
@@ -35,6 +40,15 @@ export default function ConnectScreen() {
     )
     if (!result.ok) {
       setBusy(false)
+      const tailnet = useTailnet.getState()
+      // A tailnet address the phone cannot reach: usually the Tailscale app is off because another VPN is on.
+      if (tailnetTarget(pairing.url) && tailnet.available && !tailnet.status?.ready) {
+        Alert.alert(t("connection.pair.failedTitle"), `${pairing.url}\n${t("tailnet.offer")}`, [
+          { text: t("common.cancel"), style: "cancel" },
+          { text: t("tailnet.useBuiltIn"), onPress: () => void connectThroughTailnet() },
+        ])
+        return
+      }
       Alert.alert(t("connection.pair.failedTitle"), `${pairing.url}\n${result.error ?? ""}`.trim())
       return
     }
@@ -52,6 +66,35 @@ export default function ConnectScreen() {
       setBusy(false)
       Alert.alert(t("connection.shared.alerts.saveFailedTitle"), t("connection.shared.alerts.saveFailedMessage"))
     }
+  }
+
+  const connectThroughTailnet = async () => {
+    setWaitingTailnet(true)
+    const tailnet = useTailnet.getState()
+    await tailnet.setEnabled(true)
+    const ready = await tailnet.waitReady(TAILNET_SIGN_IN_WAIT_MS)
+    setWaitingTailnet(false)
+    if (!ready) {
+      Alert.alert(t("connection.pair.failedTitle"), t("tailnet.notConnected"))
+      return
+    }
+    await handleConnect()
+  }
+
+  if (waitingTailnet) {
+    return (
+      <View style={[styles.container, isDark && styles.containerDark]} testID="connect-tailnet-wait">
+        <ActivityIndicator size="large" color="#22d3ee" />
+        <Text style={[styles.title, isDark && styles.textDark]}>{t("tailnet.waitTitle")}</Text>
+        <Text style={[styles.body, isDark && styles.hintDark]}>{t("tailnet.waitBody")}</Text>
+        <TouchableOpacity style={styles.secondary} onPress={() => void useTailnet.getState().signIn()}>
+          <Text style={[styles.secondaryText, isDark && styles.textDark]}>{t("tailnet.signIn")}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.secondary} onPress={() => void useTailnet.getState().setEnabled(false)}>
+          <Text style={[styles.secondaryText, isDark && styles.textDark]}>{t("common.cancel")}</Text>
+        </TouchableOpacity>
+      </View>
+    )
   }
 
   if (!pairing) {

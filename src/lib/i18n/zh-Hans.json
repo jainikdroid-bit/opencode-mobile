@@ -619,5 +619,21 @@
     "thinking": "思考中…",
     "speaking": "朗读中…",
     "stop": "结束"
+  },
+  "tailnet": {
+    "section": "内置 Tailscale",
+    "master": "使用内置 Tailscale",
+    "hint": "无需 Tailscale 应用即可通过 Tailscale 连接电脑。开着其他 VPN 时也能用。",
+    "unavailable": "此版本不可用。",
+    "starting": "正在启动…",
+    "needsSignIn": "请登录 Tailscale 以完成设置。",
+    "connected": "已连接。本机：{{ip}}",
+    "signIn": "登录 Tailscale",
+    "signOut": "退出 Tailscale",
+    "offer": "手机无法访问这个 Tailscale 地址。Tailscale 应用可能已关闭，例如因为开着其他 VPN。应用可以改用内置的 Tailscale 连接。",
+    "useBuiltIn": "使用内置",
+    "waitTitle": "正在等待 Tailscale",
+    "waitBody": "请使用与电脑相同的 Tailscale 账号登录，然后回到这里。",
+    "notConnected": "内置 Tailscale 未能连接。请登录后重试。"
   }
 }

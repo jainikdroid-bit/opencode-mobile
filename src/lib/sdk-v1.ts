@@ -16,6 +16,7 @@ import { SSEParser } from "./sse"
 import { apiErrorFor } from "./api-error"
 import { loadSessionList } from "./session-list"
 import type { FileRoot } from "./file-roots"
+import { routeUrl } from "./tailnet"
 
 export { ApiAuthError, isAuthError } from "./api-error"
 
@@ -246,7 +247,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   parentSignal?.addEventListener("abort", onParentAbort)
 
   try {
-    return await fetch(url, { ...options, signal: controller.signal })
+    return await fetch(await routeUrl(url), { ...options, signal: controller.signal })
   } catch (error) {
     if (timedOut) {
       throw new Error(`Request timed out after ${timeoutMs}ms`)
@@ -281,7 +282,7 @@ export function createV1Client(config: ClientConfig) {
         delete (headers as Record<string, string>)["Content-Type"]
 
         // Must use expo/fetch for ReadableStream support on native
-        const response = await expoFetch(url, { headers, signal })
+        const response = await expoFetch(await routeUrl(url), { headers, signal })
         if (!response.ok || !response.body) {
           throw apiErrorFor(response.status, `Failed to connect to event stream: ${response.status}`)
         }

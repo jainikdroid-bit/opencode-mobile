@@ -619,5 +619,21 @@
     "thinking": "Pensando…",
     "speaking": "Falando…",
     "stop": "Encerrar"
+  },
+  "tailnet": {
+    "section": "Tailscale integrado",
+    "master": "Usar o Tailscale integrado",
+    "hint": "Acesse seu computador pelo Tailscale sem o app do Tailscale. Funciona com outra VPN ligada.",
+    "unavailable": "Indisponível nesta versão.",
+    "starting": "Iniciando…",
+    "needsSignIn": "Entre no Tailscale para concluir.",
+    "connected": "Conectado. Este telefone: {{ip}}",
+    "signIn": "Entrar no Tailscale",
+    "signOut": "Sair do Tailscale",
+    "offer": "O telefone não alcança este endereço do Tailscale. O app do Tailscale provavelmente está desligado, por exemplo porque outra VPN está ligada. O app pode se conectar pelo próprio Tailscale integrado.",
+    "useBuiltIn": "Usar integrado",
+    "waitTitle": "Aguardando o Tailscale",
+    "waitBody": "Entre com a mesma conta do Tailscale usada no computador e volte para cá.",
+    "notConnected": "O Tailscale integrado não conectou. Entre e tente de novo."
   }
 }

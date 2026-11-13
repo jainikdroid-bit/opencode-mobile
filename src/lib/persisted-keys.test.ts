@@ -30,6 +30,7 @@ const ALLOWED_PERSISTED_KEYS = new Map<string, string>([
   ["RECENT_DIRS_KEY", "directories the user picked, for the recents list"],
   ["AUTH_SETTINGS_KEY", "biometric/app-lock preference"],
   ["PHONE_TOOLS_KEY", "which phone functions the user allowed the agent to use (all off by default)"],
+  ["TAILNET_KEY", "whether the user turned the built-in Tailscale node on (on/off)"],
 ])
 
 const SRC = path.join(import.meta.dirname, "..")

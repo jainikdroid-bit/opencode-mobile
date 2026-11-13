@@ -2,6 +2,7 @@
 // opencode server; it needs the same password as the server.
 import { buildRequestHeaders } from "./headers"
 import { interpretStart, launcherUrl, type StartOutcome } from "./launcher"
+import { routeUrl } from "./tailnet"
 
 export interface LauncherTarget {
   serverUrl: string
@@ -19,7 +20,7 @@ export async function startServerFromPhone(target: LauncherTarget): Promise<Star
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), START_TIMEOUT_MS)
   try {
-    const response = await fetch(`${base}/start`, {
+    const response = await fetch(await routeUrl(`${base}/start`), {
       method: "POST",
       headers: buildRequestHeaders({ auth: target.auth }),
       signal: controller.signal,

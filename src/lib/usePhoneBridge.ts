@@ -6,6 +6,7 @@ import { usePhoneTools } from "../stores/phoneTools"
 import { buildRequestHeaders } from "./headers"
 import { bridgeUrl, checkArgs, decide, type PhoneToolName } from "./phone-tools"
 import { confirm, runPhoneTool } from "./phone-handlers"
+import { routeUrl } from "./tailnet"
 
 const RETRY_MS = 5000
 
@@ -35,7 +36,7 @@ export function usePhoneBridge() {
     })
 
     const answer = (id: string, body: { ok: boolean; data?: unknown; error?: string }) =>
-      fetch(`${base}/result`, { method: "POST", headers: headers(), body: JSON.stringify({ id, ...body }), signal: controller.signal }).catch(() => {})
+      routeUrl(`${base}/result`).then((u) => fetch(u, { method: "POST", headers: headers(), body: JSON.stringify({ id, ...body }), signal: controller.signal })).catch(() => {})
 
     async function handle(job: { id: string; tool: string; args: unknown }) {
       const { record, ...settings } = usePhoneTools.getState()
@@ -74,7 +75,7 @@ export function usePhoneBridge() {
           continue
         }
         try {
-          const res = await fetch(`${base}/poll`, { headers: headers(), signal: controller.signal })
+          const res = await fetch(await routeUrl(`${base}/poll`), { headers: headers(), signal: controller.signal })
           if (res.status === 200) void handle(await res.json())
           else if (res.status !== 204) await sleep(RETRY_MS)
         } catch {

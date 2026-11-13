@@ -619,5 +619,21 @@
     "thinking": "Думаю…",
     "speaking": "Говорю…",
     "stop": "Завершить"
+  },
+  "tailnet": {
+    "section": "Встроенный Tailscale",
+    "master": "Использовать встроенный Tailscale",
+    "hint": "Связь с компьютером по Tailscale без приложения Tailscale. Работает, когда включён другой VPN.",
+    "unavailable": "В этой сборке недоступно.",
+    "starting": "Запуск…",
+    "needsSignIn": "Войдите в Tailscale, чтобы закончить.",
+    "connected": "Подключено. Этот телефон: {{ip}}",
+    "signIn": "Войти в Tailscale",
+    "signOut": "Выйти из Tailscale",
+    "offer": "Телефон не видит этот адрес Tailscale. Скорее всего, приложение Tailscale выключено, например из-за другого VPN. Приложение может подключиться через свой встроенный Tailscale.",
+    "useBuiltIn": "Встроенный",
+    "waitTitle": "Ожидание Tailscale",
+    "waitBody": "Войдите тем же аккаунтом Tailscale, что и на компьютере, затем вернитесь сюда.",
+    "notConnected": "Встроенный Tailscale не подключился. Войдите и попробуйте ещё раз."
   }
 }

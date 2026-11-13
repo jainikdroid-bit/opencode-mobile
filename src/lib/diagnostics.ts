@@ -9,6 +9,7 @@ import appJson from "../../app.json"
 import { log, formatLogLines } from "./logbuffer"
 import { type Classification, type ProbeAttempt, type ParsedUrl, parseUrl, classify } from "./diagnostics-classify"
 import { redactHostAndUrls } from "./scrub"
+import { routeUrl } from "./tailnet"
 
 export type { Classification, ProbeAttempt } from "./diagnostics-classify"
 
@@ -46,7 +47,7 @@ async function timedFetch(name: string, target: string, init?: RequestInit, opts
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), PROBE_TIMEOUT_MS)
   try {
-    const res = await fetch(target, { ...init, signal: controller.signal })
+    const res = await fetch(await routeUrl(target), { ...init, signal: controller.signal })
     return { name, target, ok: requireOk ? res.ok : true, status: res.status, durationMs: Date.now() - start }
   } catch (error: unknown) {
     const err = error as { name?: string; message?: string; cause?: unknown }

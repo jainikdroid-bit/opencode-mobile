@@ -619,5 +619,21 @@
     "thinking": "Thinking…",
     "speaking": "Speaking…",
     "stop": "End"
+  },
+  "tailnet": {
+    "section": "Built-in Tailscale",
+    "master": "Use built-in Tailscale",
+    "hint": "Reach your computer over Tailscale without the Tailscale app. Works while another VPN is on.",
+    "unavailable": "Not available in this build.",
+    "starting": "Starting…",
+    "needsSignIn": "Sign in to Tailscale to finish.",
+    "connected": "Connected. This phone: {{ip}}",
+    "signIn": "Sign in to Tailscale",
+    "signOut": "Sign out of Tailscale",
+    "offer": "The phone cannot reach this Tailscale address. The Tailscale app is probably off, for example because another VPN is on. The app can connect through its own built-in Tailscale instead.",
+    "useBuiltIn": "Use built-in",
+    "waitTitle": "Waiting for Tailscale",
+    "waitBody": "Sign in with the same Tailscale account as on your computer, then come back here.",
+    "notConnected": "Built-in Tailscale did not connect. Sign in and try again."
   }
 }

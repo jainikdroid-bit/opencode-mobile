@@ -619,5 +619,21 @@
     "thinking": "Düşünüyor…",
     "speaking": "Konuşuyor…",
     "stop": "Bitir"
+  },
+  "tailnet": {
+    "section": "Yerleşik Tailscale",
+    "master": "Yerleşik Tailscale’i kullan",
+    "hint": "Tailscale uygulaması olmadan bilgisayarınıza Tailscale üzerinden ulaşın. Başka bir VPN açıkken de çalışır.",
+    "unavailable": "Bu sürümde kullanılamıyor.",
+    "starting": "Başlatılıyor…",
+    "needsSignIn": "Bitirmek için Tailscale’de oturum açın.",
+    "connected": "Bağlandı. Bu telefon: {{ip}}",
+    "signIn": "Tailscale’de oturum aç",
+    "signOut": "Tailscale oturumunu kapat",
+    "offer": "Telefon bu Tailscale adresine ulaşamıyor. Tailscale uygulaması büyük olasılıkla kapalı, örneğin başka bir VPN açık olduğu için. Uygulama kendi yerleşik Tailscale’i ile bağlanabilir.",
+    "useBuiltIn": "Yerleşiği kullan",
+    "waitTitle": "Tailscale bekleniyor",
+    "waitBody": "Bilgisayarınızdaki Tailscale hesabıyla oturum açın, sonra buraya dönün.",
+    "notConnected": "Yerleşik Tailscale bağlanamadı. Oturum açıp yeniden deneyin."
   }
 }

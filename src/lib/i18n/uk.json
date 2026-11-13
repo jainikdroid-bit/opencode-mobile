@@ -619,5 +619,21 @@
     "thinking": "Думаю…",
     "speaking": "Говорю…",
     "stop": "Кінець"
+  },
+  "tailnet": {
+    "section": "Вбудований Tailscale",
+    "master": "Використовувати вбудований Tailscale",
+    "hint": "Зв’язок із комп’ютером через Tailscale без застосунку Tailscale. Працює, коли ввімкнено інший VPN.",
+    "unavailable": "У цій збірці недоступно.",
+    "starting": "Запуск…",
+    "needsSignIn": "Увійдіть у Tailscale, щоб завершити.",
+    "connected": "Підключено. Цей телефон: {{ip}}",
+    "signIn": "Увійти в Tailscale",
+    "signOut": "Вийти з Tailscale",
+    "offer": "Телефон не бачить цю адресу Tailscale. Імовірно, застосунок Tailscale вимкнено, наприклад через інший VPN. Застосунок може підключитися через власний вбудований Tailscale.",
+    "useBuiltIn": "Вбудований",
+    "waitTitle": "Очікування Tailscale",
+    "waitBody": "Увійдіть тим самим обліковим записом Tailscale, що й на комп’ютері, потім поверніться сюди.",
+    "notConnected": "Вбудований Tailscale не підключився. Увійдіть і спробуйте ще раз."
   }
 }

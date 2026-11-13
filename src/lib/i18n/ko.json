@@ -619,5 +619,21 @@
     "thinking": "생각 중…",
     "speaking": "말하는 중…",
     "stop": "종료"
+  },
+  "tailnet": {
+    "section": "내장 Tailscale",
+    "master": "내장 Tailscale 사용",
+    "hint": "Tailscale 앱 없이 Tailscale로 컴퓨터에 연결합니다. 다른 VPN이 켜져 있어도 작동합니다.",
+    "unavailable": "이 빌드에서는 사용할 수 없습니다.",
+    "starting": "시작하는 중…",
+    "needsSignIn": "완료하려면 Tailscale에 로그인하세요.",
+    "connected": "연결됨. 이 휴대폰: {{ip}}",
+    "signIn": "Tailscale 로그인",
+    "signOut": "Tailscale 로그아웃",
+    "offer": "휴대폰에서 이 Tailscale 주소에 연결할 수 없습니다. 다른 VPN이 켜져 있는 등의 이유로 Tailscale 앱이 꺼져 있을 수 있습니다. 앱에 내장된 Tailscale로 연결할 수 있습니다.",
+    "useBuiltIn": "내장 사용",
+    "waitTitle": "Tailscale 대기 중",
+    "waitBody": "컴퓨터와 같은 Tailscale 계정으로 로그인한 다음 여기로 돌아오세요.",
+    "notConnected": "내장 Tailscale이 연결되지 않았습니다. 로그인한 후 다시 시도하세요."
   }
 }

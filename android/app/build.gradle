@@ -93,8 +93,8 @@ android {
         applicationId 'cc.agentlabs.opencode'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 55
-        versionName "0.11.0"
+        versionCode 56
+        versionName "0.12.0"
 
         buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
     }
@@ -176,6 +176,9 @@ android {
 }
 
 dependencies {
+    // Built-in Tailscale (userspace tsnet). Built by native/tsnet/build.sh.
+    implementation(files("libs/tsnetbridge.aar"))
+
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 

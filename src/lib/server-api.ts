@@ -3,6 +3,7 @@
 // x-opencode-directory) as the main client.
 import { buildRequestHeaders } from "./headers"
 import { ptySocketUrl } from "./server-tools"
+import { routeUrl } from "./tailnet"
 
 export interface ServerConn {
   baseUrl: string
@@ -38,7 +39,7 @@ async function call<T>(conn: ServerConn, path: string, init: RequestInit = {}): 
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
   try {
-    const response = await fetch(`${conn.baseUrl.replace(/\/+$/, "")}${path}`, {
+    const response = await fetch(await routeUrl(`${conn.baseUrl.replace(/\/+$/, "")}${path}`), {
       ...init,
       headers: { ...buildRequestHeaders({ directory: conn.directory, auth: conn.auth }), ...(init.headers as Record<string, string>) },
       signal: controller.signal,

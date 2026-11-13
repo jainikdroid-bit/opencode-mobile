@@ -21,6 +21,7 @@ import { PermissionBanner } from "../src/components/PermissionBanner"
 import { replyPermission } from "../src/lib/permission-actions"
 import { useTunnelDiscovery } from "../src/lib/useTunnelDiscovery"
 import { usePhoneBridge } from "../src/lib/usePhoneBridge"
+import { useTailnetLifecycle } from "../src/lib/useTailnetLifecycle"
 import { ShareIntentProvider, useShareIntentContext } from "expo-share-intent"
 
 // The app is dark-only: a minimal blue-black look with neon accents.
@@ -131,6 +132,7 @@ function RootLayout() {
 
   const isLoading = authLoading || connectionsLoading
   usePhoneBridge()
+  useTailnetLifecycle()
   useTunnelDiscovery()
   const { hasShareIntent } = useShareIntentContext()
   useEffect(() => {

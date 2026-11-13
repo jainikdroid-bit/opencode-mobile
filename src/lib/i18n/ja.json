@@ -619,5 +619,21 @@
     "thinking": "考え中...",
     "speaking": "読み上げ中...",
     "stop": "終了"
+  },
+  "tailnet": {
+    "section": "内蔵 Tailscale",
+    "master": "内蔵 Tailscale を使う",
+    "hint": "Tailscale アプリなしで、Tailscale 経由でパソコンに接続します。別の VPN がオンでも動作します。",
+    "unavailable": "このビルドでは利用できません。",
+    "starting": "起動中…",
+    "needsSignIn": "Tailscale にサインインして完了してください。",
+    "connected": "接続済み。このスマートフォン: {{ip}}",
+    "signIn": "Tailscale にサインイン",
+    "signOut": "Tailscale からサインアウト",
+    "offer": "スマートフォンからこの Tailscale アドレスに接続できません。別の VPN がオンになっているなどの理由で、Tailscale アプリがオフになっている可能性があります。アプリ内蔵の Tailscale で接続できます。",
+    "useBuiltIn": "内蔵を使う",
+    "waitTitle": "Tailscale を待機中",
+    "waitBody": "パソコンと同じ Tailscale アカウントでサインインしてから、ここに戻ってください。",
+    "notConnected": "内蔵 Tailscale が接続できませんでした。サインインしてもう一度お試しください。"
   }
 }

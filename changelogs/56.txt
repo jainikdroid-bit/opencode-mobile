@@ -1,0 +1,4 @@
+v0.12.0 — built-in Tailscale
+
+• The app now carries its own Tailscale: it reaches your computer on a Tailscale address without the Tailscale app, and it works while another VPN is on. Turn it on in Settings, or accept the offer when pairing fails, then sign in once.
+• Android only allows one VPN app at a time; the built-in Tailscale does not need the VPN slot.
