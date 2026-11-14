@@ -4,6 +4,7 @@ import Svg, { Circle, G, Line, Path, Polygon, Rect, Text as SvgText } from "reac
 import { faceFor } from "../../lib/cheri-antics"
 import { Blush, Brows, CHERI as C, Eyes, Mouth, type BrowKind } from "./cheriFace"
 import { HeadScene, Scene, earMotion, glance, headMotion, yawnHeight } from "./cheriScenes"
+import { Pivot } from "./Pivot"
 import type { MascotProps, MascotState } from "./types"
 import { useAntics } from "./useAntics"
 import { useBlink, useLoop } from "./useLoop"
@@ -81,9 +82,9 @@ function CheriImpl({ state = "idle", size = 96, interactive = false, calm = fals
 
       {/* long hair behind the shoulders */}
       <G transform={HEAD}>
-        <AnimatedG rotation={bob} originX={60} originY={60} x={jitter}>
+        <Pivot x={60} y={60} rotation={bob} shiftX={jitter}>
           <Path d="M34 104 Q24 60 34 34 Q46 18 62 20 Q86 22 88 50 Q92 80 84 104 Z" fill={C.hair} />
-        </AnimatedG>
+        </Pivot>
       </G>
 
       {/* shoulders, top, jacket, neck and choker */}
@@ -96,7 +97,7 @@ function CheriImpl({ state = "idle", size = 96, interactive = false, calm = fals
 
       {/* head */}
       <G transform={HEAD}>
-        <AnimatedG rotation={bob} originX={60} originY={60} x={jitter}>
+        <Pivot x={60} y={60} rotation={bob} shiftX={jitter}>
           <Path d="M44 44 Q44 66 60 71 Q76 66 76 44 Q76 26 60 26 Q44 26 44 44 Z" fill={C.skin} />
           <Brows kind={browsFor(state, antic)} />
           <Eyes kind={face.eyes} motion={{ dx: eyeDx, dy: eyeDy, blink }} />
@@ -108,14 +109,14 @@ function CheriImpl({ state = "idle", size = 96, interactive = false, calm = fals
           {/* headset with cat ears; the inner ear is the status LED */}
           <AnimatedG y={hop}>
             <Path d="M41 40 Q41 14 60 14 Q79 14 79 40" stroke={C.headset} strokeWidth={3} fill="none" />
-            <AnimatedG rotation={twitch} originX={50} originY={21}>
+            <Pivot x={50} y={21} rotation={twitch}>
               <Polygon points={ears.left} fill="#fff" stroke={C.headset} strokeWidth={1.5} />
               <AnimatedPolygon points={ears.innerL} fill={led} opacity={ledOpacity} />
-            </AnimatedG>
+            </Pivot>
             <Polygon points={ears.right} fill="#fff" stroke={C.headset} strokeWidth={1.5} />
             <AnimatedPolygon points={ears.innerR} fill={led} opacity={ledOpacity} />
           </AnimatedG>
-        </AnimatedG>
+        </Pivot>
       </G>
 
       {state === "thinking" && !antic ? (
@@ -135,16 +136,16 @@ function CheriImpl({ state = "idle", size = 96, interactive = false, calm = fals
       ) : null}
 
       {state === "working" ? (
-        <AnimatedG rotation={degrees} originX={14} originY={100}>
+        <Pivot x={14} y={100} rotation={degrees}>
           <Circle cx={14} cy={100} r={8} fill="none" stroke={C.amber} strokeWidth={3} strokeDasharray="4 3.5" />
           <Circle cx={14} cy={100} r={2.6} fill={C.amber} />
-        </AnimatedG>
+        </Pivot>
       ) : null}
 
       {state === "loading" ? (
-        <AnimatedG rotation={degrees} originX={60} originY={60}>
+        <Pivot x={60} y={60} rotation={degrees}>
           <Circle cx={60} cy={60} r={57} fill="none" stroke={C.cyan} strokeWidth={2} strokeDasharray="20 70" strokeLinecap="round" />
-        </AnimatedG>
+        </Pivot>
       ) : null}
 
       {state === "success" && !antic ? (

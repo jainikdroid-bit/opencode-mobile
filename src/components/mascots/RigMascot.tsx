@@ -2,6 +2,7 @@ import { memo } from "react"
 import { Animated, View } from "react-native"
 import Svg, { Circle, G, Line, Path, Rect, Text as SvgText } from "react-native-svg"
 import { cyber } from "../../theme/cyber"
+import { Pivot } from "./Pivot"
 import type { MascotProps } from "./types"
 import { useLoop } from "./useLoop"
 
@@ -114,18 +115,18 @@ function MascotImpl({ state = "idle", size = 96 }: MascotProps) {
         {/* gear for work / ring for loading */}
         {state === "working" ? (
           <G>
-            <AnimatedG rotation={degrees} originX={16} originY={96}>
+            <Pivot x={16} y={96} rotation={degrees}>
               <Circle cx={16} cy={96} r={9} fill="none" stroke={cyber.amber} strokeWidth={3} strokeDasharray="5 4" />
               <Circle cx={16} cy={96} r={3} fill={cyber.amber} />
-            </AnimatedG>
+            </Pivot>
             <Circle cx={104} cy={96} r={2} fill={cyber.amber} opacity={0.8} />
             <Circle cx={110} cy={88} r={1.5} fill={cyber.magenta} opacity={0.8} />
           </G>
         ) : null}
         {state === "loading" ? (
-          <AnimatedG rotation={degrees} originX={60} originY={60}>
+          <Pivot x={60} y={60} rotation={degrees}>
             <Circle cx={60} cy={60} r={56} fill="none" stroke={cyber.cyan} strokeWidth={2} strokeDasharray="20 70" strokeLinecap="round" />
-          </AnimatedG>
+          </Pivot>
         ) : null}
       </Svg>
     </View>

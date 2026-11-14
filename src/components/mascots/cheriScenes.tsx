@@ -1,5 +1,6 @@
 import { Animated } from "react-native"
 import { Circle, Ellipse, G, Line, Path, Rect, Text as SvgText } from "react-native-svg"
+import { Pivot } from "./Pivot"
 import type { Antic } from "../../lib/cheri-antics"
 import { CHERI } from "./cheriFace"
 
@@ -253,11 +254,11 @@ export function Scene({ antic, p }: { antic: Antic | null; p: P }) {
       )
     case "dizzy":
       return (
-        <AnimatedG rotation={p.interpolate({ inputRange: [0, 1], outputRange: [0, 720] })} originX={60} originY={14}>
+        <Pivot x={60} y={14} rotation={p.interpolate({ inputRange: [0, 1], outputRange: [0, 720] })}>
           <Path d={star(60, 2, 3.5)} fill={CHERI.amber} />
           <Path d={star(72, 20, 3)} fill={CHERI.cyan} />
           <Path d={star(48, 20, 3)} fill={CHERI.lips} />
-        </AnimatedG>
+        </Pivot>
       )
     default:
       return null
