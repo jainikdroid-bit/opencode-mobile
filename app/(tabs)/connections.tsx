@@ -128,7 +128,7 @@ export default function ConnectionsScreen() {
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Mascot state="offline" size={110} />
+            <Mascot state="offline" size={110} interactive />
             <Text style={[styles.emptyTitle, isDark && styles.textDark]}>{t("connectionsList.empty.title")}</Text>
             <Text style={[styles.emptySubtitle, isDark && styles.metaDark]}>
               {t("connectionsList.empty.subtitle")}

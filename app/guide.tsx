@@ -57,7 +57,7 @@ export default function GuideScreen() {
       </View>
 
       <ScrollView contentContainerStyle={s.content}>
-        <Mascot state={MOOD[clampStep(index)]} size={104} />
+        <Mascot state={MOOD[clampStep(index)]} size={104} interactive />
         <View style={s.dots}>
           {GUIDE_STEPS.map((name, i) => (
             <View key={name} style={[s.dot, i === index && s.dotActive]} />

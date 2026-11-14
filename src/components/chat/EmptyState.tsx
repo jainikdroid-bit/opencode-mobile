@@ -33,7 +33,7 @@ export function EmptyState({ isDark, onPick }: Props) {
   return (
     <Animated.View style={[s.wrap, { opacity: appear }]} pointerEvents="box-none">
       <Animated.View style={{ transform: [{ translateY: float.interpolate({ inputRange: [0, 1], outputRange: [0, -8] }) }] }}>
-        <Mascot state="idle" size={132} />
+        <Mascot state="idle" size={132} interactive />
       </Animated.View>
       <Text style={[s.title, isDark && s.titleDark]}>{t("session.empty.title")}</Text>
       <Text style={[s.hint, isDark && s.hintDark]}>{t("session.empty.hint")}</Text>

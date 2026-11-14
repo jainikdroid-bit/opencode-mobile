@@ -45,7 +45,7 @@ export default function ScanScreen() {
   if (!permission.granted) {
     return (
       <View style={[s.container, s.center]} testID="scan-permission">
-        <Mascot state="idle" size={96} />
+        <Mascot state="idle" size={96} interactive />
         <Text style={s.title}>{t("scan.permissionTitle")}</Text>
         <Text style={s.body}>{t("scan.permissionBody")}</Text>
         <TouchableOpacity style={s.primary} onPress={() => void requestPermission()} testID="scan-allow">

@@ -262,7 +262,7 @@ export default function SettingsScreen() {
           description={t(`settings.mascot.${mascot}`)}
           isDark={isDark}
           onPress={() => setShowMascots(true)}
-          right={<MascotOf kind={mascot} state="idle" size={36} />}
+          right={<MascotOf kind={mascot} state="idle" size={36} calm />}
         />
         <SettingRow
           icon="information-circle"
@@ -327,7 +327,7 @@ export default function SettingsScreen() {
             {MASCOT_KINDS.map((kind) => (
               <TouchableOpacity key={kind} style={styles.langRow} onPress={() => chooseMascot(kind)} testID={`mascot-${kind}`}>
                 <View style={styles.mascotOption}>
-                  <MascotOf kind={kind} state="idle" size={56} />
+                  <MascotOf kind={kind} state="idle" size={56} calm />
                   <Text style={[styles.langLabel, isDark && { color: "#e8ecf4" }]}>{t(`settings.mascot.${kind}`)}</Text>
                 </View>
                 {mascot === kind ? <Ionicons name="checkmark" size={20} color="#22d3ee" /> : null}

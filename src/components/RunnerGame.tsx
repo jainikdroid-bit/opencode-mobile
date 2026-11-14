@@ -13,7 +13,7 @@ const GROUND = 26 // px of ground strip below the running line
 type Phase = "ready" | "playing" | "over"
 
 const Player = memo(function Player({ phase }: { phase: Phase }) {
-  return <Mascot state={phase === "over" ? "error" : phase === "playing" ? "working" : "idle"} size={CONFIG.playerH + 4} />
+  return <Mascot state={phase === "over" ? "error" : phase === "playing" ? "working" : "idle"} size={CONFIG.playerH + 4} calm />
 })
 
 function ObstacleView({ o }: { o: Obstacle }) {

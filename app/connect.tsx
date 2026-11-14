@@ -140,7 +140,7 @@ export default function ConnectScreen() {
 
   return (
     <View style={[styles.container, isDark && styles.containerDark]} testID="connect-screen">
-      <Mascot state="idle" size={96} />
+      <Mascot state="idle" size={96} interactive />
       <Text style={[styles.title, isDark && styles.textDark]}>{t("connection.pair.confirmText")}</Text>
       <View style={[styles.card, isDark && styles.cardDark]}>
         <Text style={[styles.name, isDark && styles.textDark]}>{pairing.name}</Text>
