@@ -502,7 +502,7 @@ export default function SessionsScreen() {
           </View>
         ) : (
           <TouchableOpacity onPress={() => setPlayOffline(true)} activeOpacity={0.8} testID="offline-mascot">
-            <Mascot state="offline" size={120} interactive />
+            <Mascot state="offline" size={120} />
           </TouchableOpacity>
         )}
         <Text style={[styles.emptyTitle, isDark && styles.textDark]}>{t("sessionsList.empty.noConnectionTitle")}</Text>

@@ -36,9 +36,17 @@ export function useAntics(mood: Mood, calm: boolean) {
   useEffect(() => () => running.current?.stop(), [])
 
   useEffect(() => {
+    const changed = previousMood.current !== mood
     const entering = enterAntic(previousMood.current, mood)
     previousMood.current = mood
-    if (entering && !calm) play(entering)
+    if (entering && !calm) {
+      play(entering)
+    } else if (changed && running.current) {
+      // A new mood ends the old mood's scene (no confetti left falling once she is back to idle).
+      running.current.stop()
+      running.current = null
+      setAntic(null)
+    }
   }, [mood, calm, play])
 
   useEffect(() => {
