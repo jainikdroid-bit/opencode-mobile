@@ -2,7 +2,7 @@
 
 **Diller:** [English](INSTALL.md) · [Русский](INSTALL.ru.md) · [中文](INSTALL.zh-Hans.md) · [Español](INSTALL.es.md) · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · [한국어](INSTALL.ko.md) · [Українська](INSTALL.uk.md) · Türkçe
 
-OpenCode Mobile, **kendi bilgisayarınızda** çalışan kodlama ajanını yöneten bir Android uygulamasıdır. Kurulum yaklaşık
+AgentLink, **kendi bilgisayarınızda** çalışan kodlama ajanını yöneten bir Android uygulamasıdır. Kurulum yaklaşık
 iki dakika ve üç adım sürer. Bizim hiçbir bulut hizmetimizden geçmez: telefon, bilgisayarınızla özel bir bağlantı üzerinden konuşur.
 
 ## İhtiyacınız olanlar
@@ -87,7 +87,7 @@ herkes ajanınızı kullanabilir, bu yüzden asla paylaşmayın. Varsayılan ola
 
 Ajanınıza (Claude Code, opencode, Codex, ...) şunu söyleyin:
 
-> OpenCode Mobile'ı benim için kur. https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md adresini izle
+> AgentLink'ı benim için kur. https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md adresini izle
 
 Siz yalnızca Windows isteminde **Evet**'e tıklarsınız, Tailscale'e bir kez giriş yaparsınız ve telefonda **Bağlan**'a dokunursunuz.
 

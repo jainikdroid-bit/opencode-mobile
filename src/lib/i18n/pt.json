@@ -61,7 +61,7 @@
       "ru": "Russo"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "Conecte-se ao seu assistente de IA para programar de qualquer lugar"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "Precisa fazer login no computador",
         "other": "Desconhecido"
       }
+    },
+    "mascot": {
+      "label": "Mascote",
+      "title": "Escolher mascote",
+      "cheri": "Cheri",
+      "rig": "RIG"
     }
   },
   "session": {

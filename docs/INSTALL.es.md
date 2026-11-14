@@ -2,7 +2,7 @@
 
 **Idiomas:** [English](INSTALL.md) · [Русский](INSTALL.ru.md) · [中文](INSTALL.zh-Hans.md) · Español · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · [한국어](INSTALL.ko.md) · [Українська](INSTALL.uk.md) · [Türkçe](INSTALL.tr.md)
 
-OpenCode Mobile es una app de Android que controla el agente de programación que se ejecuta en **tu propio ordenador**.
+AgentLink es una app de Android que controla el agente de programación que se ejecuta en **tu propio ordenador**.
 La configuración lleva unos dos minutos y tres pasos. Nada pasa por un servicio en la nube nuestro: el móvil habla con tu
 ordenador mediante una conexión privada.
 
@@ -90,7 +90,7 @@ lo compartas. Tailscale sigue siendo la opción recomendada.
 
 Dile a tu agente (Claude Code, opencode, Codex, ...):
 
-> Configura OpenCode Mobile para mí. Sigue https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
+> Configura AgentLink para mí. Sigue https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
 
 Solo pulsas **Sí** en el aviso de Windows, inicias sesión una vez en Tailscale y pulsas **Conectar** en el móvil.
 

@@ -2,7 +2,7 @@
 
 **언어:** [English](INSTALL.md) · [Русский](INSTALL.ru.md) · [中文](INSTALL.zh-Hans.md) · [Español](INSTALL.es.md) · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · 한국어 · [Українська](INSTALL.uk.md) · [Türkçe](INSTALL.tr.md)
 
-OpenCode Mobile은 **내 컴퓨터**에서 실행되는 코딩 에이전트를 조작하는 Android 앱입니다. 설정은 약 2분, 3단계면 끝납니다.
+AgentLink은 **내 컴퓨터**에서 실행되는 코딩 에이전트를 조작하는 Android 앱입니다. 설정은 약 2분, 3단계면 끝납니다.
 저희 클라우드 서비스를 거치지 않습니다. 휴대폰이 비공개 연결로 내 컴퓨터와 직접 통신합니다.
 
 ## 준비물
@@ -86,7 +86,7 @@ curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/mai
 
 에이전트(Claude Code, opencode, Codex 등)에게 이렇게 말하세요.
 
-> OpenCode Mobile을 설정해 줘. https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md 를 따라 줘
+> AgentLink을 설정해 줘. https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md 를 따라 줘
 
 여러분은 Windows 창에서 **예**를 누르고, Tailscale에 한 번 로그인하고, 휴대폰에서 **연결**을 누르기만 하면 됩니다.
 

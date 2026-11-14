@@ -61,7 +61,7 @@
       "ru": "Rusça"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "AI kodlama asistanınıza her yerden bağlanın"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "Bilgisayarda giriş yapılması gerekiyor",
         "other": "Bilinmiyor"
       }
+    },
+    "mascot": {
+      "label": "Maskot",
+      "title": "Maskot seçin",
+      "cheri": "Cheri",
+      "rig": "RIG"
     }
   },
   "session": {

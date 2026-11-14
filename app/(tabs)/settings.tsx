@@ -25,6 +25,8 @@ import {
 import type { Category } from "../../src/lib/notifications"
 import { PRIVACY_POLICY_URL } from "../../src/lib/links"
 import { CURRENT_VERSION, checkForUpdate, type AvailableUpdate } from "../../src/lib/update-check"
+import { MascotOf } from "../../src/components/Mascot"
+import { MASCOT_KINDS, type MascotKind } from "../../src/lib/mascot-choice"
 import { LOCALE_NAMES, SUPPORTED_LOCALES, type LocalePreference } from "../../src/lib/i18n/locale-resolve"
 import { McpConnectors } from "../../src/components/McpConnectors"
 import { PhoneTools } from "../../src/components/PhoneTools"
@@ -80,7 +82,7 @@ export default function SettingsScreen() {
   const { t } = useTranslation()
 
   const { settings, hasBiometrics, updateSettings, lock } = useAuth()
-  const { notifications, setNotification, locale, setLocale } = useSettings()
+  const { notifications, setNotification, locale, setLocale, mascot, setMascot } = useSettings()
   const [osGranted, setOsGranted] = useState<boolean | null>(null)
 
   // Settings is where a user goes to ask "what am I running?". Answer it, and if
@@ -133,6 +135,14 @@ export default function SettingsScreen() {
       void setLocale(preference)
     },
     [setLocale],
+  )
+  const [showMascots, setShowMascots] = useState(false)
+  const chooseMascot = useCallback(
+    (kind: MascotKind) => {
+      setShowMascots(false)
+      void setMascot(kind)
+    },
+    [setMascot],
   )
 
   return (
@@ -247,6 +257,14 @@ export default function SettingsScreen() {
           right={<Ionicons name="chevron-forward" size={20} color={isDark ? "#8a93a8" : "#8a93a8"} />}
         />
         <SettingRow
+          icon="happy"
+          label={t("settings.mascot.label")}
+          description={t(`settings.mascot.${mascot}`)}
+          isDark={isDark}
+          onPress={() => setShowMascots(true)}
+          right={<MascotOf kind={mascot} state="idle" size={36} />}
+        />
+        <SettingRow
           icon="information-circle"
           label={t("settings.about.version")}
           // Was hard-coded "1.0.0" — wrong for every build ever shipped, and the
@@ -302,11 +320,32 @@ export default function SettingsScreen() {
           </View>
         </Pressable>
       </Modal>
+      <Modal visible={showMascots} transparent animationType="fade" onRequestClose={() => setShowMascots(false)}>
+        <Pressable style={styles.langBackdrop} onPress={() => setShowMascots(false)}>
+          <View style={[styles.langSheet, isDark && styles.langSheetDark]}>
+            <Text style={[styles.langTitle, isDark && styles.sectionTitleDark]}>{t("settings.mascot.title")}</Text>
+            {MASCOT_KINDS.map((kind) => (
+              <TouchableOpacity key={kind} style={styles.langRow} onPress={() => chooseMascot(kind)} testID={`mascot-${kind}`}>
+                <View style={styles.mascotOption}>
+                  <MascotOf kind={kind} state="idle" size={56} />
+                  <Text style={[styles.langLabel, isDark && { color: "#e8ecf4" }]}>{t(`settings.mascot.${kind}`)}</Text>
+                </View>
+                {mascot === kind ? <Ionicons name="checkmark" size={20} color="#22d3ee" /> : null}
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Pressable>
+      </Modal>
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  mascotOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
   container: {
     flex: 1,
     backgroundColor: "#141926",

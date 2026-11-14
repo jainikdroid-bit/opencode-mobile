@@ -2,7 +2,7 @@
 
 **Мови:** [English](INSTALL.md) · [Русский](INSTALL.ru.md) · [中文](INSTALL.zh-Hans.md) · [Español](INSTALL.es.md) · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · [한국어](INSTALL.ko.md) · Українська · [Türkçe](INSTALL.tr.md)
 
-OpenCode Mobile — застосунок для Android, яким ви керуєте агентом, що працює на **вашому власному комп'ютері**.
+AgentLink — застосунок для Android, яким ви керуєте агентом, що працює на **вашому власному комп'ютері**.
 Налаштування займає близько двох хвилин і три кроки. Жодних наших хмарних сервісів: телефон спілкується з комп'ютером
 через приватне з'єднання.
 
@@ -89,7 +89,7 @@ curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/mai
 
 Скажіть своєму агентові (Claude Code, opencode, Codex, ...):
 
-> Налаштуй для мене OpenCode Mobile. Дій за https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
+> Налаштуй для мене AgentLink. Дій за https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
 
 Від вас потрібно лише натиснути **Так** у вікні Windows, один раз увійти в Tailscale і торкнутися **Підключитися** на телефоні.
 

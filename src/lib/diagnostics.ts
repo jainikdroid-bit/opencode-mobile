@@ -122,7 +122,7 @@ export async function probeConnection(url: string, auth?: { username: string; pa
 
 export function formatReport(report: DiagnosticReport): string {
   const lines: string[] = []
-  lines.push("=== OpenCode Mobile — Connection Diagnostic ===")
+  lines.push("=== AgentLink — Connection Diagnostic ===")
   lines.push(`Time:        ${report.timestamp}`)
   lines.push(`Result:      ${report.classification.toUpperCase()}`)
   lines.push(`Summary:     ${report.summary}`)

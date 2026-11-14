@@ -61,7 +61,7 @@
       "ru": "俄语"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "随时随地连接您的 AI 编程助手"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "需要在电脑上登录",
         "other": "未知"
       }
+    },
+    "mascot": {
+      "label": "吉祥物",
+      "title": "选择吉祥物",
+      "cheri": "Cheri",
+      "rig": "RIG"
     }
   },
   "session": {

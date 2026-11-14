@@ -387,7 +387,7 @@ export const initializeRequest = (id: number, version: string): RpcMessage => ({
     protocolVersion: PROTOCOL_VERSION,
     // No file or terminal access for the agent through the phone: it uses its own tools on the computer.
     clientCapabilities: { fs: { readTextFile: false, writeTextFile: false }, terminal: false },
-    clientInfo: { name: "opencode-mobile", title: "OpenCode Mobile", version },
+    clientInfo: { name: "opencode-mobile", title: "AgentLink", version },
   },
 })
 

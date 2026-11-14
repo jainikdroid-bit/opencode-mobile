@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, StyleSheet, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native"
 import { Stack, router, useLocalSearchParams } from "expo-router"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
 import { cyber } from "../src/theme/cyber"
@@ -18,6 +19,7 @@ import { PermissionCard } from "../src/components/acp/PermissionCard"
 // agent running and reopening it from the agents list picks the chat up again.
 export default function AgentChatScreen() {
   const { t } = useTranslation()
+  const insets = useSafeAreaInsets()
   const params = useLocalSearchParams<{ agent: string; name?: string; cwd?: string; id?: string }>()
   const { activeConnection, clientBase } = useConnections()
   const target = useMemo(
@@ -142,7 +144,7 @@ export default function AgentChatScreen() {
       {state.pendingPermissions.map((request) => (
         <PermissionCard key={String(request.requestId)} request={request} agent={agentName} onAnswer={(optionId) => void chat.answer(request.requestId, optionId).catch(() => undefined)} />
       ))}
-      <View style={s.inputRow}>
+      <View style={[s.inputRow, { paddingBottom: Math.max(10, insets.bottom) }]}>
         <TextInput
           style={s.input}
           value={text}

@@ -1,4 +1,4 @@
-# AI setup runbook: OpenCode Mobile + opencode on the user's computer
+# AI setup runbook: AgentLink + opencode on the user's computer
 
 Audience: an AI agent (Claude Code, opencode, Codex, ...) asked to set this up for a person.
 Goal: the person's phone controls the opencode agent on their computer, with the fewest human actions.

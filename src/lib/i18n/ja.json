@@ -61,7 +61,7 @@
       "ru": "ロシア語"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "どこからでも AI コーディングアシスタントに接続"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "パソコンでのサインインが必要",
         "other": "不明"
       }
+    },
+    "mascot": {
+      "label": "マスコット",
+      "title": "マスコットを選択",
+      "cheri": "チェリー",
+      "rig": "RIG"
     }
   },
   "session": {

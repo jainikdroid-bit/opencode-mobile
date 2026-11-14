@@ -1,0 +1,5 @@
+v0.16.0 — now AgentLink, new mascot Cheri
+- OpenCode Mobile is now AgentLink: it works with opencode, Claude Code, Codex, Gemini CLI and other agents.
+- Meet Cheri, the new mascot: her ear lights and face show what the agent is doing.
+- The robot RIG is still there: Settings → Mascot.
+- Chat with another agent: the message box is no longer hidden behind the navigation bar.

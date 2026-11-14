@@ -2,7 +2,7 @@
 
 **语言：** [English](INSTALL.md) · [Русский](INSTALL.ru.md) · 中文 · [Español](INSTALL.es.md) · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · [한국어](INSTALL.ko.md) · [Українська](INSTALL.uk.md) · [Türkçe](INSTALL.tr.md)
 
-OpenCode Mobile 是一款 Android 应用，用来控制运行在**你自己电脑**上的编码代理。设置大约需要两分钟、三个步骤。
+AgentLink 是一款 Android 应用，用来控制运行在**你自己电脑**上的编码代理。设置大约需要两分钟、三个步骤。
 不经过我们的任何云服务：手机通过私有连接与你的电脑通信。
 
 ## 你需要准备
@@ -84,7 +84,7 @@ curl -fsSL https://raw.githubusercontent.com/jainikdroid-bit/opencode-mobile/mai
 
 告诉你的代理（Claude Code、opencode、Codex 等）：
 
-> 请帮我设置 OpenCode Mobile。按照 https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md 操作
+> 请帮我设置 AgentLink。按照 https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md 操作
 
 你只需要在 Windows 弹窗中点击**是**，登录一次 Tailscale，并在手机上点击**连接**。
 

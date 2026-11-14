@@ -2,7 +2,7 @@
 
 **Языки:** [English](INSTALL.md) · Русский · [中文](INSTALL.zh-Hans.md) · [Español](INSTALL.es.md) · [Deutsch](INSTALL.de.md) · [Français](INSTALL.fr.md) · [Português](INSTALL.pt.md) · [日本語](INSTALL.ja.md) · [한국어](INSTALL.ko.md) · [Українська](INSTALL.uk.md) · [Türkçe](INSTALL.tr.md)
 
-OpenCode Mobile — приложение для Android, которым вы управляете агентом, работающим на **вашем собственном компьютере**.
+AgentLink — приложение для Android, которым вы управляете агентом, работающим на **вашем собственном компьютере**.
 Настройка занимает около двух минут и три шага. Никаких наших облачных сервисов: телефон общается с компьютером по
 частному соединению.
 
@@ -107,7 +107,7 @@ GitHub Copilot CLI, установленными на компьютере, че
 
 Скажите своему агенту (Claude Code, opencode, Codex, ...):
 
-> Настрой для меня OpenCode Mobile. Следуй https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
+> Настрой для меня AgentLink. Следуй https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md
 
 От вас потребуется только нажать **Да** в окне Windows, один раз войти в Tailscale и нажать **Подключиться** на телефоне.
 

@@ -1,8 +1,9 @@
 <p align="center">
-  <img src="docs/brand/rig.svg" width="140" alt="RIG, the OpenCode Mobile mascot" />
+  <img src="docs/brand/rig.svg" width="140" alt="RIG, the AgentLink mascot" />
 </p>
 
-<h1 align="center">OpenCode Mobile</h1>
+<h1 align="center">AgentLink</h1>
+<p align="center"><sub>formerly OpenCode Mobile · works with opencode, Claude Code, Codex, Gemini CLI and other agents</sub></p>
 
 <p align="center">
   <b>Your coding agent, in your pocket.</b><br/>
@@ -131,7 +132,7 @@ Re-running the command is safe (it repairs instead of duplicating). No Tailscale
 
 ### Let an AI agent do it
 
-Tell your AI agent (Claude Code, opencode, Codex, ...): *"Set up OpenCode Mobile for me following
+Tell your AI agent (Claude Code, opencode, Codex, ...): *"Set up AgentLink for me following
 https://github.com/jainikdroid-bit/opencode-mobile/blob/main/docs/AI-SETUP.md"*. The runbook is written for agents: JSON output,
 exit codes, exact commands, safety rules. You only click **Yes** on a Windows prompt, sign in to Tailscale once and tap **Connect** on the phone.
 

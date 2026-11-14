@@ -61,7 +61,7 @@
       "ru": "Russian"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "어디서든 AI 코딩 어시스턴트에 연결"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "컴퓨터에서 로그인 필요",
         "other": "알 수 없음"
       }
+    },
+    "mascot": {
+      "label": "마스코트",
+      "title": "마스코트 선택",
+      "cheri": "체리",
+      "rig": "RIG"
     }
   },
   "session": {

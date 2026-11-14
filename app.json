@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "OpenCode",
+    "name": "AgentLink",
     "slug": "opencode-mobile",
-    "version": "0.15.0",
+    "version": "0.16.0",
     "orientation": "portrait",
     "scheme": "opencode",
     "userInterfaceStyle": "automatic",
@@ -35,7 +35,7 @@
     },
     "android": {
       "package": "cc.agentlabs.opencode",
-      "versionCode": 60,
+      "versionCode": 62,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

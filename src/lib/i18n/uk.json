@@ -61,7 +61,7 @@
       "ru": "Русский"
     },
     "footer": {
-      "appName": "OpenCode Mobile",
+      "appName": "AgentLink",
       "tagline": "Підключайтеся до свого AI-помічника для кодування звідусіль"
     },
     "alerts": {
@@ -79,6 +79,12 @@
         "needs_auth": "Потрібен вхід на комп'ютері",
         "other": "Невідомо"
       }
+    },
+    "mascot": {
+      "label": "Маскот",
+      "title": "Оберіть маскота",
+      "cheri": "Чері",
+      "rig": "RIG"
     }
   },
   "session": {
